@@ -318,7 +318,7 @@ for _ in range(32):
     sitar_lo.rest(Duration.WHOLE)
 
 # ── NES MARIO — pulse wave (bars 25-56) ────────────────────────
-mario = score.part("mario", synth="square", volume=0.15,
+mario = score.part("mario", synth="square", volume=0.2,
                    reverb=0.4, reverb_decay=1.5, lowpass=5000,
                    humanize=0.05)
 
