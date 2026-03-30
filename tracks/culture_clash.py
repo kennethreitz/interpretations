@@ -443,7 +443,7 @@ for vel in [70, 60, 50, 40, 30, 20, 10, 5]:
     bass.add(D.add(-24), Duration.WHOLE, velocity=vel)
 
 # ── MARCHING SNARE — military finale (bars 49-64) ──────────────
-march = score.part("march", volume=0.5,
+march = score.part("march", volume=0.8,
                    reverb=0.2, reverb_decay=0.8, humanize=0.03,
                    ensemble=16)
 
