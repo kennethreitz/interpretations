@@ -18,6 +18,19 @@ score = Score("4/4", bpm=40, temperament="just")
 # 48 bars at 40 BPM = ~7.5 minutes
 # ═══════════════════════════════════════════════════════════════════
 
+# ── DIDGERIDOO — primal opening, first voice heard ──────────────
+didge = score.part("didge", instrument="didgeridoo", volume=0.08,
+                   chorus=0.2, chorus_rate=0.05, chorus_depth=0.01,
+                   lowpass=300)
+
+for _ in range(16):
+    didge.add(B.add(-24), Duration.WHOLE, velocity=65)
+# Fade out as other layers build
+for vel in [55, 45, 35, 25, 18, 12, 8, 5]:
+    didge.add(B.add(-24), Duration.WHOLE, velocity=vel)
+for _ in range(24):
+    didge.rest(Duration.WHOLE)
+
 # ── DRONE 1 — deep sine, the foundation of the earth ───────────
 earth = score.part("earth", synth="sine", envelope="pad", volume=0.25,
                    reverb=0.9, reverb_type="taj_mahal",
@@ -50,7 +63,7 @@ for _ in range(40):
     octave.add(B.add(-24), Duration.WHOLE, velocity=45)
 
 # ── HARMONIUM — breathing chords, glacial ──────────────────────
-harmonium = score.part("harmonium", instrument="harmonium", volume=0.1,
+harmonium = score.part("harmonium", instrument="harmonium", volume=0.06,
                        reverb=0.8, reverb_type="taj_mahal",
                        chorus=0.3, chorus_rate=0.1, chorus_depth=0.01)
 
@@ -101,6 +114,23 @@ for note in shimmer_notes:
     for _ in range(4):
         shimmer.add(note.add(12), Duration.WHOLE, velocity=35)
 
+# ── VOCAL — low "ohhh", enters bar 16 ──────────────────────────
+vocal = score.part("vocal", instrument="vocal", volume=0.12,
+                   reverb=0.85, reverb_type="taj_mahal",
+                   chorus=0.3, chorus_rate=0.06, chorus_depth=0.012)
+
+for _ in range(16):
+    vocal.rest(Duration.WHOLE)
+
+# Low sustained notes — like a monk humming
+vocal_notes = [B.add(-24), Fs.add(-24), D.add(-12), B.add(-24),
+               Fs.add(-24), E.add(-12), D.add(-12), B.add(-24)]
+for note in vocal_notes:
+    vocal.add(note, Duration.WHOLE, velocity=40)
+    vocal.add(note, Duration.WHOLE, velocity=38)
+    vocal.rest(Duration.WHOLE)
+    vocal.rest(Duration.WHOLE)
+
 # ── CHOIR — voices from nowhere, enters bar 20 ─────────────────
 choir = score.part("choir", instrument="choir", volume=0.1,
                    reverb=0.9, reverb_type="taj_mahal",
@@ -135,6 +165,33 @@ wind.lfo("volume", rate=0.015, min=0.01, max=0.05, bars=48, shape="triangle")
 
 for _ in range(48):
     wind.add(B, Duration.WHOLE, velocity=30)
+
+# ── THEREMIN — emotional break, center of the piece ─────────────
+theremin = score.part("theremin", instrument="theremin", volume=0.15,
+                      reverb=0.8, reverb_type="taj_mahal",
+                      delay=0.2, delay_time=0.75, delay_feedback=0.3,
+                      humanize=0.06)
+
+for _ in range(20):
+    theremin.rest(Duration.WHOLE)
+
+# Bars 21-32: slow, aching melody — the emotional core
+theremin.add(Fs, Duration.WHOLE, velocity=45, bend=0.5)
+theremin.add(Fs, Duration.WHOLE, velocity=48)
+theremin.rest(Duration.WHOLE)
+theremin.rest(Duration.WHOLE)
+theremin.add(B, Duration.WHOLE, velocity=52, bend=-0.25)
+theremin.add(A, Duration.WHOLE, velocity=50)
+theremin.add(Fs, Duration.WHOLE, velocity=48, bend=0.5)
+theremin.rest(Duration.WHOLE)
+theremin.add(D.add(12), Duration.WHOLE, velocity=55, bend=-0.5)
+theremin.add(Cs.add(12), Duration.WHOLE, velocity=50)
+theremin.add(B, Duration.WHOLE, velocity=45, bend=0.25)
+theremin.add(Fs, Duration.WHOLE, velocity=40)
+
+# Bars 33-48: silent — let it dissolve
+for _ in range(16):
+    theremin.rest(Duration.WHOLE)
 
 # ── CELLO — one long note, enters late, the human voice ────────
 cello = score.part("cello", instrument="cello", volume=0.15,
