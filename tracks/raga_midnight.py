@@ -71,8 +71,8 @@ for _ in range(4):
     dhol.rest(Duration.WHOLE)
 
 # ── TAMBURA DRONE — the bed of everything ────────────────────────
-tambura = score.part("tambura", synth="sine", envelope="pad", volume=0.45,
-                     reverb=0.9, reverb_type="taj_mahal",
+tambura = score.part("tambura", synth="sine", envelope="pad", volume=0.3,
+                     reverb=0.5, reverb_type="taj_mahal",
                      chorus=0.4, chorus_rate=0.1, chorus_depth=0.01,
                      lowpass=1200, pan=-0.3, saturation=0.2)
 
@@ -88,7 +88,7 @@ for vol in [0.3, 0.2, 0.1, 0.05]:
 
 # ── TAMBURA HIGH — octave shimmer ────────────────────────────────
 tambura_hi = score.part("tambura_hi", synth="sine", envelope="pad", volume=0.3,
-                        reverb=0.9, reverb_type="taj_mahal",
+                        reverb=0.5, reverb_type="taj_mahal",
                         chorus=0.5, chorus_rate=0.08, chorus_depth=0.012,
                         lowpass=2000, pan=0.3, saturation=0.15)
 
@@ -100,7 +100,7 @@ for vol in [0.2, 0.12, 0.06, 0.0]:
 
 # ── SITAR — raga melody ─────────────────────────────────────────
 sitar = score.part("sitar", instrument="sitar", volume=0.75,
-                   reverb=0.55, reverb_type="taj_mahal",
+                   reverb=0.3, reverb_type="taj_mahal",
                    delay=0.3, delay_time=0.333, delay_feedback=0.3,
                    pan=-0.15, saturation=0.25, humanize=0.1)
 
