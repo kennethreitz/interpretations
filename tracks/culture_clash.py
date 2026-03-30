@@ -36,33 +36,68 @@ MR  = DrumSound.MARCH_SNARE
 #   Bars 57-64:  Military snare crescendo, everything fades, final hit
 # ═══════════════════════════════════════════════════════════════════
 
-# ── DRUMS — breakbeat backbone ──────────────────────────────────
-score.drums("breakbeat", repeats=64)
-score.set_drum_effects(volume=0.45, humanize=0.1, ensemble=4)
-# Swap ride cymbals to closed hats
-for hit in score.parts["drums"]._drum_hits:
-    if hit.sound == DrumSound.RIDE:
-        hit.sound = DrumSound.CLOSED_HAT
-
-# ── FOUR ON THE FLOOR — kick on every beat ──────────────────────
-kick = score.part("kick", volume=0.4, humanize=0.05)
+# ── DRUMS — four on the floor, snare on 2 & 4, trap hats ───────
+drums = score.part("kit", volume=0.5, humanize=0.06)
 
 # Bars 1-8: rests
 for _ in range(8):
-    kick.rest(Duration.WHOLE)
+    drums.rest(Duration.WHOLE)
 
-# Bars 9-56: kick on every quarter note
-for _ in range(48):
-    for beat in range(4):
-        kick.hit(DrumSound.KICK, Duration.QUARTER, velocity=110)
+# Bars 9-56: kick + snare + trap hats
+K = DrumSound.KICK
+S = DrumSound.SNARE
+CH = DrumSound.CLOSED_HAT
+OH = DrumSound.OPEN_HAT
 
-# Bars 57-64: fading
-for vel in [95, 85, 75, 60, 45, 30, 15, 0]:
-    if vel > 0:
-        for beat in range(4):
-            kick.hit(DrumSound.KICK, Duration.QUARTER, velocity=vel)
+for bar in range(48):
+    if bar % 8 == 7:
+        # FILL BAR — snare rolls + kick accents
+        drums.hit(S, Duration.SIXTEENTH, velocity=100)
+        drums.hit(S, Duration.SIXTEENTH, velocity=65)
+        drums.hit(S, Duration.SIXTEENTH, velocity=70)
+        drums.hit(K, Duration.SIXTEENTH, velocity=105)
+        drums.hit(S, Duration.SIXTEENTH, velocity=105)
+        drums.hit(S, Duration.SIXTEENTH, velocity=68)
+        drums.hit(S, Duration.SIXTEENTH, velocity=72)
+        drums.hit(K, Duration.SIXTEENTH, velocity=108)
+        drums.hit(S, Duration.SIXTEENTH, velocity=110)
+        drums.hit(S, Duration.SIXTEENTH, velocity=70)
+        drums.hit(K, Duration.SIXTEENTH, velocity=112)
+        drums.hit(S, Duration.SIXTEENTH, velocity=75)
+        drums.hit(K, Duration.SIXTEENTH, velocity=115)
+        drums.hit(S, Duration.SIXTEENTH, velocity=118, articulation="accent")
+        drums.hit(OH, Duration.SIXTEENTH, velocity=90)
+        drums.hit(K, Duration.SIXTEENTH, velocity=120, articulation="accent")
     else:
-        kick.rest(Duration.WHOLE)
+        # Normal bar
+        # Beat 1: kick + hat
+        drums.hit(K, Duration.SIXTEENTH, velocity=110)
+        drums.hit(CH, Duration.SIXTEENTH, velocity=55)
+        drums.hit(CH, Duration.SIXTEENTH, velocity=45)
+        drums.hit(CH, Duration.SIXTEENTH, velocity=50)
+        # Beat 2: snare + hat
+        drums.hit(S, Duration.SIXTEENTH, velocity=105)
+        drums.hit(CH, Duration.SIXTEENTH, velocity=55)
+        drums.hit(CH, Duration.SIXTEENTH, velocity=42)
+        drums.hit(CH, Duration.SIXTEENTH, velocity=48)
+        # Beat 3: kick + hat (open hat on the &)
+        drums.hit(K, Duration.SIXTEENTH, velocity=108)
+        drums.hit(CH, Duration.SIXTEENTH, velocity=55)
+        drums.hit(OH, Duration.SIXTEENTH, velocity=60)
+        drums.hit(CH, Duration.SIXTEENTH, velocity=45)
+        # Beat 4: snare + hat rolls
+        drums.hit(S, Duration.SIXTEENTH, velocity=108)
+        drums.hit(CH, Duration.SIXTEENTH, velocity=52)
+        drums.hit(CH, Duration.SIXTEENTH, velocity=48)
+        drums.hit(CH, Duration.SIXTEENTH, velocity=55)
+
+# Bars 57-64: fading via velocity
+for bar in range(8):
+    v = max(10, 100 - bar * 12)
+    drums.hit(K, Duration.QUARTER, velocity=v)
+    drums.hit(S, Duration.QUARTER, velocity=max(10, v - 10))
+    drums.hit(K, Duration.QUARTER, velocity=max(10, v - 5))
+    drums.hit(S, Duration.QUARTER, velocity=max(10, v - 15))
 
 # ── DIDGERIDOO CHORD — two drones a fifth apart ────────────────
 didge_lo = score.part("didge_lo", instrument="didgeridoo", volume=0.45,
