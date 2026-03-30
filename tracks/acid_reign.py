@@ -30,10 +30,11 @@ OH = DrumSound.OPEN_HAT
 # ═══════════════════════════════════════════════════════════════════
 
 # ── THE 303 — squelchy saw, high resonance, the whole point ─────
-acid = score.part("303", synth="saw", envelope="none", volume=0.5,
+acid = score.part("303", synth="saw", envelope="pluck", volume=0.5,
                   lowpass=800, lowpass_q=4.0,
                   distortion=0.4, distortion_drive=5.0,
-                  saturation=0.3, humanize=0.03)
+                  saturation=0.3, humanize=0.03,
+                  legato=True, glide=0.04, sub_osc=0.5)
 # The filter sweep — slow open across the whole track
 acid.lfo("lowpass", rate=0.015, min=400, max=8000, bars=64, shape="triangle")
 
@@ -41,25 +42,25 @@ acid.lfo("lowpass", rate=0.015, min=400, max=8000, bars=64, shape="triangle")
 # Mostly root and fifth with chromatic approach notes
 acid_bars = [
     # Pattern A: driving root
-    [(A.add(-12), 100), (None, 0), (A.add(-12), 90), (E.add(-12), 85),
-     (A.add(-12), 95), (None, 0), (G.add(-24), 80), (A.add(-12), 100),
-     (None, 0), (A.add(-12), 88), (None, 0), (E.add(-12), 82),
-     (A.add(-12), 95), (G.add(-24), 78), (A.add(-12), 92), (None, 0)],
+    [(A.add(-24), 100), (None, 0), (A.add(-24), 90), (E.add(-24), 85),
+     (A.add(-24), 95), (None, 0), (G.add(-36), 80), (A.add(-24), 100),
+     (None, 0), (A.add(-24), 88), (None, 0), (E.add(-24), 82),
+     (A.add(-24), 95), (G.add(-36), 78), (A.add(-24), 92), (None, 0)],
     # Pattern B: climbing
-    [(A.add(-12), 95), (B.add(-12), 85), (C, 90), (None, 0),
-     (E, 100), (None, 0), (C, 88), (A.add(-12), 82),
-     (None, 0), (G.add(-24), 78), (A.add(-12), 95), (None, 0),
-     (C, 92), (E, 98), (C, 85), (A.add(-12), 90)],
+    [(A.add(-24), 95), (B.add(-24), 85), (C.add(-12), 90), (None, 0),
+     (E.add(-12), 100), (None, 0), (C.add(-12), 88), (A.add(-24), 82),
+     (None, 0), (G.add(-36), 78), (A.add(-24), 95), (None, 0),
+     (C.add(-12), 92), (E.add(-12), 98), (C.add(-12), 85), (A.add(-24), 90)],
     # Pattern C: menacing
-    [(A.add(-12), 100), (None, 0), (None, 0), (A.add(-12), 105),
-     (Tone.from_string("Ab2"), 90), (A.add(-12), 100), (None, 0), (E.add(-12), 88),
-     (None, 0), (None, 0), (A.add(-12), 95), (Tone.from_string("Bb2"), 85),
-     (A.add(-12), 100), (None, 0), (G.add(-24), 80), (A.add(-12), 98)],
+    [(A.add(-24), 100), (None, 0), (None, 0), (A.add(-24), 105),
+     (Tone.from_string("Ab1"), 90), (A.add(-24), 100), (None, 0), (E.add(-24), 88),
+     (None, 0), (None, 0), (A.add(-24), 95), (Tone.from_string("Bb1"), 85),
+     (A.add(-24), 100), (None, 0), (G.add(-36), 80), (A.add(-24), 98)],
     # Pattern D: wild — big intervals
-    [(A.add(-12), 105), (E, 95), (A.add(-12), 100), (None, 0),
-     (C, 92), (None, 0), (A.add(-12), 98), (E, 90),
-     (G.add(-24), 85), (A.add(-12), 100), (E, 95), (None, 0),
-     (C, 90), (A.add(-12), 102), (None, 0), (E, 95)],
+    [(A.add(-24), 105), (E.add(-12), 95), (A.add(-24), 100), (None, 0),
+     (C.add(-12), 92), (None, 0), (A.add(-24), 98), (E.add(-12), 90),
+     (G.add(-36), 85), (A.add(-24), 100), (E.add(-12), 95), (None, 0),
+     (C.add(-12), 90), (A.add(-24), 102), (None, 0), (E.add(-12), 95)],
 ]
 
 # Bars 1-8: just the 303 alone — pattern A and B
