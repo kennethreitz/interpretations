@@ -36,8 +36,24 @@ MR  = DrumSound.MARCH_SNARE
 #   Bars 57-64:  Military snare crescendo, everything fades, final hit
 # ═══════════════════════════════════════════════════════════════════
 
+# ── INTRO — Nokia ringtone, bone dry, like a phone going off (bars 1-2)
+intro = score.part("intro", synth="pulse", envelope="staccato", volume=0.35,
+                   lowpass=4000)
+# Quick Nokia lick — then silence before the world drops in
+intro.add(E.add(12), Duration.EIGHTH, velocity=95)
+intro.add(D.add(12), Duration.EIGHTH, velocity=90)
+intro.add(Tone.from_string("F#4"), Duration.QUARTER, velocity=88)
+intro.add(Tone.from_string("G#4"), Duration.QUARTER, velocity=85)
+intro.add(Tone.from_string("C#5"), Duration.EIGHTH, velocity=90)
+intro.add(Tone.from_string("B4"), Duration.EIGHTH, velocity=85)
+intro.add(D, Duration.QUARTER, velocity=82)
+intro.add(E, Duration.QUARTER, velocity=80)
+intro.rest(Duration.WHOLE)  # phone stops... silence... then the world drops in
+for _ in range(62):
+    intro.rest(Duration.WHOLE)
+
 # ── DRUMS — four on the floor, snare on 2 & 4, trap hats ───────
-drums = score.part("kit", volume=0.5, humanize=0.06)
+drums = score.part("kit", volume=0.65, humanize=0.06)
 
 # Bars 1-8: rests
 for _ in range(8):
