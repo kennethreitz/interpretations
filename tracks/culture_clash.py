@@ -301,88 +301,105 @@ for vel in [70, 60, 50, 40, 30, 20, 10, 5]:
 
 # ── MARCHING SNARE — military finale (bars 49-64) ──────────────
 march = score.part("march", volume=0.5,
-                   reverb=0.2, reverb_decay=0.8, humanize=0.03)
+                   reverb=0.2, reverb_decay=0.8, humanize=0.03,
+                   ensemble=16)
 
 # Bars 1-48: rests
 for _ in range(48):
     march.rest(Duration.WHOLE)
 
-# Bars 49-50: entrance — two big accents per bar, military call
+# ── LEVEL 1 — Bars 49-50: single hits, lots of space. A warning. ──
+march.hit(MR, Duration.HALF, velocity=115, articulation="marcato")
+march.rest(Duration.HALF)
+march.rest(Duration.HALF)
+march.hit(MR, Duration.HALF, velocity=118, articulation="marcato")
+
+# ── LEVEL 2 — Bars 51-52: quarter notes. Marching begins. ────────
 for _ in range(2):
-    march.hit(MR, Duration.QUARTER, velocity=120, articulation="marcato")
-    march.rest(Duration.QUARTER)
+    march.hit(MR, Duration.QUARTER, velocity=110, articulation="accent")
+    march.hit(MR, Duration.QUARTER, velocity=55)
+    march.hit(MR, Duration.QUARTER, velocity=112, articulation="accent")
+    march.hit(MR, Duration.QUARTER, velocity=55)
+
+# ── LEVEL 3 — Bars 53-54: 8ths with ghost notes. Getting serious. ─
+for _ in range(2):
     march.hit(MR, Duration.EIGHTH, velocity=115, articulation="accent")
-    march.hit(MR, Duration.EIGHTH, velocity=60)
-    march.rest(Duration.QUARTER)
+    march.hit(MR, Duration.EIGHTH, velocity=48)
+    march.hit(MR, Duration.EIGHTH, velocity=55)
+    march.hit(MR, Duration.EIGHTH, velocity=112, articulation="accent")
+    march.hit(MR, Duration.EIGHTH, velocity=50)
+    march.hit(MR, Duration.EIGHTH, velocity=48)
+    march.hit(MR, Duration.EIGHTH, velocity=118, articulation="marcato")
+    march.hit(MR, Duration.EIGHTH, velocity=50)
 
-# Bars 51-52: doubled — answer with authority
+# ── LEVEL 4 — Bars 55-56: 16ths. Full paradiddle. ────────────────
 for _ in range(2):
-    march.hit(MR, Duration.EIGHTH, velocity=120, articulation="marcato")
-    march.hit(MR, Duration.EIGHTH, velocity=55)
-    march.hit(MR, Duration.EIGHTH, velocity=118, articulation="accent")
-    march.hit(MR, Duration.EIGHTH, velocity=55)
-    march.hit(MR, Duration.QUARTER, velocity=125, articulation="marcato")
-    march.hit(MR, Duration.EIGHTH, velocity=60)
-    march.hit(MR, Duration.EIGHTH, velocity=55)
-
-# Bars 53-54: double time with ghost notes
-for _ in range(2):
-    march.hit(MR, Duration.SIXTEENTH, velocity=120, articulation="accent")
-    march.hit(MR, Duration.SIXTEENTH, velocity=40)
-    march.hit(MR, Duration.SIXTEENTH, velocity=45)
-    march.hit(MR, Duration.SIXTEENTH, velocity=118, articulation="accent")
-    march.hit(MR, Duration.SIXTEENTH, velocity=42)
-    march.hit(MR, Duration.SIXTEENTH, velocity=120, articulation="accent")
-    march.hit(MR, Duration.SIXTEENTH, velocity=40)
-    march.hit(MR, Duration.SIXTEENTH, velocity=45)
-    march.hit(MR, Duration.SIXTEENTH, velocity=122, articulation="accent")
-    march.hit(MR, Duration.SIXTEENTH, velocity=42)
-    march.hit(MR, Duration.SIXTEENTH, velocity=40)
-    march.hit(MR, Duration.SIXTEENTH, velocity=118, articulation="accent")
+    # RLRR LRLL RLRR LRLL
     march.hit(MR, Duration.SIXTEENTH, velocity=125, articulation="marcato")
-    march.hit(MR, Duration.SIXTEENTH, velocity=45)
-    march.hit(MR, Duration.SIXTEENTH, velocity=42)
-    march.hit(MR, Duration.SIXTEENTH, velocity=40)
-
-# Bars 55-56: paradiddle pattern — RLRR LRLL with accents
-for _ in range(2):
-    march.hit(MR, Duration.SIXTEENTH, velocity=125, articulation="marcato")  # R
-    march.hit(MR, Duration.SIXTEENTH, velocity=55)   # l
-    march.hit(MR, Duration.SIXTEENTH, velocity=60)   # r
-    march.hit(MR, Duration.SIXTEENTH, velocity=58)   # r
-    march.hit(MR, Duration.SIXTEENTH, velocity=122, articulation="accent")   # L
-    march.hit(MR, Duration.SIXTEENTH, velocity=55)   # r
-    march.hit(MR, Duration.SIXTEENTH, velocity=58)   # l
-    march.hit(MR, Duration.SIXTEENTH, velocity=55)   # l
-    march.hit(MR, Duration.SIXTEENTH, velocity=127, articulation="marcato")  # R
+    march.hit(MR, Duration.SIXTEENTH, velocity=50)
     march.hit(MR, Duration.SIXTEENTH, velocity=55)
-    march.hit(MR, Duration.SIXTEENTH, velocity=60)
+    march.hit(MR, Duration.SIXTEENTH, velocity=52)
+    march.hit(MR, Duration.SIXTEENTH, velocity=122, articulation="accent")
+    march.hit(MR, Duration.SIXTEENTH, velocity=50)
+    march.hit(MR, Duration.SIXTEENTH, velocity=52)
+    march.hit(MR, Duration.SIXTEENTH, velocity=48)
+    march.hit(MR, Duration.SIXTEENTH, velocity=127, articulation="marcato")
+    march.hit(MR, Duration.SIXTEENTH, velocity=52)
     march.hit(MR, Duration.SIXTEENTH, velocity=55)
+    march.hit(MR, Duration.SIXTEENTH, velocity=50)
     march.hit(MR, Duration.SIXTEENTH, velocity=125, articulation="accent")
-    march.hit(MR, Duration.SIXTEENTH, velocity=55)
-    march.hit(MR, Duration.SIXTEENTH, velocity=58)
-    march.hit(MR, Duration.SIXTEENTH, velocity=55)
+    march.hit(MR, Duration.SIXTEENTH, velocity=50)
+    march.hit(MR, Duration.SIXTEENTH, velocity=52)
+    march.hit(MR, Duration.SIXTEENTH, velocity=48)
 
-# Bars 57-60: full 16th note barrage — accents every beat
-for _ in range(4):
+# ── LEVEL 5 — Bars 57-58: 16ths, louder, accents on every beat ───
+for _ in range(2):
     for beat in range(4):
-        march.hit(MR, Duration.SIXTEENTH, velocity=125, articulation="marcato")
-        march.hit(MR, Duration.SIXTEENTH, velocity=50)
+        march.hit(MR, Duration.SIXTEENTH, velocity=127, articulation="marcato")
+        march.hit(MR, Duration.SIXTEENTH, velocity=58)
+        march.hit(MR, Duration.SIXTEENTH, velocity=62)
         march.hit(MR, Duration.SIXTEENTH, velocity=55)
-        march.hit(MR, Duration.SIXTEENTH, velocity=48)
 
-# Bars 61-63: crescendo — getting louder every beat
-for bar in range(3):
+# ── LEVEL 6 — Bars 59-60: 32nds creep in. Here it comes. ─────────
+for _ in range(2):
+    # Half bar 16ths, half bar 32nds
+    for beat in range(2):
+        march.hit(MR, Duration.SIXTEENTH, velocity=125, articulation="accent")
+        march.hit(MR, Duration.SIXTEENTH, velocity=55)
+        march.hit(MR, Duration.SIXTEENTH, velocity=58)
+        march.hit(MR, Duration.SIXTEENTH, velocity=52)
+    for beat in range(2):
+        march.hit(MR, 0.125, velocity=125, articulation="accent")
+        march.hit(MR, 0.125, velocity=52)
+        march.hit(MR, 0.125, velocity=55)
+        march.hit(MR, 0.125, velocity=48)
+        march.hit(MR, 0.125, velocity=122, articulation="accent")
+        march.hit(MR, 0.125, velocity=50)
+        march.hit(MR, 0.125, velocity=55)
+        march.hit(MR, 0.125, velocity=48)
+
+# ── LEVEL 7 — Bars 61-62: full 32nd note rolls ───────────────────
+for bar in range(2):
     for beat in range(4):
-        base = 70 + bar * 15 + beat * 3
-        march.hit(MR, Duration.SIXTEENTH, velocity=min(127, base + 25), articulation="accent")
-        march.hit(MR, Duration.SIXTEENTH, velocity=min(127, base))
-        march.hit(MR, Duration.SIXTEENTH, velocity=min(127, base + 5))
-        march.hit(MR, Duration.SIXTEENTH, velocity=min(127, base))
+        base = 80 + bar * 15 + beat * 3
+        march.hit(MR, 0.125, velocity=min(127, base + 30), articulation="accent")
+        march.hit(MR, 0.125, velocity=min(127, base))
+        march.hit(MR, 0.125, velocity=min(127, base + 10))
+        march.hit(MR, 0.125, velocity=min(127, base))
+        march.hit(MR, 0.125, velocity=min(127, base + 25), articulation="accent")
+        march.hit(MR, 0.125, velocity=min(127, base + 5))
+        march.hit(MR, 0.125, velocity=min(127, base + 15))
+        march.hit(MR, 0.125, velocity=min(127, base))
 
-# Bar 64: fastest possible into one massive hit
-for i in range(14):
-    march.hit(MR, Duration.SIXTEENTH, velocity=min(127, 95 + i * 2))
+# Bar 63: 32nd note crescendo — wall of snare
+for i in range(32):
+    vel = min(127, 70 + i * 2)
+    art = "accent" if i % 4 == 0 else "marcato" if i % 8 == 0 else ""
+    march.hit(MR, 0.125, velocity=vel, articulation=art)
+
+# Bar 64: 32nd note roll into one massive final hit
+for i in range(28):
+    march.hit(MR, 0.125, velocity=min(127, 90 + i))
 march.hit(MR, Duration.QUARTER, velocity=127, articulation="fermata")
 
 # ── PAD — atmospheric glue throughout ───────────────────────────
