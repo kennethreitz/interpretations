@@ -36,6 +36,30 @@ MR  = DrumSound.MARCH_SNARE
 #   Bars 57-64:  Military snare crescendo, everything fades, final hit
 # ═══════════════════════════════════════════════════════════════════
 
+# ── DRUMS — breakbeat backbone ──────────────────────────────────
+score.drums("breakbeat", repeats=64)
+score.set_drum_effects(volume=0.45, humanize=0.1, ensemble=4)
+
+# ── FOUR ON THE FLOOR — kick on every beat ──────────────────────
+kick = score.part("kick", volume=0.4, humanize=0.05)
+
+# Bars 1-8: rests
+for _ in range(8):
+    kick.rest(Duration.WHOLE)
+
+# Bars 9-56: kick on every quarter note
+for _ in range(48):
+    for beat in range(4):
+        kick.hit(DrumSound.KICK, Duration.QUARTER, velocity=110)
+
+# Bars 57-64: fading
+for vel in [95, 85, 75, 60, 45, 30, 15, 0]:
+    if vel > 0:
+        for beat in range(4):
+            kick.hit(DrumSound.KICK, Duration.QUARTER, velocity=vel)
+    else:
+        kick.rest(Duration.WHOLE)
+
 # ── DIDGERIDOO CHORD — two drones a fifth apart ────────────────
 didge_lo = score.part("didge_lo", instrument="didgeridoo", volume=0.45,
                       lowpass=250)
@@ -241,7 +265,7 @@ for _ in range(12):
     mario.rest(Duration.WHOLE)
 
 # ── DRAKE — steel drum Hotline Bling melody (bars 33-52) ────────
-bling = score.part("bling", instrument="steel_drum", volume=0.45,
+bling = score.part("bling", instrument="steel_drum", volume=0.7,
                    reverb=0.4, reverb_type="taj_mahal",
                    delay=0.3, delay_time=0.316, delay_feedback=0.35,
                    humanize=0.06)
@@ -407,9 +431,26 @@ for i in range(32):
     art = "accent" if i % 4 == 0 else "marcato" if i % 8 == 0 else ""
     march.hit(MR, 0.125, velocity=vel, articulation=art)
 
-# Bar 64: 32nd note roll into one massive final hit
-for i in range(28):
-    march.hit(MR, 0.125, velocity=min(127, 90 + i))
+# Bar 64: CADENCE — DCI-style ending
+# Flam drags into triplets into unison hits
+# Flam drag: grace-MAIN grace-MAIN (tight doubles)
+march.hit(MR, 0.125, velocity=55)   # grace
+march.hit(MR, Duration.SIXTEENTH, velocity=127, articulation="marcato")  # MAIN
+march.hit(MR, 0.125, velocity=55)   # grace
+march.hit(MR, Duration.SIXTEENTH, velocity=125, articulation="marcato")  # MAIN
+# Triplet accent pattern: DUT-da-da DUT-da-da
+march.hit(MR, Duration.TRIPLET_QUARTER, velocity=127, articulation="marcato")
+march.hit(MR, Duration.TRIPLET_QUARTER, velocity=50)
+march.hit(MR, Duration.TRIPLET_QUARTER, velocity=55)
+march.hit(MR, Duration.TRIPLET_QUARTER, velocity=125, articulation="marcato")
+march.hit(MR, Duration.TRIPLET_QUARTER, velocity=50)
+march.hit(MR, Duration.TRIPLET_QUARTER, velocity=55)
+# Three unison hits — BAM . BAM . BAM
+march.hit(MR, Duration.EIGHTH, velocity=127, articulation="marcato")
+march.rest(Duration.EIGHTH)
+march.hit(MR, Duration.EIGHTH, velocity=127, articulation="marcato")
+march.rest(Duration.EIGHTH)
+# THE FINAL HIT — everything stops
 march.hit(MR, Duration.QUARTER, velocity=127, articulation="fermata")
 
 # ── PAD — atmospheric glue throughout ───────────────────────────
