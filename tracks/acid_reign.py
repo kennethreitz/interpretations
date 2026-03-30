@@ -198,7 +198,7 @@ CS = DrumSound.CAJON_SLAP
 CT = DrumSound.CAJON_TAP
 CSS = DrumSound.CAJON_SLAP_SNARE
 
-cajon = score.part("cajon", volume=0.2, reverb=0.15, reverb_decay=0.6,
+cajon = score.part("cajon", volume=0.25, reverb=0.5, reverb_type="taj_mahal",
                    humanize=0.08)
 
 # Bars 1-32: silent
