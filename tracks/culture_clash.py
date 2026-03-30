@@ -589,13 +589,13 @@ march.hit(MR, Duration.TRIPLET_QUARTER, velocity=55)
 march.hit(MR, Duration.TRIPLET_QUARTER, velocity=125, articulation="marcato")
 march.hit(MR, Duration.TRIPLET_QUARTER, velocity=50)
 march.hit(MR, Duration.TRIPLET_QUARTER, velocity=55)
-# Three unison hits — BAM . BAM . BAM
-march.hit(MR, Duration.EIGHTH, velocity=127, articulation="marcato")
-march.rest(Duration.EIGHTH)
-march.hit(MR, Duration.EIGHTH, velocity=127, articulation="marcato")
-march.rest(Duration.EIGHTH)
-# THE FINAL HIT — everything stops
-march.hit(MR, Duration.QUARTER, velocity=127, articulation="fermata")
+# Rimshot quarter notes — CRACK . CRACK . CRACK . CRACK
+RS = DrumSound.RIMSHOT
+march.hit(RS, Duration.QUARTER, velocity=127, articulation="marcato")
+march.hit(RS, Duration.QUARTER, velocity=127, articulation="marcato")
+march.hit(RS, Duration.QUARTER, velocity=127, articulation="marcato")
+# THE FINAL RIMSHOT — everything stops
+march.hit(RS, Duration.QUARTER, velocity=127, articulation="fermata")
 
 # ── PAD — atmospheric glue throughout ───────────────────────────
 pad = score.part("pad", synth="supersaw", envelope="pad", volume=0.12,
