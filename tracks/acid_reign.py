@@ -194,9 +194,9 @@ for bar in range(8):
         hats.hit(CH, Duration.SIXTEENTH, velocity=max(12, vel - 30))
 
 # ── 808 SUB — deep sine, follows the root ───────────────────────
-sub = score.part("808", synth="sine", envelope="pad", volume=0.45,
-                 lowpass=120, distortion=0.3, distortion_drive=4.0,
-                 saturation=0.5, sub_osc=0.6, sidechain=0.4)
+sub = score.part("808", synth="sine", envelope="pad", volume=0.8,
+                 lowpass=150, distortion=0.35, distortion_drive=4.0,
+                 saturation=0.6, sub_osc=0.7, sidechain=0.3)
 
 for _ in range(8):
     sub.rest(Duration.WHOLE)
