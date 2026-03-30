@@ -209,17 +209,17 @@ for bar in range(8):
     sub.rest(Duration.HALF)
 
 # ── RHODES — dark chords in the background ──────────────────────
-rhodes = score.part("rhodes", instrument="electric_piano", volume=0.15,
-                    reverb=0.4, reverb_type="taj_mahal",
+rhodes = score.part("rhodes", instrument="rhodes", volume=0.2,
+                    reverb=0.7, reverb_type="taj_mahal",
                     tremolo_depth=0.15, tremolo_rate=3.0,
                     sidechain=0.35, humanize=0.08)
 
-prog = key.progression("i", "VII", "VI", "v")
+prog = [c.transpose(-12) for c in key.progression("i", "VII", "VI", "v")]
 
 for _ in range(8):
     rhodes.rest(Duration.WHOLE)
 
-# Bars 9-56: slow chord changes, atmospheric
+# Bars 9-56: slow chord changes, atmospheric, octave down
 for _ in range(12):
     for chord in prog:
         rhodes.add(chord, Duration.WHOLE, velocity=55)
