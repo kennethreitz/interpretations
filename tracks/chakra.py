@@ -45,7 +45,7 @@ su = key_upper.scale
 # ═══════════════════════════════════════════════════════════════════
 
 # ── Tambura — Sa-Pa drone in G ──────────────────────────────────
-tambura = score.part("tambura", synth="sine", envelope="pad", volume=0.4,
+tambura = score.part("tambura", synth="sine", envelope="pad", volume=0.2,
                      reverb=0.8, reverb_type="taj_mahal",
                      chorus=0.3, chorus_rate=0.08, chorus_depth=0.01,
                      lowpass=1000, pan=-0.25)
@@ -57,7 +57,7 @@ for _ in range(8):
     tambura.add(sl[4].add(-24), Duration.HALF)   # D3
 
 # ── Harmonium — slow breathing chords ───────────────────────────
-harmonium = score.part("harmonium", instrument="harmonium", volume=0.35,
+harmonium = score.part("harmonium", instrument="harmonium", volume=0.15,
                        reverb=0.6, reverb_type="taj_mahal",
                        chorus=0.2, chorus_rate=0.15, chorus_depth=0.008,
                        humanize=0.08)
@@ -73,7 +73,7 @@ for _ in range(2):
         harmonium.add(chord, Duration.WHOLE, velocity=80)
 
 # ── Singing bowl — real singing bowl synth ──────────────────────
-bowl = score.part("bowl", instrument="singing_bowl", volume=0.4,
+bowl = score.part("bowl", instrument="singing_bowl", volume=0.2,
                   reverb=0.9, reverb_type="taj_mahal")
 
 # Strike every 2 bars — let it ring
@@ -87,7 +87,7 @@ bowl.add(sl[0], Duration.WHOLE, velocity=75)
 bowl.rest(Duration.WHOLE)
 
 # ── Rhodes — sparse, warm ──────────────────────────────────────
-rhodes = score.part("rhodes", instrument="electric_piano", volume=0.3,
+rhodes = score.part("rhodes", instrument="electric_piano", volume=0.15,
                     reverb=0.6, reverb_type="taj_mahal",
                     tremolo_depth=0.1, tremolo_rate=3.0,
                     humanize=0.08)
@@ -134,7 +134,7 @@ for _ in range(4):
     rhodes.rest(Duration.WHOLE)
 
 # ── Sitar enters — flowing melody ──────────────────────────────
-sitar = score.part("sitar", instrument="sitar", volume=0.5,
+sitar = score.part("sitar", instrument="sitar", volume=0.25,
                    reverb=0.4, reverb_type="taj_mahal",
                    delay=0.3, delay_time=0.333, delay_feedback=0.35,
                    pan=-0.15, humanize=0.1)
@@ -201,7 +201,7 @@ for _ in range(4):
     sitar.rest(Duration.WHOLE)
 
 # ── Tabla enters — gentle at first ─────────────────────────────
-tabla = score.part("tabla", volume=0.35,
+tabla = score.part("tabla", volume=0.18,
                    reverb=0.25, reverb_decay=1.2, humanize=0.08)
 
 NA  = DrumSound.TABLA_NA
@@ -346,7 +346,7 @@ for bar in range(8):
         tabla.hit(TIT, Duration.EIGHTH, velocity=50)
 
 # ── Theremin — the voice of the throat chakra ───────────────────
-theremin = score.part("theremin", instrument="theremin", volume=0.5,
+theremin = score.part("theremin", instrument="theremin", volume=0.25,
                       reverb=0.5, reverb_type="taj_mahal",
                       delay=0.25, delay_time=0.278, delay_feedback=0.3,
                       pan=0.2, humanize=0.06)
