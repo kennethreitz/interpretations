@@ -260,7 +260,7 @@ for _ in range(48):
     wind.add(B, Duration.WHOLE, velocity=30)
 
 # ── THEREMIN — emotional break, center of the piece ─────────────
-theremin = score.part("theremin", instrument="theremin", volume=0.15,
+theremin = score.part("theremin", instrument="theremin", volume=0.2,
                       reverb=0.8, reverb_type="taj_mahal",
                       delay=0.2, delay_time=0.75, delay_feedback=0.3,
                       humanize=0.06)
