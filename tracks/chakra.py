@@ -20,7 +20,7 @@ from pytheory.rhythm import DrumSound
 # We'll use Tone objects at specific frequencies via .from_hz()
 # and also use scale tones for melodic content
 
-score = Score("4/4", bpm=60, reference_pitch=432.0)
+score = Score("4/4", bpm=60, system="shruti", reference_pitch=432.0)
 
 # Bowl tones — root note of each section's key, ascending through octaves
 # At A=432 Hz, everything sits in the "healing" frequency space
@@ -124,15 +124,15 @@ for chord in root_prog:
     harmonium.add(chord, Duration.WHOLE, velocity=55)
 
 # ── Singing bowl — real singing bowl synth ──────────────────────
-bowl = score.part("bowl", instrument="singing_bowl", volume=0.2,
+bowl = score.part("bowl", instrument="singing_bowl", volume=0.35,
                   reverb=0.9, reverb_type="taj_mahal")
 
-# Strike every 4 bars — maximum space to ring
-bowl.add(sl[0].add(-12), Duration.WHOLE, velocity=75)
+# Strike every 4 bars — maximum space to ring, low octave
+bowl.add(sl[0].add(-24), Duration.WHOLE, velocity=85)
 bowl.rest(Duration.WHOLE)
 bowl.rest(Duration.WHOLE)
 bowl.rest(Duration.WHOLE)
-bowl.add(sl[0].add(-12), Duration.WHOLE, velocity=70)
+bowl.add(sl[0].add(-24), Duration.WHOLE, velocity=80)
 bowl.rest(Duration.WHOLE)
 bowl.rest(Duration.WHOLE)
 bowl.rest(Duration.WHOLE)
@@ -175,7 +175,7 @@ for _ in range(2):
 
 # Bowl shifts to 417 Hz
 for _ in range(4):
-    bowl.add(sl[0].add(2), Duration.WHOLE, velocity=80)
+    bowl.add(sl[0].add(-22), Duration.WHOLE, velocity=80)
     bowl.rest(Duration.WHOLE)
 
 # Rhodes — fuller arps
