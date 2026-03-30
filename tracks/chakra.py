@@ -44,61 +44,116 @@ su = key_upper.scale
 #    Deep, slow, grounding. Tambura drone + harmonium + singing bowl.
 # ═══════════════════════════════════════════════════════════════════
 
+# ── Ukulele — gentle opening, intimate ──────────────────────────
+uke = score.part("uke", instrument="ukulele", volume=0.2,
+                 reverb=0.4, reverb_type="taj_mahal",
+                 humanize=0.1)
+
+# ROOT: simple fingerpicked G chord — lots of space
+for _ in range(4):
+    uke.add(sl[0], Duration.QUARTER, velocity=60)
+    uke.rest(Duration.QUARTER)
+    uke.add(sl[2], Duration.QUARTER, velocity=55)
+    uke.add(sl[4], Duration.QUARTER, velocity=50)
+# Sacral: uke continues gently
+for _ in range(4):
+    uke.add(sl[0], Duration.QUARTER, velocity=50)
+    uke.rest(Duration.QUARTER)
+    uke.add(sl[4], Duration.QUARTER, velocity=45)
+    uke.rest(Duration.QUARTER)
+# Rest of piece: silent
+for _ in range(48):
+    uke.rest(Duration.WHOLE)
+
+# ── 808 Sub — deep grounding tone ──────────────────────────────
+sub = score.part("sub", synth="sine", envelope="pad", volume=0.2,
+                 lowpass=100, distortion=0.1, distortion_drive=2.0)
+
+# Sub drone throughout — changes root with each section
+# ROOT (8 bars)
+for _ in range(8):
+    sub.add(sl[0].add(-24), Duration.WHOLE, velocity=70)
+# SACRAL (8 bars) — same root
+for _ in range(8):
+    sub.add(sl[0].add(-24), Duration.WHOLE, velocity=72)
+# SOLAR (8 bars) — shifts to C
+for _ in range(8):
+    sub.add(sm[0].add(-24), Duration.WHOLE, velocity=75)
+# HEART (8 bars) — stays C
+for _ in range(8):
+    sub.add(sm[0].add(-24), Duration.WHOLE, velocity=72)
+# THROAT (8 bars) — shifts to E
+for _ in range(8):
+    sub.add(su[0].add(-24), Duration.WHOLE, velocity=70)
+# THIRD EYE (8 bars) — stays E
+for _ in range(8):
+    sub.add(su[0].add(-24), Duration.WHOLE, velocity=68)
+# CROWN (8 bars) — fading
+for vel in [60, 50, 40, 30, 20, 10, 5, 0]:
+    if vel > 0:
+        sub.add(su[0].add(-12), Duration.WHOLE, velocity=vel)
+    else:
+        sub.rest(Duration.WHOLE)
+
 # ── Tambura — Sa-Pa drone in G ──────────────────────────────────
 tambura = score.part("tambura", synth="sine", envelope="pad", volume=0.12,
                      reverb=0.8, reverb_type="taj_mahal",
                      chorus=0.3, chorus_rate=0.08, chorus_depth=0.01,
                      lowpass=1000, pan=-0.25)
 
-# Drone throughout entire piece — changes root with each section
-# ROOT: G drone
-for _ in range(8):
+# ROOT: G drone — enters bar 3, giving uke space first
+tambura.rest(Duration.WHOLE)
+tambura.rest(Duration.WHOLE)
+for _ in range(6):
     tambura.add(sl[0].add(-24), Duration.HALF)   # G2
     tambura.add(sl[4].add(-24), Duration.HALF)   # D3
 
-# ── Harmonium — slow breathing chords ───────────────────────────
+# ── Harmonium — low register, breathing ─────────────────────────
 harmonium = score.part("harmonium", instrument="harmonium", volume=0.08,
                        reverb=0.6, reverb_type="taj_mahal",
                        chorus=0.2, chorus_rate=0.15, chorus_depth=0.008,
                        humanize=0.08)
 
-# ROOT: simple I chord, breathing in and out
+# ROOT: simple I chord, dropped an octave, lots of rests
 root_prog = key_lower.progression("I", "IV")
-for _ in range(2):
-    for chord in root_prog:
-        harmonium.add(chord, Duration.WHOLE)
-# Repeat softer
-for _ in range(2):
-    for chord in root_prog:
-        harmonium.add(chord, Duration.WHOLE, velocity=80)
+for chord in root_prog:
+    harmonium.rest(Duration.WHOLE)
+    harmonium.add(chord, Duration.WHOLE, velocity=65)
+for chord in root_prog:
+    harmonium.rest(Duration.WHOLE)
+    harmonium.add(chord, Duration.WHOLE, velocity=55)
 
 # ── Singing bowl — real singing bowl synth ──────────────────────
 bowl = score.part("bowl", instrument="singing_bowl", volume=0.2,
                   reverb=0.9, reverb_type="taj_mahal")
 
-# Strike every 2 bars — let it ring
-bowl.add(sl[0], Duration.WHOLE, velocity=90)
+# Strike every 4 bars — maximum space to ring
+bowl.add(sl[0].add(-12), Duration.WHOLE, velocity=75)
 bowl.rest(Duration.WHOLE)
-bowl.add(sl[0], Duration.WHOLE, velocity=85)
 bowl.rest(Duration.WHOLE)
-bowl.add(sl[0], Duration.WHOLE, velocity=80)
 bowl.rest(Duration.WHOLE)
-bowl.add(sl[0], Duration.WHOLE, velocity=75)
+bowl.add(sl[0].add(-12), Duration.WHOLE, velocity=70)
+bowl.rest(Duration.WHOLE)
+bowl.rest(Duration.WHOLE)
 bowl.rest(Duration.WHOLE)
 
-# ── Rhodes — sparse, warm ──────────────────────────────────────
+# ── Rhodes — very sparse, low ──────────────────────────────────
 rhodes = score.part("rhodes", instrument="electric_piano", volume=0.15,
                     reverb=0.6, reverb_type="taj_mahal",
                     tremolo_depth=0.1, tremolo_rate=3.0,
                     humanize=0.08)
 
-# ROOT: gentle arpeggiated I chord
-for _ in range(4):
-    rhodes.add(sl[0], Duration.QUARTER, velocity=70)
-    rhodes.add(sl[2], Duration.QUARTER, velocity=65)
-    rhodes.add(sl[4], Duration.QUARTER, velocity=60)
-    rhodes.rest(Duration.QUARTER)
-for _ in range(4):
+# ROOT: one arp every 2 bars
+rhodes.add(sl[0].add(-12), Duration.QUARTER, velocity=55)
+rhodes.add(sl[2].add(-12), Duration.QUARTER, velocity=50)
+rhodes.add(sl[4].add(-12), Duration.QUARTER, velocity=45)
+rhodes.rest(Duration.QUARTER)
+rhodes.rest(Duration.WHOLE)
+rhodes.add(sl[0], Duration.QUARTER, velocity=50)
+rhodes.add(sl[2], Duration.QUARTER, velocity=45)
+rhodes.add(sl[4], Duration.QUARTER, velocity=40)
+rhodes.rest(Duration.QUARTER)
+for _ in range(5):
     rhodes.rest(Duration.WHOLE)
 
 # ═══════════════════════════════════════════════════════════════════
