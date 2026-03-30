@@ -145,7 +145,7 @@ for _ in range(4):
     acid_bar(acid, P1, acid2)
 
 # ── KICK — enters bar 9 ────────────────────────────────────────
-kick = score.part("kick", volume=0.7, humanize=0.03)
+kick = score.part("kick", volume=0.9, humanize=0.03)
 
 for _ in range(8):
     kick.rest(Duration.WHOLE)
