@@ -33,7 +33,8 @@ OH = DrumSound.OPEN_HAT
 acid = score.part("303", synth="saw", envelope="pluck", volume=0.5,
                   lowpass=800, lowpass_q=4.0,
                   distortion=0.4, distortion_drive=5.0,
-                  saturation=0.3, humanize=0.03)
+                  saturation=0.3, humanize=0.03,
+                  legato=True, glide=0.04)
 # The filter sweep — slow open across the whole track
 acid.lfo("lowpass", rate=0.015, min=400, max=8000, bars=64, shape="triangle")
 
