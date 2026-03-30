@@ -7,7 +7,7 @@ from pytheory.rhythm import DrumSound
 
 key = Key("A", "minor")
 s = key.scale
-prog = key.progression("i", "VII", "VI", "v")
+prog = [c.transpose(-24) for c in key.progression("i", "VII", "VI", "v")]
 
 score = Score("4/4", bpm=135)
 
@@ -17,7 +17,7 @@ CH = DrumSound.CLOSED_HAT
 OH = DrumSound.OPEN_HAT
 
 # ── 303 — arpeggiated chords, legato, squelchy ─────────────────
-acid = score.part("303", synth="saw", envelope="organ", volume=0.7,
+acid = score.part("303", synth="saw", volume=0.7,
                   lowpass=800, lowpass_q=4.0,
                   distortion=0.4, distortion_drive=5.0,
                   saturation=0.3, legato=True, glide=0.04,
