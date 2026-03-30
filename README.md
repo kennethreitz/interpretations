@@ -12,7 +12,8 @@ Each track is a `.py` file. Run it to hear it.
 4. **Ghost Protocol** — F minor, 128 BPM. Portishead-style dark Rhodes intro with trip-hop beat, morphing into a Strobe-inspired hypnotic build. Saw arp emerges, kick doesn't arrive until bar 49. NES square wave melody at the emotional peak.
 5. **Acid Reign** — A minor, 140 BPM. Dual 303 acid bass lines (saw + square) with resonant filter sweeps (Q up to 20). Cajon in cathedral reverb, Rhodes pad, 808 sub. Five hand-written groove patterns.
 6. **Silk Road** — D minor, 95 BPM. A caravan picking up musicians along the ancient trade route. Koto solo (China) → sitar + tabla (India) → mandolin + doumbek (Persia) → guitar + cajon (Mediterranean) → all together. Nobody leaves, everyone adds their voice.
-7. **Deep Time** — B minor, 40 BPM, just intonation. Ambient drone. No rhythm, no melody, just texture and space. Sine drones, singing bowl, harmonium breathing, triangle shimmer, wind noise, cello entering late as the human voice. 7.5 minutes of deep listening.
+7. **Deep Time** — B minor, 40 BPM, just intonation. Ambient drone. Tingsha, rainstick, finger cymbals, singing bowls, didgeridoo, sine drones, harmonium, theremin, choir, cello. 7.5 minutes of deep listening.
+8. **The Interruption** — D minor, 85 BPM. A baroque harpsichord and string quartet playing beautifully. Then at bar 33, a drum & bass breakbeat slams in with sub bass and reese. The strings keep playing like nothing happened. The beat dissolves, the quartet wins.
 
 ## Usage
 
