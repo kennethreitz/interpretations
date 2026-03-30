@@ -4,6 +4,7 @@ Like listening to the earth breathe through a cathedral.
 """
 
 from pytheory import Key, Duration, Score, Tone, play_score
+from pytheory.rhythm import DrumSound
 
 key = Key("B", "minor")
 s = key.scale
