@@ -187,7 +187,7 @@ mario_melody = [
     (G, Duration.EIGHTH), (None, Duration.QUARTER),
     (E, Duration.QUARTER),
     (None, Duration.EIGHTH), (A, Duration.QUARTER),
-    (B, Duration.QUARTER), (Tone.from_string("Bb4"), Duration.EIGHTH),
+    (Bb, Duration.QUARTER), (Tone.from_string("Bb4"), Duration.EIGHTH),
     (A, Duration.QUARTER),
 ]
 for note, dur in mario_melody:
