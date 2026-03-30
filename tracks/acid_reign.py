@@ -26,14 +26,14 @@ OH = DrumSound.OPEN_HAT
 
 # ── 303 MAIN — the lead voice ──────────────────────────────────
 acid = score.part("303", synth="saw", volume=0.6,
-                  lowpass=600, lowpass_q=10.0,
+                  lowpass=2000, lowpass_q=12.0,
                   distortion=0.35, distortion_drive=4.0,
                   saturation=0.8, legato=True, glide=0.05,
                   sub_osc=0.6, sidechain=0.3)
 # Filter sweeps UP across the track — the whole point of acid
-acid.lfo("lowpass", rate=0.01, min=300, max=10000, bars=64, shape="saw")
+acid.lfo("lowpass", rate=0.01, min=800, max=12000, bars=64, shape="saw")
 # Resonance also sweeps
-acid.lfo("lowpass_q", rate=0.02, min=5.0, max=18.0, bars=32, shape="triangle")
+acid.lfo("lowpass_q", rate=0.03, min=8.0, max=20.0, bars=24, shape="triangle")
 
 # ── 303 SUB — dirty double, octave down, more distortion ───────
 acid2 = score.part("303_sub", synth="square", volume=0.35,
