@@ -18,6 +18,98 @@ score = Score("4/4", bpm=40, temperament="just")
 # 48 bars at 40 BPM = ~7.5 minutes
 # ═══════════════════════════════════════════════════════════════════
 
+# ── TINGSHA — crystalline strikes, etheric opening ──────────────
+tingsha = score.part("tingsha", instrument="tingsha", volume=0.2,
+                     reverb=0.9, reverb_type="taj_mahal")
+
+# Sparse strikes in the first 8 bars — let each one ring forever
+tingsha.add(B.add(12), Duration.WHOLE, velocity=65)
+tingsha.rest(Duration.WHOLE)
+tingsha.rest(Duration.WHOLE)
+tingsha.add(Fs.add(12), Duration.WHOLE, velocity=58)
+tingsha.rest(Duration.WHOLE)
+tingsha.rest(Duration.WHOLE)
+tingsha.add(B.add(12), Duration.WHOLE, velocity=52)
+tingsha.rest(Duration.WHOLE)
+# A few more through bars 9-16
+tingsha.rest(Duration.WHOLE)
+tingsha.rest(Duration.WHOLE)
+tingsha.add(D.add(12), Duration.WHOLE, velocity=48)
+tingsha.rest(Duration.WHOLE)
+tingsha.rest(Duration.WHOLE)
+tingsha.add(Fs.add(12), Duration.WHOLE, velocity=42)
+tingsha.rest(Duration.WHOLE)
+tingsha.rest(Duration.WHOLE)
+# Rest of track: silent
+for _ in range(32):
+    tingsha.rest(Duration.WHOLE)
+
+# ── RAINSTICK — slow texture wash ──────────────────────────────
+rain = score.part("rain", volume=0.15, reverb=0.7, reverb_type="taj_mahal")
+
+RS = DrumSound.RAINSTICK_SLOW
+# One slow rainstick every 4 bars in the intro
+rain.hit(RS, Duration.WHOLE, velocity=60)
+rain.rest(Duration.WHOLE)
+rain.rest(Duration.WHOLE)
+rain.rest(Duration.WHOLE)
+rain.hit(RS, Duration.WHOLE, velocity=55)
+rain.rest(Duration.WHOLE)
+rain.rest(Duration.WHOLE)
+rain.rest(Duration.WHOLE)
+rain.hit(RS, Duration.WHOLE, velocity=50)
+rain.rest(Duration.WHOLE)
+rain.rest(Duration.WHOLE)
+rain.rest(Duration.WHOLE)
+rain.hit(RS, Duration.WHOLE, velocity=42)
+rain.rest(Duration.WHOLE)
+rain.rest(Duration.WHOLE)
+rain.rest(Duration.WHOLE)
+# Rest of track
+for _ in range(32):
+    rain.rest(Duration.WHOLE)
+
+# ── FINGER CYMBALS — a few gypsy accents ───────────────────────
+FC = DrumSound.FINGER_CYMBAL
+fingers = score.part("fingers", volume=0.12, reverb=0.6, reverb_type="taj_mahal")
+
+fingers.rest(Duration.WHOLE)
+fingers.rest(Duration.WHOLE)
+fingers.hit(FC, Duration.HALF, velocity=55)
+fingers.rest(Duration.HALF)
+fingers.rest(Duration.WHOLE)
+fingers.rest(Duration.WHOLE)
+fingers.rest(Duration.WHOLE)
+fingers.hit(FC, Duration.HALF, velocity=48)
+fingers.rest(Duration.HALF)
+fingers.rest(Duration.WHOLE)
+fingers.rest(Duration.WHOLE)
+fingers.rest(Duration.WHOLE)
+fingers.rest(Duration.WHOLE)
+fingers.hit(FC, Duration.HALF, velocity=42)
+fingers.rest(Duration.HALF)
+fingers.rest(Duration.WHOLE)
+fingers.rest(Duration.WHOLE)
+fingers.rest(Duration.WHOLE)
+# Rest of track
+for _ in range(32):
+    fingers.rest(Duration.WHOLE)
+
+# ── SINGING BOWL LOW — deep bowl in the opening ────────────────
+bowl_low = score.part("bowl_low", instrument="singing_bowl", volume=0.25,
+                      reverb=0.9, reverb_type="taj_mahal")
+
+# One deep strike every 8 bars
+bowl_low.add(B.add(-24), Duration.WHOLE, velocity=70)
+for _ in range(7):
+    bowl_low.rest(Duration.WHOLE)
+bowl_low.add(B.add(-24), Duration.WHOLE, velocity=62)
+for _ in range(7):
+    bowl_low.rest(Duration.WHOLE)
+# Rest of track
+for _ in range(32):
+    bowl_low.rest(Duration.WHOLE)
+
 # ── DIDGERIDOO — primal opening, first voice heard ──────────────
 didge = score.part("didge", instrument="didgeridoo", volume=0.08,
                    chorus=0.2, chorus_rate=0.05, chorus_depth=0.01,
