@@ -30,7 +30,7 @@ OH = DrumSound.OPEN_HAT
 acid = score.part("303", synth="saw", volume=0.7,
                   lowpass=800, lowpass_q=4.0,
                   distortion=0.3, distortion_drive=4.0,
-                  saturation=0.25, legato=True, glide=0.05,
+                  saturation=0.6, legato=True, glide=0.05,
                   sub_osc=0.4, sidechain=0.3)
 acid.lfo("lowpass", rate=0.02, min=500, max=6000, bars=64, shape="triangle")
 
