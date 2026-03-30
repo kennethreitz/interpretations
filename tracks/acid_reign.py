@@ -28,7 +28,7 @@ OH = DrumSound.OPEN_HAT
 acid = score.part("303", synth="saw", volume=0.6,
                   lowpass=600, lowpass_q=10.0,
                   distortion=0.35, distortion_drive=4.0,
-                  saturation=0.6, legato=True, glide=0.05,
+                  saturation=0.8, legato=True, glide=0.05,
                   sub_osc=0.4, sidechain=0.3)
 # Filter sweeps UP across the track — the whole point of acid
 acid.lfo("lowpass", rate=0.01, min=300, max=10000, bars=64, shape="saw")
@@ -39,7 +39,7 @@ acid.lfo("lowpass_q", rate=0.02, min=5.0, max=18.0, bars=32, shape="triangle")
 acid2 = score.part("303_sub", synth="square", volume=0.35,
                    lowpass=400, lowpass_q=3.0,
                    distortion=0.5, distortion_drive=6.0,
-                   saturation=0.7, legato=True, glide=0.08,
+                   saturation=0.8, legato=True, glide=0.08,
                    pan=0.15)
 acid2.lfo("lowpass", rate=0.015, min=200, max=4000, bars=64, shape="triangle")
 
@@ -194,9 +194,9 @@ for bar in range(8):
         hats.hit(CH, Duration.SIXTEENTH, velocity=max(12, vel - 30))
 
 # ── 808 SUB — deep sine, follows the root ───────────────────────
-sub = score.part("808", synth="sine", envelope="pad", volume=0.35,
-                 lowpass=100, distortion=0.15, distortion_drive=2.0,
-                 sidechain=0.4)
+sub = score.part("808", synth="sine", envelope="pad", volume=0.45,
+                 lowpass=120, distortion=0.3, distortion_drive=4.0,
+                 saturation=0.5, sub_osc=0.6, sidechain=0.4)
 
 for _ in range(8):
     sub.rest(Duration.WHOLE)
@@ -207,6 +207,25 @@ for bar in range(8):
     vel = max(20, 85 - bar * 10)
     sub.add(A1, Duration.HALF, velocity=vel)
     sub.rest(Duration.HALF)
+
+# ── RHODES — dark chords in the background ──────────────────────
+rhodes = score.part("rhodes", instrument="electric_piano", volume=0.15,
+                    reverb=0.4, reverb_type="taj_mahal",
+                    tremolo_depth=0.15, tremolo_rate=3.0,
+                    sidechain=0.35, humanize=0.08)
+
+prog = key.progression("i", "VII", "VI", "v")
+
+for _ in range(8):
+    rhodes.rest(Duration.WHOLE)
+
+# Bars 9-56: slow chord changes, atmospheric
+for _ in range(12):
+    for chord in prog:
+        rhodes.add(chord, Duration.WHOLE, velocity=55)
+
+for bar in range(8):
+    rhodes.rest(Duration.WHOLE)
 
 # ═════════════════════════════════════════════════════════════════
 import sys
