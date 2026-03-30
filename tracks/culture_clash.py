@@ -318,7 +318,7 @@ for _ in range(32):
     sitar_lo.rest(Duration.WHOLE)
 
 # ── NES MARIO — pulse wave (bars 25-56) ────────────────────────
-mario = score.part("mario", synth="square", envelope="staccato", volume=0.25,
+mario = score.part("mario", synth="square", envelope="staccato", volume=0.4,
                    reverb=0.5, reverb_type="taj_mahal", lowpass=5000,
                    humanize=0.05)
 
@@ -380,7 +380,7 @@ for note, dur in mario_melody:
 # ══ Bars 53-60: MARIO SOLO — emotional 8-bit shredding ═══════════
 # The NES cries out. Fast arps climbing through D minor, getting
 # faster and higher. Like watching Mario run out of time.
-mario.set(volume=0.45)
+mario.set(volume=0.55)
 
 # Bars 53-54: 16th note arps — establishing the run
 solo_arps_16 = [
