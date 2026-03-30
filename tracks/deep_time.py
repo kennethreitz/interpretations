@@ -21,7 +21,7 @@ score = Score("4/4", bpm=40, temperament="just")
 
 # ── TINGSHA — crystalline strikes, etheric opening ──────────────
 tingsha = score.part("tingsha", instrument="tingsha", volume=0.2,
-                     reverb=0.9, reverb_type="taj_mahal")
+                     reverb=0.2, reverb_decay=1.0)
 
 # Sparse strikes in the first 8 bars — let each one ring forever
 tingsha.add(B.add(12), Duration.WHOLE, velocity=65)
