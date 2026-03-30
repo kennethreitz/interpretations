@@ -29,7 +29,7 @@ acid = score.part("303", synth="saw", volume=0.6,
                   lowpass=600, lowpass_q=10.0,
                   distortion=0.35, distortion_drive=4.0,
                   saturation=0.8, legato=True, glide=0.05,
-                  sub_osc=0.4, sidechain=0.3)
+                  sub_osc=0.6, sidechain=0.3)
 # Filter sweeps UP across the track — the whole point of acid
 acid.lfo("lowpass", rate=0.01, min=300, max=10000, bars=64, shape="saw")
 # Resonance also sweeps
@@ -145,7 +145,7 @@ for _ in range(4):
     acid_bar(acid, P1, acid2)
 
 # ── KICK — enters bar 9 ────────────────────────────────────────
-kick = score.part("kick", volume=0.5, humanize=0.03)
+kick = score.part("kick", volume=0.7, humanize=0.03)
 
 for _ in range(8):
     kick.rest(Duration.WHOLE)
@@ -192,6 +192,55 @@ for bar in range(8):
         hats.hit(CH, Duration.SIXTEENTH, velocity=max(12, vel - 28))
         hats.hit(CH, Duration.SIXTEENTH, velocity=max(12, vel - 15))
         hats.hit(CH, Duration.SIXTEENTH, velocity=max(12, vel - 30))
+
+# ── TABLA — enters halfway, fusion moment ───────────────────────
+TNA = DrumSound.TABLA_NA
+TIT = DrumSound.TABLA_TIT
+TGE = DrumSound.TABLA_GE
+TDHA = DrumSound.TABLA_DHA
+TKE = DrumSound.TABLA_KE
+TGEB = DrumSound.TABLA_GE_BEND
+
+tabla = score.part("tabla", volume=0.3, reverb=0.25, reverb_decay=1.0,
+                   humanize=0.06)
+
+# Bars 1-32: silent
+for _ in range(32):
+    tabla.rest(Duration.WHOLE)
+
+# Bars 33-56: keherwa groove with fills
+for bar in range(24):
+    if bar % 8 == 7:
+        # Fill with bayan bends
+        tabla.hit(TDHA, Duration.EIGHTH, velocity=95, articulation="accent")
+        tabla.hit(TGEB, Duration.EIGHTH, velocity=110)
+        tabla.hit(TNA, Duration.EIGHTH, velocity=75)
+        tabla.hit(TGEB, Duration.EIGHTH, velocity=105)
+        tabla.hit(TDHA, Duration.EIGHTH, velocity=90, articulation="accent")
+        tabla.hit(TNA, Duration.SIXTEENTH, velocity=65)
+        tabla.hit(TKE, Duration.SIXTEENTH, velocity=55)
+        tabla.hit(TGEB, Duration.QUARTER, velocity=115)
+    else:
+        tabla.hit(TDHA, Duration.EIGHTH, velocity=88, articulation="accent")
+        tabla.hit(TGE, Duration.EIGHTH, velocity=58)
+        tabla.hit(TNA, Duration.EIGHTH, velocity=68)
+        tabla.hit(TIT, Duration.EIGHTH, velocity=42)
+        tabla.hit(TNA, Duration.EIGHTH, velocity=62)
+        tabla.hit(TIT, Duration.EIGHTH, velocity=40)
+        tabla.hit(TDHA, Duration.EIGHTH, velocity=82, articulation="accent")
+        tabla.hit(TNA, Duration.EIGHTH, velocity=60)
+
+# Bars 57-64: fading
+for bar in range(8):
+    vel = max(25, 80 - bar * 7)
+    tabla.hit(TDHA, Duration.EIGHTH, velocity=vel)
+    tabla.hit(TGE, Duration.EIGHTH, velocity=max(20, vel - 25))
+    tabla.hit(TNA, Duration.EIGHTH, velocity=max(20, vel - 15))
+    tabla.hit(TIT, Duration.EIGHTH, velocity=max(15, vel - 35))
+    tabla.hit(TNA, Duration.EIGHTH, velocity=max(20, vel - 20))
+    tabla.hit(TIT, Duration.EIGHTH, velocity=max(15, vel - 38))
+    tabla.hit(TDHA, Duration.EIGHTH, velocity=max(20, vel - 5))
+    tabla.hit(TNA, Duration.EIGHTH, velocity=max(20, vel - 22))
 
 # ── 808 SUB — deep sine, follows the root ───────────────────────
 sub = score.part("808", synth="sine", envelope="pad", volume=0.8,
