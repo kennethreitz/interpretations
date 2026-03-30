@@ -380,6 +380,7 @@ for note, dur in mario_melody:
 # ══ Bars 53-60: MARIO SOLO — emotional 8-bit shredding ═══════════
 # The NES cries out. Fast arps climbing through D minor, getting
 # faster and higher. Like watching Mario run out of time.
+mario.set(volume=0.45)
 
 # Bars 53-54: 16th note arps — establishing the run
 solo_arps_16 = [
@@ -660,20 +661,20 @@ march.hit(MR, 0.125, velocity=55)   # grace
 march.hit(MR, Duration.SIXTEENTH, velocity=127, articulation="marcato")  # MAIN
 march.hit(MR, 0.125, velocity=55)   # grace
 march.hit(MR, Duration.SIXTEENTH, velocity=125, articulation="marcato")  # MAIN
-# Triplet accent pattern: DUT-da-da DUT-da-da
-march.hit(MR, Duration.TRIPLET_QUARTER, velocity=127, articulation="marcato")
-march.hit(MR, Duration.TRIPLET_QUARTER, velocity=50)
-march.hit(MR, Duration.TRIPLET_QUARTER, velocity=55)
-march.hit(MR, Duration.TRIPLET_QUARTER, velocity=125, articulation="marcato")
-march.hit(MR, Duration.TRIPLET_QUARTER, velocity=50)
-march.hit(MR, Duration.TRIPLET_QUARTER, velocity=55)
+# 16th note triplets — six per beat, blazing
+for _ in range(4):
+    march.hit(MR, 1/6, velocity=127, articulation="marcato")
+    march.hit(MR, 1/6, velocity=52)
+    march.hit(MR, 1/6, velocity=55)
+    march.hit(MR, 1/6, velocity=125, articulation="accent")
+    march.hit(MR, 1/6, velocity=50)
+    march.hit(MR, 1/6, velocity=55)
 # Rimshot quarter notes — CRACK . CRACK . CRACK . CRACK
-RS = DrumSound.RIMSHOT
-march.hit(RS, Duration.QUARTER, velocity=127, articulation="marcato")
-march.hit(RS, Duration.QUARTER, velocity=127, articulation="marcato")
-march.hit(RS, Duration.QUARTER, velocity=127, articulation="marcato")
+march.hit(MR, Duration.QUARTER, velocity=127, articulation="marcato")
+march.hit(MR, Duration.QUARTER, velocity=127, articulation="marcato")
+march.hit(MR, Duration.QUARTER, velocity=127, articulation="marcato")
 # THE FINAL RIMSHOT — everything stops
-march.hit(RS, Duration.QUARTER, velocity=127, articulation="fermata")
+march.hit(MR, Duration.QUARTER, velocity=127, articulation="fermata")
 
 # ── PAD — atmospheric glue throughout ───────────────────────────
 pad = score.part("pad", synth="supersaw", envelope="pad", volume=0.12,
