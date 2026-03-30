@@ -30,7 +30,7 @@ OH = DrumSound.OPEN_HAT
 # ═══════════════════════════════════════════════════════════════════
 
 # ── THE 303 — squelchy saw, high resonance, the whole point ─────
-acid = score.part("303", synth="saw", envelope="pluck", volume=0.5,
+acid = score.part("303", synth="saw", envelope="organ", volume=0.5,
                   lowpass=800, lowpass_q=4.0,
                   distortion=0.4, distortion_drive=5.0,
                   saturation=0.3, humanize=0.03,
