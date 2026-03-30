@@ -161,11 +161,70 @@ for _ in range(4):
         rhodes.add(chord, Duration.QUARTER)
         rhodes.rest(Duration.QUARTER)
 
-# Bars 41-56: half notes, thinning
+# Bars 41-56: half notes, thinning — making room for theremin
 for _ in range(4):
     for chord in prog:
         rhodes.add(chord, Duration.HALF)
         rhodes.rest(Duration.HALF)
+
+# ── THEREMIN SOLO — wailing over the chaos (bars 41-52) ─────────
+theremin = score.part("theremin", instrument="theremin", volume=0.6,
+                      reverb=0.5, reverb_type="taj_mahal",
+                      delay=0.3, delay_time=0.316, delay_feedback=0.35,
+                      pan=0.25, humanize=0.06)
+
+# Bars 1-40: silent
+for _ in range(40):
+    theremin.rest(Duration.WHOLE)
+
+# Bars 41-42: entrance — slow, eerie, one long note bending up
+theremin.add(A, Duration.WHOLE, velocity=90, bend=1.5)
+theremin.add(D.add(12), Duration.HALF, velocity=95)
+theremin.add(F.add(12), Duration.HALF, velocity=100, bend=-0.5)
+
+# Bars 43-44: the solo takes off — expressive, vocal-like
+theremin.add(A.add(12), Duration.QUARTER, velocity=110, bend=0.5)
+theremin.add(G.add(12), Duration.EIGHTH, velocity=95)
+theremin.add(F.add(12), Duration.EIGHTH, velocity=90)
+theremin.add(D.add(12), Duration.HALF, velocity=100, bend=-0.25)
+theremin.add(F.add(12), Duration.QUARTER, velocity=105, bend=1.0)
+theremin.add(A.add(12), Duration.QUARTER, velocity=112)
+theremin.add(D.add(24), Duration.QUARTER, velocity=115, bend=-0.5)
+theremin.add(A.add(12), Duration.QUARTER, velocity=100)
+
+# Bars 45-46: climax — reaching for the top, crying
+theremin.add(D.add(24), Duration.HALF, velocity=120, bend=2.0)
+theremin.add(A.add(12), Duration.QUARTER, velocity=105, bend=0.5)
+theremin.add(F.add(12), Duration.QUARTER, velocity=100)
+theremin.add(G.add(12), Duration.QUARTER, velocity=110, bend=1.0)
+theremin.add(A.add(12), Duration.QUARTER, velocity=115, bend=1.5)
+theremin.add(D.add(24), Duration.HALF, velocity=125, bend=-1.0)
+
+# Bars 47-48: fast vibrato-like passages
+theremin.add(D.add(24), Duration.EIGHTH, velocity=115, bend=-0.25)
+theremin.add(Cs.add(12), Duration.EIGHTH, velocity=100)
+theremin.add(D.add(24), Duration.EIGHTH, velocity=118, bend=0.25)
+theremin.add(Cs.add(12), Duration.EIGHTH, velocity=100)
+theremin.add(A.add(12), Duration.QUARTER, velocity=110, bend=0.5)
+theremin.add(F.add(12), Duration.QUARTER, velocity=105, bend=-0.5)
+theremin.add(D.add(12), Duration.QUARTER, velocity=100, bend=1.0)
+theremin.add(A, Duration.QUARTER, velocity=95)
+theremin.add(D.add(12), Duration.HALF, velocity=108, bend=-0.25)
+
+# Bars 49-50: descending, fading — handing off to the mario solo
+theremin.add(A, Duration.QUARTER, velocity=90, bend=0.5)
+theremin.add(G, Duration.QUARTER, velocity=80)
+theremin.add(F, Duration.QUARTER, velocity=75, bend=-0.5)
+theremin.add(D, Duration.QUARTER, velocity=70)
+theremin.add(A.add(-12), Duration.WHOLE, velocity=60, bend=-1.0)
+
+# Bars 51-52: last gasp
+theremin.add(D, Duration.WHOLE, velocity=45, bend=0.5)
+theremin.add(D, Duration.WHOLE, velocity=25)
+
+# Bars 53-64: silent
+for _ in range(12):
+    theremin.rest(Duration.WHOLE)
 
 # Bars 57-64: silent
 for _ in range(8):
