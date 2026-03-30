@@ -255,7 +255,7 @@ for bar in range(8):
     dhol.hit(DB, Duration.EIGHTH, velocity=max(20, vel - 5))
 
 # ── 808 SUB — deep sine, follows the root ───────────────────────
-sub = score.part("808", synth="sine", envelope="pad", volume=0.8,
+sub = score.part("808", synth="sine", envelope="pad", volume=1.0,
                  lowpass=150, distortion=0.35, distortion_drive=4.0,
                  saturation=0.6, sub_osc=0.7, sidechain=0.3)
 
