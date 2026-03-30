@@ -20,36 +20,10 @@ from pytheory.rhythm import DrumSound
 # We'll use Tone objects at specific frequencies via .from_hz()
 # and also use scale tones for melodic content
 
-score = Score("4/4", bpm=60, temperament="just")
+score = Score("4/4", bpm=60, temperament="just", reference_pitch=432.0)
 
-# Helper: find the nearest tone to a frequency
-def chakra_tone(hz):
-    """Create a tone near the target chakra frequency."""
-    return Tone.from_frequency(hz)
-
-# Chakra frequencies
-ROOT_HZ = 396
-SACRAL_HZ = 417
-SOLAR_HZ = 528
-HEART_HZ = 639
-THROAT_HZ = 741
-THIRD_EYE_HZ = 852
-CROWN_HZ = 963
-
-root_tone = chakra_tone(ROOT_HZ)
-sacral_tone = chakra_tone(SACRAL_HZ)
-solar_tone = chakra_tone(SOLAR_HZ)
-heart_tone = chakra_tone(HEART_HZ)
-throat_tone = chakra_tone(THROAT_HZ)
-third_eye_tone = chakra_tone(THIRD_EYE_HZ)
-crown_tone = chakra_tone(CROWN_HZ)
-
-print(f"Chakra tones:")
-for name, t in [("Root", root_tone), ("Sacral", sacral_tone),
-                ("Solar", solar_tone), ("Heart", heart_tone),
-                ("Throat", throat_tone), ("Third Eye", third_eye_tone),
-                ("Crown", crown_tone)]:
-    print(f"  {name:10s}: {t} ({t.frequency:.0f} Hz)")
+# Bowl tones — root note of each section's key, ascending through octaves
+# At A=432 Hz, everything sits in the "healing" frequency space
 
 # ── Keys for each chakra section ────────────────────────────────
 # Root/Sacral: G major (grounding)
@@ -103,13 +77,13 @@ bowl = score.part("bowl", instrument="singing_bowl", volume=0.4,
                   reverb=0.9, reverb_type="taj_mahal")
 
 # Strike every 2 bars — let it ring
-bowl.add(root_tone, Duration.WHOLE, velocity=90)
+bowl.add(sl[0], Duration.WHOLE, velocity=90)
 bowl.rest(Duration.WHOLE)
-bowl.add(root_tone, Duration.WHOLE, velocity=85)
+bowl.add(sl[0], Duration.WHOLE, velocity=85)
 bowl.rest(Duration.WHOLE)
-bowl.add(root_tone, Duration.WHOLE, velocity=80)
+bowl.add(sl[0], Duration.WHOLE, velocity=80)
 bowl.rest(Duration.WHOLE)
-bowl.add(root_tone, Duration.WHOLE, velocity=75)
+bowl.add(sl[0], Duration.WHOLE, velocity=75)
 bowl.rest(Duration.WHOLE)
 
 # ── Rhodes — sparse, warm ──────────────────────────────────────
@@ -146,7 +120,7 @@ for _ in range(2):
 
 # Bowl shifts to 417 Hz
 for _ in range(4):
-    bowl.add(sacral_tone, Duration.WHOLE, velocity=80)
+    bowl.add(sl[0].add(2), Duration.WHOLE, velocity=80)
     bowl.rest(Duration.WHOLE)
 
 # Rhodes — fuller arps
@@ -200,7 +174,7 @@ for _ in range(2):
 
 # Bowl at 528 Hz — the "love frequency"
 for _ in range(4):
-    bowl.add(solar_tone, Duration.WHOLE, velocity=85)
+    bowl.add(sm[0], Duration.WHOLE, velocity=85)
     bowl.rest(Duration.WHOLE)
 
 # Rhodes — more active
@@ -270,7 +244,7 @@ for _ in range(2):
 
 # Bowl at 639 Hz
 for _ in range(4):
-    bowl.add(heart_tone, Duration.WHOLE, velocity=88)
+    bowl.add(sm[0].add(7), Duration.WHOLE, velocity=88)
     bowl.rest(Duration.WHOLE)
 
 # Rhodes — flowing arps
@@ -327,7 +301,7 @@ for _ in range(2):
 
 # Bowl at 741 Hz
 for _ in range(4):
-    bowl.add(throat_tone, Duration.WHOLE, velocity=85)
+    bowl.add(su[0], Duration.WHOLE, velocity=85)
     bowl.rest(Duration.WHOLE)
 
 # Rhodes — staccato arps, rhythmic
@@ -412,7 +386,7 @@ for chord in eye_prog:
 
 # Bowl at 852 Hz
 for _ in range(4):
-    bowl.add(third_eye_tone, Duration.WHOLE, velocity=90)
+    bowl.add(su[0].add(7), Duration.WHOLE, velocity=90)
     bowl.rest(Duration.WHOLE)
 
 # Rhodes — 16th note arps
@@ -487,13 +461,13 @@ for _ in range(4):
     harmonium.rest(Duration.WHOLE)
 
 # Bowl at 963 Hz — the crown. Rings alone.
-bowl.add(crown_tone, Duration.WHOLE, velocity=95)
-bowl.add(crown_tone, Duration.WHOLE, velocity=90)
-bowl.add(crown_tone, Duration.WHOLE, velocity=80)
-bowl.add(crown_tone, Duration.WHOLE, velocity=65)
-bowl.add(crown_tone, Duration.WHOLE, velocity=50)
-bowl.add(crown_tone, Duration.WHOLE, velocity=35)
-bowl.add(crown_tone, Duration.WHOLE, velocity=20)
+bowl.add(su[0].add(12), Duration.WHOLE, velocity=95)
+bowl.add(su[0].add(12), Duration.WHOLE, velocity=90)
+bowl.add(su[0].add(12), Duration.WHOLE, velocity=80)
+bowl.add(su[0].add(12), Duration.WHOLE, velocity=65)
+bowl.add(su[0].add(12), Duration.WHOLE, velocity=50)
+bowl.add(su[0].add(12), Duration.WHOLE, velocity=35)
+bowl.add(su[0].add(12), Duration.WHOLE, velocity=20)
 bowl.rest(Duration.WHOLE)
 
 # Rhodes — one last arp, dissolving
@@ -516,9 +490,9 @@ for _ in range(7):
     tabla.rest(Duration.WHOLE)
 
 # Theremin — highest note, dissolving into the cosmos
-theremin.add(crown_tone, Duration.WHOLE, velocity=90, bend=3.0)
-theremin.add(crown_tone, Duration.WHOLE, velocity=70, bend=2.0)
-theremin.add(crown_tone, Duration.WHOLE, velocity=45, bend=1.0)
+theremin.add(su[0].add(12), Duration.WHOLE, velocity=90, bend=3.0)
+theremin.add(su[0].add(12), Duration.WHOLE, velocity=70, bend=2.0)
+theremin.add(su[0].add(12), Duration.WHOLE, velocity=45, bend=1.0)
 for _ in range(5):
     theremin.rest(Duration.WHOLE)
 
