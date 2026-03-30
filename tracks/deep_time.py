@@ -101,6 +101,31 @@ for note in shimmer_notes:
     for _ in range(4):
         shimmer.add(note.add(12), Duration.WHOLE, velocity=35)
 
+# ── CHOIR — voices from nowhere, enters bar 20 ─────────────────
+choir = score.part("choir", instrument="choir", volume=0.1,
+                   reverb=0.9, reverb_type="taj_mahal",
+                   chorus=0.4, chorus_rate=0.08, chorus_depth=0.015)
+
+for _ in range(20):
+    choir.rest(Duration.WHOLE)
+
+# Held chords, glacial — one every 4 bars
+choir_notes = [
+    (B.add(-12), Fs),
+    (D, A),
+    (E, B),
+    (Fs, Cs.add(12)),
+    (D, A),
+    (B.add(-12), Fs),
+    (B.add(-12), Fs),
+]
+for low, high in choir_notes:
+    choir.hold(low, Duration.WHOLE * 4, velocity=40)
+    choir.add(high, Duration.WHOLE, velocity=35)
+    choir.rest(Duration.WHOLE)
+    choir.rest(Duration.WHOLE)
+    choir.rest(Duration.WHOLE)
+
 # ── NOISE WASH — the wind ──────────────────────────────────────
 wind = score.part("wind", synth="noise", envelope="pad", volume=0.03,
                   reverb=0.8, reverb_type="taj_mahal",
