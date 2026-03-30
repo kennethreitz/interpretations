@@ -193,66 +193,67 @@ for bar in range(8):
         hats.hit(CH, Duration.SIXTEENTH, velocity=max(12, vel - 15))
         hats.hit(CH, Duration.SIXTEENTH, velocity=max(12, vel - 30))
 
-# ── DHOL — enters halfway, heavy and driving ────────────────────
-DB = DrumSound.DHOL_BOTH
-DD = DrumSound.DHOL_DAGGA
-DT = DrumSound.DHOL_TILLI
+# ── CAJON — enters halfway, organic groove ──────────────────────
+CS = DrumSound.CAJON_SLAP
+CT = DrumSound.CAJON_TAP
+CSS = DrumSound.CAJON_SLAP_SNARE
 
-dhol = score.part("dhol", volume=0.4, reverb=0.2, reverb_decay=0.8,
-                  humanize=0.06)
+cajon = score.part("cajon", volume=0.45, reverb=0.15, reverb_decay=0.6,
+                   humanize=0.08)
 
 # Bars 1-32: silent
 for _ in range(32):
-    dhol.rest(Duration.WHOLE)
+    cajon.rest(Duration.WHOLE)
 
-# Bars 33-56: dhol chaal pattern in 16ths with fills
+# Bars 33-56: 16th note groove with fills
 for bar in range(24):
     if bar % 4 == 3:
-        # Fill — rapid dagga/tilli alternation
-        dhol.hit(DB, Duration.SIXTEENTH, velocity=110, articulation="accent")
-        dhol.hit(DT, Duration.SIXTEENTH, velocity=70)
-        dhol.hit(DT, Duration.SIXTEENTH, velocity=65)
-        dhol.hit(DD, Duration.SIXTEENTH, velocity=100)
-        dhol.hit(DT, Duration.SIXTEENTH, velocity=72)
-        dhol.hit(DB, Duration.SIXTEENTH, velocity=108, articulation="accent")
-        dhol.hit(DT, Duration.SIXTEENTH, velocity=68)
-        dhol.hit(DT, Duration.SIXTEENTH, velocity=62)
-        dhol.hit(DD, Duration.SIXTEENTH, velocity=105)
-        dhol.hit(DT, Duration.SIXTEENTH, velocity=70)
-        dhol.hit(DB, Duration.SIXTEENTH, velocity=112, articulation="accent")
-        dhol.hit(DT, Duration.SIXTEENTH, velocity=65)
-        dhol.hit(DD, Duration.SIXTEENTH, velocity=108)
-        dhol.hit(DT, Duration.SIXTEENTH, velocity=68)
-        dhol.hit(DB, Duration.QUARTER, velocity=120, articulation="marcato")
+        # Fill — snare slaps building
+        cajon.hit(CSS, Duration.SIXTEENTH, velocity=108, articulation="accent")
+        cajon.hit(CT, Duration.SIXTEENTH, velocity=60)
+        cajon.hit(CSS, Duration.SIXTEENTH, velocity=105)
+        cajon.hit(CT, Duration.SIXTEENTH, velocity=55)
+        cajon.hit(CSS, Duration.SIXTEENTH, velocity=110, articulation="accent")
+        cajon.hit(CT, Duration.SIXTEENTH, velocity=58)
+        cajon.hit(CSS, Duration.SIXTEENTH, velocity=112)
+        cajon.hit(CS, Duration.SIXTEENTH, velocity=100)
+        cajon.hit(CSS, Duration.SIXTEENTH, velocity=115, articulation="accent")
+        cajon.hit(CT, Duration.SIXTEENTH, velocity=62)
+        cajon.hit(CSS, Duration.SIXTEENTH, velocity=110)
+        cajon.hit(CT, Duration.SIXTEENTH, velocity=58)
+        cajon.hit(CS, Duration.SIXTEENTH, velocity=105)
+        cajon.hit(CT, Duration.SIXTEENTH, velocity=55)
+        cajon.hit(CSS, Duration.QUARTER, velocity=120, articulation="marcato")
     else:
-        # Driving dhol chaal — 16ths
-        dhol.hit(DB, Duration.SIXTEENTH, velocity=105, articulation="accent")
-        dhol.hit(DT, Duration.SIXTEENTH, velocity=65)
-        dhol.hit(DD, Duration.SIXTEENTH, velocity=85)
-        dhol.hit(DT, Duration.SIXTEENTH, velocity=60)
-        dhol.hit(DT, Duration.SIXTEENTH, velocity=62)
-        dhol.hit(DT, Duration.SIXTEENTH, velocity=55)
-        dhol.hit(DD, Duration.SIXTEENTH, velocity=80)
-        dhol.hit(DB, Duration.SIXTEENTH, velocity=100, articulation="accent")
-        dhol.hit(DT, Duration.SIXTEENTH, velocity=62)
-        dhol.hit(DD, Duration.SIXTEENTH, velocity=82)
-        dhol.hit(DT, Duration.SIXTEENTH, velocity=58)
-        dhol.hit(DT, Duration.SIXTEENTH, velocity=55)
-        dhol.hit(DD, Duration.SIXTEENTH, velocity=78)
-        dhol.hit(DT, Duration.SIXTEENTH, velocity=60)
-        dhol.hit(DB, Duration.SIXTEENTH, velocity=98, articulation="accent")
-        dhol.hit(DT, Duration.SIXTEENTH, velocity=58)
+        # Groove: SLAP-tap-tap-SNARE tap-tap-SLAP-tap
+        cajon.hit(CS, Duration.SIXTEENTH, velocity=98, articulation="accent")
+        cajon.hit(CT, Duration.SIXTEENTH, velocity=52)
+        cajon.hit(CT, Duration.SIXTEENTH, velocity=48)
+        cajon.hit(CSS, Duration.SIXTEENTH, velocity=90)
+        cajon.hit(CT, Duration.SIXTEENTH, velocity=50)
+        cajon.hit(CT, Duration.SIXTEENTH, velocity=45)
+        cajon.hit(CS, Duration.SIXTEENTH, velocity=92, articulation="accent")
+        cajon.hit(CT, Duration.SIXTEENTH, velocity=50)
+        cajon.hit(CSS, Duration.SIXTEENTH, velocity=88)
+        cajon.hit(CT, Duration.SIXTEENTH, velocity=48)
+        cajon.hit(CT, Duration.SIXTEENTH, velocity=45)
+        cajon.hit(CS, Duration.SIXTEENTH, velocity=95, articulation="accent")
+        cajon.hit(CT, Duration.SIXTEENTH, velocity=50)
+        cajon.hit(CSS, Duration.SIXTEENTH, velocity=85)
+        cajon.hit(CT, Duration.SIXTEENTH, velocity=48)
+        cajon.hit(CT, Duration.SIXTEENTH, velocity=42)
 
 # Bars 57-64: fading
 for bar in range(8):
-    vel = max(25, 95 - bar * 9)
-    dhol.hit(DB, Duration.QUARTER, velocity=vel, articulation="accent")
-    dhol.hit(DT, Duration.EIGHTH, velocity=max(20, vel - 30))
-    dhol.hit(DD, Duration.EIGHTH, velocity=max(20, vel - 15))
-    dhol.hit(DT, Duration.EIGHTH, velocity=max(20, vel - 32))
-    dhol.hit(DT, Duration.EIGHTH, velocity=max(20, vel - 35))
-    dhol.hit(DD, Duration.EIGHTH, velocity=max(20, vel - 18))
-    dhol.hit(DB, Duration.EIGHTH, velocity=max(20, vel - 5))
+    vel = max(25, 90 - bar * 8)
+    cajon.hit(CS, Duration.EIGHTH, velocity=vel, articulation="accent")
+    cajon.hit(CT, Duration.EIGHTH, velocity=max(20, vel - 35))
+    cajon.hit(CSS, Duration.EIGHTH, velocity=max(20, vel - 10))
+    cajon.hit(CT, Duration.EIGHTH, velocity=max(20, vel - 38))
+    cajon.hit(CS, Duration.EIGHTH, velocity=max(20, vel - 5))
+    cajon.hit(CT, Duration.EIGHTH, velocity=max(20, vel - 32))
+    cajon.hit(CSS, Duration.EIGHTH, velocity=max(20, vel - 12))
+    cajon.hit(CT, Duration.EIGHTH, velocity=max(20, vel - 40))
 
 # ── 808 SUB — deep sine, follows the root ───────────────────────
 sub = score.part("808", synth="sine", envelope="pad", volume=1.0,
