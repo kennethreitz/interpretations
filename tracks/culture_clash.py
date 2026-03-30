@@ -129,10 +129,14 @@ for _ in range(8):
 for vel in [60, 50, 35, 20]:
     didge_lo.add(D.add(-24), Duration.WHOLE, velocity=vel)
     didge_hi.add(A.add(-24), Duration.WHOLE, velocity=vel)
-# Rest of track: silent via rests
-for _ in range(52):
+# Bars 13-56: silent
+for _ in range(44):
     didge_lo.rest(Duration.WHOLE)
     didge_hi.rest(Duration.WHOLE)
+# Bars 57-64: DIDGE RETURNS — massive, under the snare crescendo
+for vel in [60, 75, 90, 100, 110, 115, 120, 127]:
+    didge_lo.add(D.add(-24), Duration.WHOLE, velocity=vel)
+    didge_hi.add(A.add(-24), Duration.WHOLE, velocity=vel)
 
 # ── RHODES — from bar 1, the harmonic anchor ───────────────────
 rhodes = score.part("rhodes", instrument="electric_piano", volume=0.35,
@@ -494,7 +498,7 @@ for vel in [70, 60, 50, 40, 30, 20, 10, 5]:
     bass.add(D.add(-24), Duration.WHOLE, velocity=vel)
 
 # ── MARCHING SNARE — military finale (bars 49-64) ──────────────
-march = score.part("march", volume=0.8,
+march = score.part("march", volume=1.0,
                    reverb=0.2, reverb_decay=0.8, humanize=0.03,
                    ensemble=16)
 
