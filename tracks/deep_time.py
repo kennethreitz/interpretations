@@ -97,7 +97,7 @@ for _ in range(32):
     fingers.rest(Duration.WHOLE)
 
 # ── SINGING BOWL LOW — deep bowl in the opening ────────────────
-bowl_low = score.part("bowl_low", instrument="singing_bowl_ring", volume=0.25,
+bowl_low = score.part("bowl_low", instrument="singing_bowl_ring", volume=0.45,
                       reverb=0.9, reverb_type="taj_mahal")
 
 # One deep strike every 8 bars
@@ -182,7 +182,7 @@ for chord in chords:
     harmonium.rest(Duration.WHOLE)
 
 # ── SINGING BOWL — one strike, ages apart ──────────────────────
-bowl = score.part("bowl", instrument="singing_bowl", volume=0.25,
+bowl = score.part("bowl", instrument="singing_bowl", volume=0.4,
                   reverb=0.95, reverb_type="taj_mahal")
 
 # Strike once every 8 bars
