@@ -25,7 +25,7 @@ score = Score("4/4", bpm=60, temperament="just")
 # Helper: find the nearest tone to a frequency
 def chakra_tone(hz):
     """Create a tone near the target chakra frequency."""
-    return Tone.from_hz(hz)
+    return Tone.from_frequency(hz)
 
 # Chakra frequencies
 ROOT_HZ = 396
@@ -98,10 +98,9 @@ for _ in range(2):
     for chord in root_prog:
         harmonium.add(chord, Duration.WHOLE, velocity=80)
 
-# ── Singing bowl — FM bell at 396 Hz ───────────────────────────
-bowl = score.part("bowl", synth="fm", envelope="bell", volume=0.3,
-                  reverb=0.9, reverb_type="taj_mahal",
-                  fm_ratio=2.0, fm_index=1.5)
+# ── Singing bowl — real singing bowl synth ──────────────────────
+bowl = score.part("bowl", instrument="singing_bowl", volume=0.4,
+                  reverb=0.9, reverb_type="taj_mahal")
 
 # Strike every 2 bars — let it ring
 bowl.add(root_tone, Duration.WHOLE, velocity=90)
