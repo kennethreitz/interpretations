@@ -25,9 +25,45 @@ score = Score("4/4", bpm=85)
 #   Bars 65-80:  Strings win — beat dissolves, quartet plays out
 # ═══════════════════════════════════════════════════════════════════
 
+# ── HARPSICHORD — baroque opening, sets the scene ───────────────
+harpsi = score.part("harpsichord", instrument="harpsichord", volume=0.25,
+                    reverb=0.45, reverb_type="cathedral",
+                    humanize=0.08)
+
+# Bars 1-16: arpeggiated chords — elegant, formal
+for _ in range(4):
+    for chord in prog:
+        harpsi.add(chord, Duration.QUARTER, velocity=72)
+        harpsi.rest(Duration.QUARTER)
+        harpsi.add(chord, Duration.QUARTER, velocity=65)
+        harpsi.rest(Duration.QUARTER)
+
+# Bars 17-32: thinner, violins take over
+for _ in range(2):
+    for chord in prog:
+        harpsi.add(chord, Duration.HALF, velocity=55)
+        harpsi.rest(Duration.HALF)
+for _ in range(8):
+    harpsi.rest(Duration.WHOLE)
+
+# Bars 33-64: gone — obliterated by the beat
+for _ in range(32):
+    harpsi.rest(Duration.WHOLE)
+
+# Bars 65-80: returns for the ending — full circle
+for _ in range(2):
+    for chord in prog:
+        harpsi.add(chord, Duration.QUARTER, velocity=60)
+        harpsi.rest(Duration.QUARTER)
+        harpsi.add(chord, Duration.QUARTER, velocity=52)
+        harpsi.rest(Duration.QUARTER)
+for _ in range(8):
+    harpsi.rest(Duration.WHOLE)
+
 # ── VIOLIN 1 — melody, the lead voice ──────────────────────────
 violin1 = score.part("violin_1", instrument="violin", volume=0.35,
-                     reverb=0.4, reverb_type="cathedral",
+                     reverb=0.45, reverb_type="cathedral",
+                     chorus=0.15, chorus_rate=0.3, chorus_depth=0.005,
                      humanize=0.1)
 
 # Bars 1-16: opening melody — lyrical, romantic
@@ -86,7 +122,8 @@ for _ in range(2):
 
 # ── VIOLIN 2 — harmony, follows violin 1 a third below ─────────
 violin2 = score.part("violin_2", instrument="violin", volume=0.3,
-                     reverb=0.4, reverb_type="cathedral",
+                     reverb=0.45, reverb_type="cathedral",
+                     chorus=0.15, chorus_rate=0.25, chorus_depth=0.005,
                      pan=0.2, humanize=0.1)
 
 # Bars 1-16: harmony part
@@ -134,7 +171,8 @@ for _ in range(2):
 
 # ── VIOLA — inner voice, warm ──────────────────────────────────
 viola = score.part("viola", instrument="viola", volume=0.28,
-                   reverb=0.4, reverb_type="cathedral",
+                   reverb=0.45, reverb_type="cathedral",
+                   chorus=0.12, chorus_rate=0.2, chorus_depth=0.005,
                    pan=-0.15, humanize=0.1)
 
 # Whole note chords throughout — the glue
