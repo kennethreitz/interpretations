@@ -37,10 +37,10 @@ MR  = DrumSound.MARCH_SNARE
 # ═══════════════════════════════════════════════════════════════════
 
 # ── DIDGERIDOO CHORD — two drones a fifth apart ────────────────
-didge_lo = score.part("didge_lo", instrument="didgeridoo", volume=0.25,
-                      lowpass=300)
-didge_hi = score.part("didge_hi", instrument="didgeridoo", volume=0.18,
-                      lowpass=400, pan=0.2)
+didge_lo = score.part("didge_lo", instrument="didgeridoo", volume=0.45,
+                      lowpass=250)
+didge_hi = score.part("didge_hi", instrument="didgeridoo", volume=0.35,
+                      lowpass=300, pan=0.2)
 
 # Bars 1-8: drone chord (D2 + A2)
 for _ in range(8):
@@ -135,13 +135,20 @@ for _ in range(16):
 
 # ── SITAR — I V vi IV arpeggiated (bars 9-32) ──────────────────
 sitar = score.part("sitar", instrument="sitar", volume=0.8,
-                   reverb=0.45, reverb_type="taj_mahal",
+                   reverb=0.3, reverb_decay=1.5,
                    delay=0.35, delay_time=0.316, delay_feedback=0.4,
                    pan=-0.2, humanize=0.1)
+
+# ── SITAR LOW — octave down double, thickens it up ─────────────
+sitar_lo = score.part("sitar_lo", instrument="sitar", volume=0.5,
+                      reverb=0.25, reverb_decay=1.2,
+                      delay=0.2, delay_time=0.316, delay_feedback=0.3,
+                      pan=0.15, humanize=0.1, lowpass=2000)
 
 # Bars 1-8: rests
 for _ in range(8):
     sitar.rest(Duration.WHOLE)
+    sitar_lo.rest(Duration.WHOLE)
 
 # Bars 9-24: arpeggiated pop progression
 # i(Dm) - VII(C) - VI(Bb) - iv(Gm) arpeggiated
@@ -155,16 +162,19 @@ for _ in range(4):
     for arp in arp_chords:
         for note in arp:
             sitar.add(note, Duration.EIGHTH, velocity=85)
+            sitar_lo.add(note.add(-12), Duration.EIGHTH, velocity=70)
 
 # Bars 25-32: fading via velocity
 for _ in range(2):
     for arp in arp_chords:
         for note in arp:
             sitar.add(note, Duration.EIGHTH, velocity=55)
+            sitar_lo.add(note.add(-12), Duration.EIGHTH, velocity=40)
 
 # Bars 33-64: silent
 for _ in range(32):
     sitar.rest(Duration.WHOLE)
+    sitar_lo.rest(Duration.WHOLE)
 
 # ── NES MARIO — pulse wave (bars 25-56) ────────────────────────
 mario = score.part("mario", synth="square", envelope="staccato", volume=0.4,
