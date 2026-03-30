@@ -1,0 +1,15 @@
+[project]
+name = "interpretations"
+version = "0.1.0"
+description = "An album of compositions written in Python using pytheory."
+license = "ISC"
+authors = [
+    { name = "Kenneth Reitz", email = "me@kennethreitz.org" },
+]
+requires-python = ">=3.10"
+dependencies = [
+    "pytheory>=0.40.0",
+]
+
+[project.urls]
+Repository = "https://github.com/kennethreitz/interpretations"
