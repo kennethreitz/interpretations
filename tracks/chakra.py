@@ -20,7 +20,7 @@ from pytheory.rhythm import DrumSound
 # We'll use Tone objects at specific frequencies via .from_hz()
 # and also use scale tones for melodic content
 
-score = Score("4/4", bpm=60, temperament="just", reference_pitch=432.0)
+score = Score("4/4", bpm=60, reference_pitch=432.0)
 
 # Bowl tones — root note of each section's key, ascending through octaves
 # At A=432 Hz, everything sits in the "healing" frequency space
@@ -45,7 +45,7 @@ su = key_upper.scale
 # ═══════════════════════════════════════════════════════════════════
 
 # ── Tambura — Sa-Pa drone in G ──────────────────────────────────
-tambura = score.part("tambura", synth="sine", envelope="pad", volume=0.2,
+tambura = score.part("tambura", synth="sine", envelope="pad", volume=0.12,
                      reverb=0.8, reverb_type="taj_mahal",
                      chorus=0.3, chorus_rate=0.08, chorus_depth=0.01,
                      lowpass=1000, pan=-0.25)
@@ -57,7 +57,7 @@ for _ in range(8):
     tambura.add(sl[4].add(-24), Duration.HALF)   # D3
 
 # ── Harmonium — slow breathing chords ───────────────────────────
-harmonium = score.part("harmonium", instrument="harmonium", volume=0.15,
+harmonium = score.part("harmonium", instrument="harmonium", volume=0.08,
                        reverb=0.6, reverb_type="taj_mahal",
                        chorus=0.2, chorus_rate=0.15, chorus_depth=0.008,
                        humanize=0.08)
