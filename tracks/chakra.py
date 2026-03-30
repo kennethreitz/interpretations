@@ -49,7 +49,7 @@ for name, t in [("Root", root_tone), ("Sacral", sacral_tone),
                 ("Solar", solar_tone), ("Heart", heart_tone),
                 ("Throat", throat_tone), ("Third Eye", third_eye_tone),
                 ("Crown", crown_tone)]:
-    print(f"  {name:10s}: {t} ({t.hz:.0f} Hz)")
+    print(f"  {name:10s}: {t} ({t.frequency:.0f} Hz)")
 
 # ── Keys for each chakra section ────────────────────────────────
 # Root/Sacral: G major (grounding)
