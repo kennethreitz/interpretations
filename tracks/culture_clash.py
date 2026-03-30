@@ -39,6 +39,10 @@ MR  = DrumSound.MARCH_SNARE
 # ── DRUMS — breakbeat backbone ──────────────────────────────────
 score.drums("breakbeat", repeats=64)
 score.set_drum_effects(volume=0.45, humanize=0.1, ensemble=4)
+# Swap ride cymbals to closed hats
+for hit in score.parts["drums"]._drum_hits:
+    if hit.sound == DrumSound.RIDE:
+        hit.sound = DrumSound.CLOSED_HAT
 
 # ── FOUR ON THE FLOOR — kick on every beat ──────────────────────
 kick = score.part("kick", volume=0.4, humanize=0.05)
