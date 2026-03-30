@@ -144,7 +144,7 @@ for _ in range(2):
         skank.rest(Duration.QUARTER)
 
 # ── MELODICA — the melody, drenched in delay, enters bar 17 ────
-melodica = score.part("melodica", instrument="harmonica",  volume=0.3,
+melodica = score.part("melodica", instrument="flute", volume=0.3,
                       reverb=0.4, reverb_type="cathedral",
                       delay=0.5, delay_time=0.417, delay_feedback=0.5,
                       humanize=0.1)
