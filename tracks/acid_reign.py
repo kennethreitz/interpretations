@@ -208,29 +208,45 @@ tabla = score.part("tabla", volume=0.3, reverb=0.25, reverb_decay=1.0,
 for _ in range(32):
     tabla.rest(Duration.WHOLE)
 
-# Bars 33-56: keherwa groove with fills
+# Bars 33-56: double-time keherwa (16ths) with fills every 4 bars
 for bar in range(24):
-    if bar % 8 == 7:
-        # Fill with bayan bends
-        tabla.hit(TDHA, Duration.EIGHTH, velocity=95, articulation="accent")
-        tabla.hit(TGEB, Duration.EIGHTH, velocity=110)
-        tabla.hit(TNA, Duration.EIGHTH, velocity=75)
-        tabla.hit(TGEB, Duration.EIGHTH, velocity=105)
-        tabla.hit(TDHA, Duration.EIGHTH, velocity=90, articulation="accent")
+    if bar % 4 == 3:
+        # Fill — 16th note flurry with bayan bends
+        tabla.hit(TDHA, Duration.SIXTEENTH, velocity=100, articulation="accent")
+        tabla.hit(TIT, Duration.SIXTEENTH, velocity=55)
+        tabla.hit(TGEB, Duration.SIXTEENTH, velocity=110)
+        tabla.hit(TNA, Duration.SIXTEENTH, velocity=72)
+        tabla.hit(TDHA, Duration.SIXTEENTH, velocity=95, articulation="accent")
+        tabla.hit(TIT, Duration.SIXTEENTH, velocity=50)
+        tabla.hit(TNA, Duration.SIXTEENTH, velocity=68)
+        tabla.hit(TGEB, Duration.SIXTEENTH, velocity=108)
+        tabla.hit(TDHA, Duration.SIXTEENTH, velocity=98, articulation="accent")
+        tabla.hit(TNA, Duration.SIXTEENTH, velocity=70)
+        tabla.hit(TKE, Duration.SIXTEENTH, velocity=58)
+        tabla.hit(TGEB, Duration.SIXTEENTH, velocity=115)
         tabla.hit(TNA, Duration.SIXTEENTH, velocity=65)
-        tabla.hit(TKE, Duration.SIXTEENTH, velocity=55)
-        tabla.hit(TGEB, Duration.QUARTER, velocity=115)
+        tabla.hit(TIT, Duration.SIXTEENTH, velocity=52)
+        tabla.hit(TGEB, Duration.QUARTER, velocity=120)
     else:
-        tabla.hit(TDHA, Duration.EIGHTH, velocity=88, articulation="accent")
-        tabla.hit(TGE, Duration.EIGHTH, velocity=58)
-        tabla.hit(TNA, Duration.EIGHTH, velocity=68)
-        tabla.hit(TIT, Duration.EIGHTH, velocity=42)
-        tabla.hit(TNA, Duration.EIGHTH, velocity=62)
-        tabla.hit(TIT, Duration.EIGHTH, velocity=40)
-        tabla.hit(TDHA, Duration.EIGHTH, velocity=82, articulation="accent")
-        tabla.hit(TNA, Duration.EIGHTH, velocity=60)
+        # Double-time groove — 16ths
+        tabla.hit(TDHA, Duration.SIXTEENTH, velocity=90, articulation="accent")
+        tabla.hit(TGE, Duration.SIXTEENTH, velocity=52)
+        tabla.hit(TNA, Duration.SIXTEENTH, velocity=65)
+        tabla.hit(TIT, Duration.SIXTEENTH, velocity=38)
+        tabla.hit(TNA, Duration.SIXTEENTH, velocity=60)
+        tabla.hit(TIT, Duration.SIXTEENTH, velocity=35)
+        tabla.hit(TDHA, Duration.SIXTEENTH, velocity=85, articulation="accent")
+        tabla.hit(TNA, Duration.SIXTEENTH, velocity=55)
+        tabla.hit(TGE, Duration.SIXTEENTH, velocity=50)
+        tabla.hit(TNA, Duration.SIXTEENTH, velocity=62)
+        tabla.hit(TIT, Duration.SIXTEENTH, velocity=38)
+        tabla.hit(TNA, Duration.SIXTEENTH, velocity=58)
+        tabla.hit(TDHA, Duration.SIXTEENTH, velocity=88, articulation="accent")
+        tabla.hit(TIT, Duration.SIXTEENTH, velocity=40)
+        tabla.hit(TNA, Duration.SIXTEENTH, velocity=60)
+        tabla.hit(TIT, Duration.SIXTEENTH, velocity=35)
 
-# Bars 57-64: fading
+# Bars 57-64: fading — back to 8ths
 for bar in range(8):
     vel = max(25, 80 - bar * 7)
     tabla.hit(TDHA, Duration.EIGHTH, velocity=vel)
