@@ -2,3 +2,5 @@ __pycache__/
 *.pyc
 .venv/
 *.egg-info/
+wavs/
+mp3s/
