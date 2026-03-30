@@ -203,39 +203,21 @@ for note, dur in mario_melody:
     else:
         mario.add(note, dur, velocity=105)
 
-# Bars 33-40: Drake Hotline Bling melody
-drake = [
-    (D.add(12), Duration.QUARTER), (C.add(12), Duration.QUARTER),
-    (A, Duration.QUARTER), (G, Duration.QUARTER),
-    (A, Duration.QUARTER), (None, Duration.QUARTER),
-    (G, Duration.QUARTER), (E, Duration.QUARTER),
-    (D.add(12), Duration.QUARTER), (C.add(12), Duration.EIGHTH),
-    (A, Duration.EIGHTH), (G, Duration.HALF),
-    (A, Duration.HALF), (G, Duration.QUARTER),
-    (E, Duration.QUARTER),
-]
+# Bars 33-40: Mario keeps going — repeat the theme
 for _ in range(2):
-    for note, dur in drake:
+    for note, dur in mario_melody:
         if note is None:
             mario.rest(dur)
         else:
-            mario.add(note, dur, velocity=95)
+            mario.add(note, dur, velocity=90)
 
-# Bars 41-48: Mario × Drake alternating
+# Bars 41-48: Mario keeps looping underneath drake
 for _ in range(2):
-    mario.add(E.add(12), Duration.EIGHTH, velocity=100)
-    mario.add(E.add(12), Duration.EIGHTH, velocity=95)
-    mario.rest(Duration.EIGHTH)
-    mario.add(E.add(12), Duration.EIGHTH, velocity=100)
-    mario.add(C.add(12), Duration.EIGHTH, velocity=90)
-    mario.add(E.add(12), Duration.QUARTER, velocity=95)
-    mario.rest(Duration.EIGHTH)
-    mario.add(D.add(12), Duration.QUARTER, velocity=90)
-    mario.add(C.add(12), Duration.QUARTER, velocity=85)
-    mario.add(A, Duration.QUARTER, velocity=80)
-    mario.add(G, Duration.QUARTER, velocity=85)
-    mario.add(E, Duration.HALF, velocity=80)
-    mario.rest(Duration.HALF)
+    for note, dur in mario_melody:
+        if note is None:
+            mario.rest(dur)
+        else:
+            mario.add(note, dur, velocity=75)
 
 # Bars 49-52: one last Mario statement fading
 for note, dur in mario_melody:
@@ -247,6 +229,53 @@ for note, dur in mario_melody:
 # Bars 53-64: silent
 for _ in range(12):
     mario.rest(Duration.WHOLE)
+
+# ── DRAKE — steel drum Hotline Bling melody (bars 33-52) ────────
+bling = score.part("bling", instrument="steel_drum", volume=0.45,
+                   reverb=0.4, reverb_type="taj_mahal",
+                   delay=0.3, delay_time=0.316, delay_feedback=0.35,
+                   humanize=0.06)
+
+# Bars 1-32: rests
+for _ in range(32):
+    bling.rest(Duration.WHOLE)
+
+# Bars 33-40: that Hotline Bling melody — hypnotic, descending
+drake_melody = [
+    (D.add(12), Duration.QUARTER), (C.add(12), Duration.QUARTER),
+    (A, Duration.QUARTER), (G, Duration.QUARTER),
+    (A, Duration.QUARTER), (None, Duration.QUARTER),
+    (G, Duration.QUARTER), (E, Duration.QUARTER),
+    (D.add(12), Duration.QUARTER), (C.add(12), Duration.EIGHTH),
+    (A, Duration.EIGHTH), (G, Duration.HALF),
+    (A, Duration.HALF), (G, Duration.QUARTER),
+    (E, Duration.QUARTER),
+]
+for _ in range(2):
+    for note, dur in drake_melody:
+        if note is None:
+            bling.rest(dur)
+        else:
+            bling.add(note, dur, velocity=100)
+
+# Bars 41-48: keep going, Mario layered underneath
+for _ in range(2):
+    for note, dur in drake_melody:
+        if note is None:
+            bling.rest(dur)
+        else:
+            bling.add(note, dur, velocity=95)
+
+# Bars 49-52: fading
+for note, dur in drake_melody:
+    if note is None:
+        bling.rest(dur)
+    else:
+        bling.add(note, dur, velocity=65)
+
+# Bars 53-64: silent
+for _ in range(12):
+    bling.rest(Duration.WHOLE)
 
 # ── 808 BASS — enters bar 9, throughout ────────────────────────
 bass = score.part("bass_808", synth="sine", envelope="pad", volume=0.3,
