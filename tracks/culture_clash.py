@@ -260,9 +260,114 @@ for note, dur in mario_melody:
     else:
         mario.add(note, dur, velocity=70)
 
-# Bars 53-64: silent
-for _ in range(12):
+# ══ Bars 53-60: MARIO SOLO — emotional 8-bit shredding ═══════════
+# The NES cries out. Fast arps climbing through D minor, getting
+# faster and higher. Like watching Mario run out of time.
+
+# Bars 53-54: 16th note arps — establishing the run
+solo_arps_16 = [
+    # Dm arp up and down
+    D, F, A, D.add(12), A, F, D, A.add(-12),
+    F, A, D.add(12), F.add(12), D.add(12), A, F, D,
+    # C arp
+    C, E, G, C.add(12), G, E, C, G.add(-12),
+    E, G, C.add(12), E.add(12), C.add(12), G, E, C,
+]
+for note in solo_arps_16:
+    mario.add(note, Duration.SIXTEENTH, velocity=105)
+
+# Bars 55-56: 32nd notes — faster, climbing higher
+solo_arps_32 = [
+    # Dm climbing
+    D, F, A, D.add(12), F.add(12), A.add(12),
+    D.add(24), A.add(12), F.add(12), D.add(12), A, F,
+    # Bb arp
+    Bb.add(-12), D, F, Bb, D.add(12), F.add(12),
+    Bb.add(12), F.add(12), D.add(12), Bb, F, D,
+    # Gm arp
+    G.add(-12), Bb.add(-12), D, G, Bb, D.add(12),
+    G.add(12), D.add(12), Bb, G, D, Bb.add(-12),
+    # Back to Dm — reaching for the top
+    D, A, D.add(12), A.add(12), D.add(24), A.add(24),
+    D.add(24), A.add(12), D.add(12), A, D, A.add(-12),
+]
+for note in solo_arps_32:
+    mario.add(note, 0.125, velocity=110)
+
+# Bars 57-58: the emotional peak — sustained high notes with fast trills
+# Hold a high D while trilling between neighbors
+mario.add(D.add(24), Duration.QUARTER, velocity=120)
+mario.add(Cs.add(12), 0.125, velocity=100)
+mario.add(D.add(24), 0.125, velocity=115)
+mario.add(Cs.add(12), 0.125, velocity=100)
+mario.add(D.add(24), 0.125, velocity=118)
+mario.add(E.add(12), Duration.QUARTER, velocity=110)
+mario.add(F.add(12), Duration.QUARTER, velocity=115)
+# Descending cry
+mario.add(D.add(24), Duration.EIGHTH, velocity=120)
+mario.add(A.add(12), Duration.EIGHTH, velocity=105)
+mario.add(F.add(12), Duration.EIGHTH, velocity=100)
+mario.add(D.add(12), Duration.EIGHTH, velocity=95)
+mario.add(A, Duration.EIGHTH, velocity=90)
+mario.add(F, Duration.EIGHTH, velocity=85)
+mario.add(D, Duration.QUARTER, velocity=110)
+
+# Bars 59-60: final blaze — 32nd note scale runs up and down
+# Full D minor scale run ascending then descending, twice
+scale_up = [D, E, F, G, A, Bb, Cs, D.add(12),
+            E.add(12), F.add(12), G.add(12), A.add(12),
+            Bb.add(12), Cs.add(12), D.add(24), Cs.add(12)]
+scale_down = [Bb.add(12), A.add(12), G.add(12), F.add(12),
+              E.add(12), D.add(12), Cs, Bb,
+              A, G, F, E, D, E, F, A]
+for note in scale_up:
+    mario.add(note, 0.125, velocity=115)
+for note in scale_down:
+    mario.add(note, 0.125, velocity=108)
+
+# Bars 61-64: mario fades into the snare crescendo
+mario.add(D.add(12), Duration.WHOLE, velocity=90)  # one last held note
+for _ in range(3):
     mario.rest(Duration.WHOLE)
+
+# ── NOKIA — Gran Vals ringtone on pulse wave (bars 49-56) ───────
+nokia = score.part("nokia", synth="pulse", envelope="staccato", volume=0.3,
+                   reverb=0.4, reverb_type="taj_mahal", lowpass=4000,
+                   humanize=0.04)
+
+# Bars 1-48: rests
+for _ in range(48):
+    nokia.rest(Duration.WHOLE)
+
+# Bars 49-52: the iconic Nokia tune (Gran Vals by Francisco Tárrega)
+# E5 D5 F#4 G#4 | C#5 B4 D4 E4 | B4 A4 C#4 E4 | A4
+nokia_melody = [
+    (E.add(12), Duration.EIGHTH), (D.add(12), Duration.EIGHTH),
+    (Tone.from_string("F#4"), Duration.QUARTER), (Tone.from_string("G#4"), Duration.QUARTER),
+    (Tone.from_string("C#5"), Duration.EIGHTH), (Tone.from_string("B4"), Duration.EIGHTH),
+    (D, Duration.QUARTER), (E, Duration.QUARTER),
+    (Tone.from_string("B4"), Duration.EIGHTH), (A, Duration.EIGHTH),
+    (Tone.from_string("C#4"), Duration.QUARTER), (E, Duration.QUARTER),
+    (A, Duration.HALF), (None, Duration.HALF),
+]
+for _ in range(2):
+    for note, dur in nokia_melody:
+        if note is None:
+            nokia.rest(dur)
+        else:
+            nokia.add(note, dur, velocity=95)
+
+# Bars 53-56: nokia fading under the mario solo
+for note, dur in nokia_melody:
+    if note is None:
+        nokia.rest(dur)
+    else:
+        nokia.add(note, dur, velocity=60)
+nokia.rest(Duration.WHOLE)
+
+# Bars 57-64: silent
+for _ in range(8):
+    nokia.rest(Duration.WHOLE)
 
 # ── DRAKE — steel drum Hotline Bling melody (bars 33-52) ────────
 bling = score.part("bling", instrument="steel_drum", volume=0.7,
