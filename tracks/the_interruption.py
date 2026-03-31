@@ -210,7 +210,7 @@ CH = DrumSound.CLOSED_HAT
 OH = DrumSound.OPEN_HAT
 
 # ── BREAKBEAT — enters bar 33, no warning ──────────────────────
-beat = score.part("breakbeat", volume=0.45, humanize=0.06)
+beat = score.part("breakbeat", volume=0.6, humanize=0.06)
 
 # Bars 1-32: silence — the audience suspects nothing
 for _ in range(32):
@@ -267,8 +267,29 @@ for bar in range(8):
 for _ in range(8):
     beat.rest(Duration.WHOLE)
 
+# ── 808 KICK — four on the floor, the slap ─────────────────────
+kick808 = score.part("kick808", volume=0.8, humanize=0.03)
+
+for _ in range(32):
+    kick808.rest(Duration.WHOLE)
+
+# Bars 33-64: FOUR ON THE FLOOR — hits like a truck
+for _ in range(32):
+    for beat_num in range(4):
+        kick808.hit(K, Duration.QUARTER, velocity=125)
+
+# Bars 65-72: fading
+for bar in range(8):
+    vel = max(30, 120 - bar * 12)
+    for beat_num in range(4):
+        kick808.hit(K, Duration.QUARTER, velocity=vel)
+
+# Bars 73-80: gone
+for _ in range(8):
+    kick808.rest(Duration.WHOLE)
+
 # ── SUB BASS — DnB sub, enters with the beat ───────────────────
-sub = score.part("sub", synth="sine", envelope="pad", volume=0.5,
+sub = score.part("sub", synth="sine", envelope="pad", volume=0.7,
                  lowpass=120, distortion=0.2, distortion_drive=3.0,
                  sub_osc=0.5, sidechain=0.4)
 
