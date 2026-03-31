@@ -210,7 +210,8 @@ CH = DrumSound.CLOSED_HAT
 OH = DrumSound.OPEN_HAT
 
 # ── BREAKBEAT — enters bar 33, no warning ──────────────────────
-beat = score.part("breakbeat", volume=0.6, humanize=0.06)
+beat = score.part("breakbeat", volume=0.9, humanize=0.06,
+                  reverb=0.2, reverb_decay=0.8)
 
 # Bars 1-32: silence — the audience suspects nothing
 for _ in range(32):
@@ -268,7 +269,7 @@ for _ in range(8):
     beat.rest(Duration.WHOLE)
 
 # ── 808 KICK — four on the floor, the slap ─────────────────────
-kick808 = score.part("kick808", volume=0.8, humanize=0.03)
+kick808 = score.part("kick808", volume=1.0, humanize=0.03)
 
 for _ in range(32):
     kick808.rest(Duration.WHOLE)
