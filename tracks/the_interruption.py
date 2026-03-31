@@ -290,9 +290,9 @@ for _ in range(8):
     kick808.rest(Duration.WHOLE)
 
 # ── SUB BASS — DnB sub, enters with the beat ───────────────────
-sub = score.part("sub", synth="sine", envelope="pad", volume=0.7,
-                 lowpass=120, distortion=0.2, distortion_drive=3.0,
-                 sub_osc=0.5, sidechain=0.4)
+sub = score.part("sub", synth="sine", envelope="pad", volume=0.9,
+                 lowpass=150, distortion=0.25, distortion_drive=3.5,
+                 sub_osc=0.7, sidechain=0.3)
 
 for _ in range(32):
     sub.rest(Duration.WHOLE)
