@@ -28,9 +28,51 @@ Each track is a `.py` file. Run it to hear it.
 ## Usage
 
 ```bash
-pip install pytheory
-python tracks/raga_midnight.py
+uv sync
 ```
+
+**Interactive player** — pick a track, play/pause, seek:
+
+```bash
+uv run play.py
+```
+
+**Play a specific track:**
+
+```bash
+uv run play.py tracks/the_temple.py
+```
+
+**Playback options:**
+
+```bash
+uv run play.py tracks/acid_reign.py --from 17 --to 32       # measure range
+uv run play.py tracks/the_temple.py --from-time 3:30         # seek to time
+uv run play.py tracks/ghost_protocol.py --solo arp,kick       # solo parts
+uv run play.py tracks/deep_time.py --mute wind                # mute parts
+uv run play.py tracks/the_temple.py --pitch 440               # override tuning
+uv run play.py tracks/acid_reign.py --bpm 160                 # override tempo
+uv run play.py tracks/silk_road.py --loop 3                   # loop playback
+```
+
+**Export & inspect:**
+
+```bash
+uv run play.py tracks/raga_midnight.py -o raga.wav            # export WAV
+uv run play.py tracks/culture_clash.py --info                  # show metadata
+uv run play.py tracks/the_interruption.py --parts              # list parts
+uv run play.py --list                                          # list all tracks
+```
+
+**Transport controls during playback:**
+
+| Key | Action |
+|-----|--------|
+| `space` | Play / pause |
+| `←` / `→` | Seek ±5s |
+| `shift+←` / `shift+→` | Seek ±30s |
+| `0` | Back to start |
+| `q` | Quit |
 
 ## License
 
