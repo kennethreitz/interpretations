@@ -37,6 +37,25 @@ from pytheory import play_score
 
 TRACKS_DIR = Path(__file__).parent / "tracks"
 
+# Album order — defines the canonical tracklist
+ALBUM_ORDER = [
+    "raga_midnight.py",
+    "culture_clash.py",
+    "chakra.py",
+    "ghost_protocol.py",
+    "acid_reign.py",
+    "silk_road.py",
+    "deep_time.py",
+    "the_interruption.py",
+    "the_temple.py",
+]
+
+
+def sorted_tracks(files):
+    """Sort track files by album order. Unknown tracks go at the end."""
+    order = {name: i for i, name in enumerate(ALBUM_ORDER)}
+    return sorted(files, key=lambda f: order.get(f.name, 999))
+
 
 # ═══════════════════════════════════════════════════════════════════
 #  Score loading
@@ -298,7 +317,7 @@ def list_tracks():
         print("No tracks/ directory found.")
         return
 
-    files = sorted(TRACKS_DIR.glob("*.py"))
+    files = sorted_tracks(list(TRACKS_DIR.glob("*.py")))
     if not files:
         print("No .py files in tracks/.")
         return
@@ -334,7 +353,7 @@ def pick_track():
         print("No tracks/ directory found.")
         return None
 
-    files = sorted(TRACKS_DIR.glob("*.py"))
+    files = sorted_tracks(list(TRACKS_DIR.glob("*.py")))
     if not files:
         print("No tracks found.")
         return None
