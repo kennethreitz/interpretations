@@ -64,15 +64,7 @@ uv run play.py tracks/the_interruption.py --parts              # list parts
 uv run play.py --list                                          # list all tracks
 ```
 
-**Transport controls during playback:**
-
-| Key | Action |
-|-----|--------|
-| `space` | Play / pause |
-| `←` / `→` | Seek ±5s |
-| `shift+←` / `shift+→` | Seek ±30s |
-| `0` | Back to start |
-| `q` | Quit |
+`Ctrl+C` to stop playback.
 
 ## License
 
