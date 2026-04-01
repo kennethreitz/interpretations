@@ -2,7 +2,7 @@
 
 ## 2026-04-01
 
-- The Interruption: string quartet panned across stereo field, more reverb, delay on harpsichord and violins, louder across the board
+- The Interruption: flute + harp added, 32nd note hat fills, sidechain 0.6, stereo string quartet, delay on harpsichord/violins
 - Voltage: dotted delay on saw (spring) and pulse (taj_mahal), distortion on kick
 - **Track 11: Voltage** — F minor, 138 BPM. Raw oscillators only — sine sub (dry), saw lead (spring reverb), pulse counter-rhythm (taj_mahal). Rhythm from monophonic pitch shifts. Saw arp solo, pulse arp solo, 32nd note chaos peak. Kick maxed at 1.0.
 - **Track 10: The Dialogue** — E Phrygian, 75 BPM, shruti just intonation, A=432 Hz. Sitar (human) and theremin (machine) find each other through call-and-response. House kick + hats + clap enter at bar 41. 32nd note sitar shredding at the peak with dry reverb.
