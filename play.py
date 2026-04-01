@@ -201,15 +201,176 @@ def render_audio(score, *, from_measure=None, to_measure=None,
     return buf, sample_rate
 
 
-def play_audio(buf, sample_rate):
-    """Play a rendered audio buffer through speakers."""
+def play_audio(buf, sample_rate, title="", info_lines=None):
+    """Interactive curses playback with transport controls."""
+    import curses
     import sounddevice as sd
+    import numpy
+    import time, math, threading
+
+    total_frames = len(buf)
+    total_sec = total_frames / sample_rate
+    channels = buf.shape[1] if buf.ndim == 2 else 1
+    block_size = 1024
+
+    # Playback state
+    state = {
+        "pos": 0,           # current frame position
+        "playing": True,
+        "quit": False,
+    }
+    lock = threading.Lock()
+
+    def callback(outdata, frames, time_info, status):
+        with lock:
+            pos = state["pos"]
+            if not state["playing"] or pos >= total_frames:
+                outdata[:] = 0
+                return
+            end = min(pos + frames, total_frames)
+            n = end - pos
+            if buf.ndim == 2:
+                outdata[:n] = buf[pos:end]
+                outdata[n:] = 0
+            else:
+                outdata[:n, 0] = buf[pos:end]
+                outdata[n:] = 0
+            state["pos"] = end
+
+    stream = sd.OutputStream(
+        samplerate=sample_rate,
+        channels=channels,
+        blocksize=block_size,
+        callback=callback,
+    )
+
+    def _player(stdscr):
+        curses.curs_set(0)
+        curses.use_default_colors()
+        curses.init_pair(1, curses.COLOR_CYAN, -1)
+        curses.init_pair(2, curses.COLOR_GREEN, -1)
+        curses.init_pair(3, curses.COLOR_YELLOW, -1)
+        curses.init_pair(4, curses.COLOR_MAGENTA, -1)
+        curses.init_pair(5, curses.COLOR_RED, -1)
+        stdscr.nodelay(True)
+
+        seek_amount = int(5 * sample_rate)      # 5 seconds
+        big_seek = int(30 * sample_rate)         # 30 seconds
+
+        stream.start()
+
+        while not state["quit"]:
+            stdscr.clear()
+            h, w = stdscr.getmaxyx()
+            t = time.monotonic()
+
+            with lock:
+                pos = state["pos"]
+                playing = state["playing"]
+
+            cur_sec = pos / sample_rate
+            cur_m, cur_s = int(cur_sec // 60), int(cur_sec % 60)
+            tot_m, tot_s = int(total_sec // 60), int(total_sec % 60)
+            pct = pos / total_frames if total_frames > 0 else 0
+
+            # ── Title ─────────────────────────────────────────
+            if title:
+                header_colors = [1, 4, 2, 3, 5]
+                hx = max(0, (w - len(title)) // 2)
+                for ci, ch in enumerate(title):
+                    color = header_colors[int((t * 1.2 + ci * 0.25) % len(header_colors))]
+                    try:
+                        wave = math.sin(t * 2.0 + ci * 0.35)
+                        y_off = round(wave * 0.4)
+                        stdscr.addstr(1 + y_off, hx + ci, ch,
+                                      curses.A_BOLD | curses.color_pair(color))
+                    except curses.error:
+                        pass
+
+            # ── Info lines ────────────────────────────────────
+            if info_lines:
+                for i, line in enumerate(info_lines[:4]):
+                    try:
+                        stdscr.addstr(3 + i, max(0, (w - len(line)) // 2),
+                                      line, curses.A_DIM)
+                    except curses.error:
+                        pass
+
+            info_offset = len(info_lines) if info_lines else 0
+
+            # ── Transport ─────────────────────────────────────
+            icon = "▶" if playing else "⏸"
+            time_str = f"{icon}  {cur_m}:{cur_s:02d} / {tot_m}:{tot_s:02d}"
+            ty = 4 + info_offset
+            try:
+                stdscr.addstr(ty, max(0, (w - len(time_str)) // 2),
+                              time_str, curses.A_BOLD | curses.color_pair(1))
+            except curses.error:
+                pass
+
+            # ── Progress bar ──────────────────────────────────
+            bar_w = min(w - 6, 50)
+            filled = int(pct * bar_w)
+            bar = "█" * filled + "░" * (bar_w - filled)
+            by = ty + 1
+            try:
+                bx = max(0, (w - bar_w) // 2)
+                stdscr.addstr(by, bx, bar[:filled],
+                              curses.color_pair(2))
+                stdscr.addstr(by, bx + filled, bar[filled:],
+                              curses.A_DIM)
+            except curses.error:
+                pass
+
+            # ── Controls ──────────────────────────────────────
+            controls = "[space] play/pause  [←/→] ±5s  [shift] ±30s  [q] quit"
+            cy = by + 2
+            try:
+                stdscr.addstr(cy, max(0, (w - len(controls)) // 2),
+                              controls, curses.A_DIM)
+            except curses.error:
+                pass
+
+            stdscr.refresh()
+            curses.napms(50)
+
+            # ── Input ─────────────────────────────────────────
+            key = stdscr.getch()
+            if key == -1:
+                # Auto-quit at end
+                if pos >= total_frames and playing:
+                    state["quit"] = True
+                continue
+
+            if key == ord("q") or key == 27:
+                state["quit"] = True
+            elif key == ord(" "):
+                with lock:
+                    state["playing"] = not state["playing"]
+            elif key == curses.KEY_RIGHT:
+                with lock:
+                    state["pos"] = min(total_frames, state["pos"] + seek_amount)
+            elif key == curses.KEY_LEFT:
+                with lock:
+                    state["pos"] = max(0, state["pos"] - seek_amount)
+            elif key == curses.KEY_SRIGHT or key == ord("L"):
+                with lock:
+                    state["pos"] = min(total_frames, state["pos"] + big_seek)
+            elif key == curses.KEY_SLEFT or key == ord("H"):
+                with lock:
+                    state["pos"] = max(0, state["pos"] - big_seek)
+            elif key == ord("0") or key == curses.KEY_HOME:
+                with lock:
+                    state["pos"] = 0
+
+        stream.stop()
+        stream.close()
+
     try:
-        sd.play(buf, sample_rate)
-        sd.wait()
+        curses.wrapper(_player)
     except KeyboardInterrupt:
-        sd.stop()
-        print("\nStopped.")
+        stream.stop()
+        stream.close()
 
 
 def save_wav(buf, sample_rate, path):
@@ -302,6 +463,132 @@ def list_tracks():
 #  CLI
 # ═══════════════════════════════════════════════════════════════════
 
+def pick_track():
+    """Interactive curses track picker."""
+    import curses
+
+    if not TRACKS_DIR.exists():
+        print("No tracks/ directory found.")
+        return None
+
+    files = sorted(TRACKS_DIR.glob("*.py"))
+    if not files:
+        print("No tracks found.")
+        return None
+
+    # Pre-load all track metadata before entering curses mode
+    entries = []
+    for f in files:
+        try:
+            score, mod = load_score(f)
+            name = f.name
+            bpm = score.bpm
+            parts = len(score.parts)
+            duration_sec = (score.total_beats / bpm) * 60 if bpm else 0
+            m = int(duration_sec // 60)
+            s = int(duration_sec % 60)
+            desc = get_description(mod)
+            entries.append((f, name, bpm, m, s, parts, desc))
+        except Exception:
+            entries.append((f, f.name, 0, 0, 0, 0, ""))
+
+    selected = [0]
+    result = [None]
+
+    def _picker(stdscr):
+        import time, math
+        curses.curs_set(0)
+        curses.use_default_colors()
+        curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
+        curses.init_pair(2, curses.COLOR_CYAN, -1)
+        curses.init_pair(3, curses.COLOR_YELLOW, -1)
+        curses.init_pair(4, curses.COLOR_MAGENTA, -1)
+        curses.init_pair(5, curses.COLOR_GREEN, -1)
+        curses.init_pair(6, curses.COLOR_RED, -1)
+        header_colors = [2, 4, 5, 3, 6]
+        stdscr.nodelay(True)
+
+        while True:
+            stdscr.clear()
+            h, w = stdscr.getmaxyx()
+            t = time.monotonic()
+
+            # Header — each letter waves up/down and shifts color
+            header = "INTERPRETATIONS"
+            hx = max(0, (w - len(header)) // 2)
+            for ci, ch in enumerate(header):
+                wave = math.sin(t * 2.5 + ci * 0.4)
+                y_off = round(wave * 0.5)
+                color = header_colors[int((t * 1.5 + ci * 0.3) % len(header_colors))]
+                try:
+                    stdscr.addstr(1 + y_off, hx + ci, ch,
+                                  curses.A_BOLD | curses.color_pair(color))
+                except curses.error:
+                    pass
+            stdscr.addstr(3, max(0, (w - 15) // 2), "─" * 15,
+                          curses.color_pair(2))
+            stdscr.addstr(4, max(0, (w - 28) // 2), "↑/↓ navigate  ↵ play  q quit",
+                          curses.A_DIM)
+
+            # Track list
+            list_start = 6
+            for i, (f, title, bpm, m, s, parts, desc) in enumerate(entries):
+                y = list_start + i
+                if y >= h - 4:
+                    break
+
+                name_col = 22
+                meta_str = f"{bpm:>3} BPM  {m}:{s:02d}" if bpm else ""
+                name_display = title[:name_col - 1].ljust(name_col - 1)
+
+                num = f"{i + 1:>2}."
+
+                if i == selected[0]:
+                    full = f" ▸ {num} {name_display}  {meta_str}"
+                    stdscr.addstr(y, 1, full[:w - 2],
+                                  curses.A_BOLD | curses.color_pair(1))
+                else:
+                    track_color = header_colors[i % len(header_colors)]
+                    stdscr.addstr(y, 1, f"   {num} ",
+                                  curses.A_BOLD)
+                    stdscr.addstr(y, 8, name_display,
+                                  curses.color_pair(track_color))
+                    if meta_str:
+                        stdscr.addstr(y, 8 + name_col, meta_str,
+                                      curses.A_DIM)
+
+            # Description of selected track
+            _, _, _, _, _, _, desc = entries[selected[0]]
+            if desc:
+                desc_y = list_start + len(entries) + 1
+                if desc_y < h - 2:
+                    # Wrap description to fit width
+                    desc = desc[:w - 6]
+                    stdscr.addstr(desc_y, 3, desc,
+                                  curses.A_DIM | curses.color_pair(3))
+
+            stdscr.refresh()
+            curses.napms(50)
+
+            key = stdscr.getch()
+            if key == curses.KEY_UP or key == ord("k"):
+                selected[0] = max(0, selected[0] - 1)
+            elif key == curses.KEY_DOWN or key == ord("j"):
+                selected[0] = min(len(entries) - 1, selected[0] + 1)
+            elif key in (curses.KEY_ENTER, 10, 13):
+                result[0] = entries[selected[0]][0]
+                return
+            elif key == ord("q") or key == 27:
+                return
+
+    try:
+        curses.wrapper(_picker)
+    except KeyboardInterrupt:
+        return None
+
+    return result[0]
+
+
 def build_parser():
     p = argparse.ArgumentParser(
         prog="play.py",
@@ -376,12 +663,13 @@ def main():
         list_tracks()
         return
 
-    # ── Everything else needs a score ──────────────────────────────
+    # ── Track picker when no score given ─────────────────────────
     if not args.score:
-        parser.print_help()
-        sys.exit(1)
-
-    path = Path(args.score)
+        path = pick_track()
+        if path is None:
+            return
+    else:
+        path = Path(args.score)
     if not path.exists():
         print(f"File not found: {path}")
         sys.exit(1)
@@ -442,21 +730,25 @@ def main():
         return
 
     # ── Play ───────────────────────────────────────────────────────
-    range_str = ""
-    if args.from_time or args.to_time:
-        f = args.from_time or "0:00"
-        t = args.to_time or "end"
-        range_str = f" ({f}-{t})"
-    elif args.from_measure or args.to_measure:
-        f = args.from_measure or 1
-        t = args.to_measure or "end"
-        range_str = f" (measures {f}-{t})"
-    loop_str = f" x{args.loop}" if args.loop > 1 else ""
-    bpm_str = f" @ {args.bpm} BPM" if args.bpm else ""
+    # Build info lines for the player UI
+    info = []
+    info.append(f"{score.time_signature}  {score.bpm} BPM  {len(score.parts)} parts")
+    extras = []
+    if score.system != "western":
+        extras.append(score.system)
+    if score.temperament != "equal":
+        extras.append(score.temperament)
+    if score.reference_pitch != 440.0:
+        extras.append(f"A={score.reference_pitch} Hz")
+    if extras:
+        info.append("  ".join(extras))
 
-    print(f"Playing: {title}{range_str}{loop_str}{bpm_str}")
-    play_audio(buf, sr)
+    play_audio(buf, sr, title=title, info_lines=info)
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\nStopped.")
+        sys.exit(0)
