@@ -66,6 +66,8 @@ uv run play.py --list                                          # list all tracks
 
 `Ctrl+C` to stop playback.
 
+## [Changelog](CHANGELOG.md)
+
 ## License
 
 ISC
