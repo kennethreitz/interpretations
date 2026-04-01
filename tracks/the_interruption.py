@@ -342,10 +342,37 @@ for _ in range(32):
 # Classic amen-style break
 for bar in range(32):
     if bar % 8 == 7:
-        # Fill — snare rolls
-        for i in range(16):
-            vel = min(127, 70 + i * 3)
-            beat.hit(S, Duration.SIXTEENTH, velocity=vel)
+        # Fill — snare into 32nd note hat cascade
+        beat.hit(S, Duration.SIXTEENTH, velocity=108)
+        beat.hit(S, Duration.SIXTEENTH, velocity=105)
+        beat.hit(K, Duration.SIXTEENTH, velocity=110)
+        beat.hit(S, Duration.SIXTEENTH, velocity=100)
+        # 32nd note hat roll
+        for i in range(8):
+            vel = min(127, 55 + i * 8)
+            beat.hit(CH, 0.125, velocity=vel)
+        # Back to snare hits
+        beat.hit(S, Duration.SIXTEENTH, velocity=112)
+        beat.hit(K, Duration.SIXTEENTH, velocity=115)
+        beat.hit(S, Duration.SIXTEENTH, velocity=118)
+        beat.hit(S, Duration.SIXTEENTH, velocity=120)
+    elif bar % 4 == 3:
+        # Mini fill — 32nd hat flurry on beat 4
+        beat.hit(K, Duration.SIXTEENTH, velocity=110)
+        beat.hit(CH, Duration.SIXTEENTH, velocity=50)
+        beat.hit(CH, Duration.SIXTEENTH, velocity=45)
+        beat.hit(CH, Duration.SIXTEENTH, velocity=48)
+        beat.hit(S, Duration.SIXTEENTH, velocity=105)
+        beat.hit(CH, Duration.SIXTEENTH, velocity=50)
+        beat.hit(CH, Duration.SIXTEENTH, velocity=42)
+        beat.hit(K, Duration.SIXTEENTH, velocity=95)
+        beat.hit(CH, Duration.SIXTEENTH, velocity=48)
+        beat.hit(K, Duration.SIXTEENTH, velocity=100)
+        beat.hit(S, Duration.SIXTEENTH, velocity=108)
+        beat.hit(CH, Duration.SIXTEENTH, velocity=45)
+        # 32nd note hat burst
+        for i in range(8):
+            beat.hit(CH, 0.125, velocity=min(90, 50 + i * 5))
     else:
         # K---S--K-KS----
         beat.hit(K, Duration.SIXTEENTH, velocity=110)

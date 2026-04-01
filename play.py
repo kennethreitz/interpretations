@@ -212,6 +212,8 @@ def render_audio(score, *, from_measure=None, to_measure=None,
     start = int(max(0, min(start, len(buf))))
     end = int(max(start, min(end, len(buf))))
 
+    offset_sec = start / sample_rate
+
     if start > 0 or end < len(buf):
         buf = buf[start:end]
 
@@ -219,17 +221,18 @@ def render_audio(score, *, from_measure=None, to_measure=None,
         import numpy
         buf = numpy.tile(buf, (loop, 1)) if buf.ndim == 2 else numpy.tile(buf, loop)
 
-    return buf, sample_rate
+    return buf, sample_rate, offset_sec
 
 
-def play_audio(buf, sample_rate, title="", info_lines=None):
+def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
     """Simple terminal playback with progress bar."""
     import sounddevice as sd
     import time
 
     total_frames = len(buf)
     total_sec = total_frames / sample_rate
-    tot_m, tot_s = int(total_sec // 60), int(total_sec % 60)
+    full_sec = total_sec + offset_sec
+    tot_m, tot_s = int(full_sec // 60), int(full_sec % 60)
 
     if title:
         print(f"\n  {title}")
@@ -242,9 +245,10 @@ def play_audio(buf, sample_rate, title="", info_lines=None):
     try:
         sd.play(buf, sample_rate)
         while sd.get_stream().active:
-            cur_sec = time.monotonic() - start
+            elapsed = time.monotonic() - start
+            cur_sec = elapsed + offset_sec
             cur_m, cur_s = int(cur_sec // 60), int(cur_sec % 60)
-            pct = min(1.0, cur_sec / total_sec) if total_sec > 0 else 0
+            pct = min(1.0, cur_sec / full_sec) if full_sec > 0 else 0
             bar_w = 40
             filled = int(pct * bar_w)
             bar = "█" * filled + "░" * (bar_w - filled)
@@ -600,7 +604,7 @@ def main():
     from_sec = parse_time(args.from_time) if args.from_time else None
     to_sec = parse_time(args.to_time) if args.to_time else None
 
-    buf, sr = render_audio(
+    buf, sr, offset_sec = render_audio(
         score,
         from_measure=args.from_measure,
         to_measure=args.to_measure,
@@ -632,7 +636,7 @@ def main():
         parts += "  —  " + "  ".join(extras)
     info.append(parts)
 
-    play_audio(buf, sr, title=title, info_lines=info)
+    play_audio(buf, sr, title=title, info_lines=info, offset_sec=offset_sec)
 
 
 if __name__ == "__main__":
