@@ -220,7 +220,8 @@ for _ in range(2):
                       (Ma,112),(Pa.add(-12),80),(Pa,115),(Pa.add(-12),82),
                       (Dha,118),(Pa.add(-12),80),(Ni,120),(Pa.add(-12),82)]:
         sitar.add(note, Duration.SIXTEENTH, velocity=vel)
-# 32nd note shred
+# 32nd note shred — pull reverb back so the notes cut through
+sitar.set(reverb=0.1, delay=0.08)
 for note in [Sa, Re, Ga, Ma, Pa, Dha, Ni, Sa.add(12),
              Sa.add(12), Ni, Dha, Pa, Ma, Ga, Re, Sa]:
     sitar.add(note, 0.125, velocity=125)
@@ -228,7 +229,8 @@ for note in [Sa, Re, Ga, Ma, Pa, Dha, Ni, Sa.add(12),
 for note in [Ni, Dha, Pa, Ma, Ga, Re, Sa, Pa.add(-12),
              Sa, Re, Ga, Ma, Pa, Dha, Ni, Sa.add(12)]:
     sitar.add(note, 0.125, velocity=120)
-# Held peak note
+# Held peak note — reverb back for the sustain
+sitar.set(reverb=0.35, delay=0.25)
 sitar.add(Sa.add(12), Duration.HALF, velocity=127, bend=-0.2)
 sitar.add(Pa, Duration.HALF, velocity=110)
 sitar.add(Sa, Duration.WHOLE, velocity=100, bend=-0.15)

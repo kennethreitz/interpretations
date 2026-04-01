@@ -1,5 +1,0 @@
-- [Kenneth's music preferences](user_kenneth_music.md) — mixing, composition, workflow for Interpretations album
-- [Interpretations Album](project_interpretations_album.md) — album project, tracks are real music not demos
-- [Commit every change](feedback_commit_every_change.md) — don't batch commits, commit after every edit
-- [Volume and compressor](feedback_volume_compressor.md) — volume=0.0 breaks parts, use velocity for fading
-- [Taj mahal on drums](feedback_taj_mahal_drums.md) — creates choir artifacts, use algorithmic reverb instead
