@@ -87,7 +87,7 @@ def play_pattern(part, pattern, reps=1, vel_offset=0):
 # ── SINE — the sub, the foundation, the pulse ──────────────────
 sine = score.part("sine", synth="sine", volume=0.8,
                   lowpass=200, distortion=0.2, distortion_drive=2.5,
-                  sub_osc=0.5, reverb=0.3, reverb_decay=1.5)
+                  sub_osc=0.5, reverb=0.12, reverb_decay=0.6)
 
 # Bars 1-8: pulsing root
 for _ in range(8):
@@ -195,7 +195,7 @@ for bar in range(8):
 saw = score.part("saw", synth="saw", volume=0.55,
                  lowpass=4000, distortion=0.3, distortion_drive=3.5,
                  saturation=0.7, legato=True, glide=0.03,
-                 reverb=0.45, reverb_decay=2.0)
+                 reverb=0.25, reverb_type="spring")
 saw.lfo("lowpass", rate=0.015, min=1500, max=8000, bars=96, shape="saw")
 
 # Bars 1-8: silent
@@ -321,7 +321,7 @@ for _ in range(4):
 # ── PULSE — square wave, digital, counter-rhythm ───────────────
 pulse = score.part("pulse", synth="square", volume=0.35,
                    lowpass=3000, distortion=0.15, distortion_drive=2.0,
-                   saturation=0.5, reverb=0.5, reverb_decay=2.5)
+                   saturation=0.5, reverb=0.15, reverb_type="taj_mahal")
 pulse.lfo("lowpass", rate=0.03, min=800, max=5000, bars=96, shape="triangle")
 
 # Bars 1-16: silent
