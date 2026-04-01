@@ -13,6 +13,7 @@ Usage:
     uv run play.py tracks/acid_reign.py
     uv run play.py tracks/acid_reign.py --from 17
     uv run play.py tracks/acid_reign.py --from 17 --to 32
+    uv run play.py tracks/the_temple.py --from-time 3:30 --to-time 5:00
     uv run play.py tracks/acid_reign.py -o out.wav
     uv run play.py tracks/acid_reign.py --midi out.mid
     uv run play.py tracks/acid_reign.py --info
@@ -21,6 +22,7 @@ Usage:
     uv run play.py tracks/acid_reign.py --mute kick
     uv run play.py tracks/acid_reign.py --bpm 100
     uv run play.py tracks/acid_reign.py --volume 0.8
+    uv run play.py tracks/the_temple.py --pitch 440
     uv run play.py tracks/acid_reign.py --loop 4
     uv run play.py --list
 """
@@ -125,7 +127,16 @@ def apply_volume(score, volume):
 #  Audio rendering & playback
 # ═══════════════════════════════════════════════════════════════════
 
-def render_audio(score, *, from_measure=None, to_measure=None, loop=1):
+def parse_time(s):
+    """Parse a time string like '1:30', '90', '0:45' into seconds."""
+    if ":" in s:
+        parts = s.split(":")
+        return int(parts[0]) * 60 + float(parts[1])
+    return float(s)
+
+
+def render_audio(score, *, from_measure=None, to_measure=None,
+                 from_seconds=None, to_seconds=None, loop=1):
     """Render score to a numpy audio buffer, optionally slicing by measure."""
     import inspect
     import threading
@@ -159,21 +170,28 @@ def render_audio(score, *, from_measure=None, to_measure=None, loop=1):
 
     buf = result[0]
 
+    start = 0
+    end = len(buf)
+
     if from_measure is not None or to_measure is not None:
         beats_per_measure = score.time_signature.beats_per_measure
         samples_per_beat = int(sample_rate * 60.0 / score.bpm)
         samples_per_measure = samples_per_beat * beats_per_measure
 
-        start = 0
         if from_measure is not None:
             start = (from_measure - 1) * samples_per_measure
-
-        end = len(buf)
         if to_measure is not None:
             end = min(to_measure * samples_per_measure, len(buf))
 
-        start = int(max(0, min(start, len(buf))))
-        end = int(max(start, min(end, len(buf))))
+    if from_seconds is not None:
+        start = int(from_seconds * sample_rate)
+    if to_seconds is not None:
+        end = int(to_seconds * sample_rate)
+
+    start = int(max(0, min(start, len(buf))))
+    end = int(max(start, min(end, len(buf))))
+
+    if start > 0 or end < len(buf):
         buf = buf[start:end]
 
     if loop > 1:
@@ -321,6 +339,10 @@ examples:
                       help="Start playback at measure N")
     play.add_argument("--to", dest="to_measure", type=int, metavar="N",
                       help="Stop playback at measure N")
+    play.add_argument("--from-time", dest="from_time", metavar="TIME",
+                      help="Start playback at time (e.g. 1:30, 90, 0:45)")
+    play.add_argument("--to-time", dest="to_time", metavar="TIME",
+                      help="Stop playback at time (e.g. 3:00, 180)")
     play.add_argument("--loop", type=int, default=1, metavar="N",
                       help="Loop playback N times (default: 1)")
     play.add_argument("--solo", metavar="PARTS",
@@ -333,6 +355,8 @@ examples:
                       help="Override tempo")
     over.add_argument("--volume", type=float, default=1.0, metavar="V",
                       help="Master volume scale (0.0-1.0, default: 1.0)")
+    over.add_argument("--pitch", type=float, metavar="HZ",
+                      help="Override reference pitch (e.g. 432, 440)")
 
     exp = p.add_argument_group("export")
     exp.add_argument("-o", "--output", metavar="FILE",
@@ -370,6 +394,9 @@ def main():
     if args.bpm:
         score.bpm = args.bpm
 
+    if args.pitch:
+        score.reference_pitch = args.pitch
+
     if args.solo:
         apply_solo(score, set(args.solo.split(",")))
 
@@ -394,10 +421,15 @@ def main():
         return
 
     # ── Render ─────────────────────────────────────────────────────
+    from_sec = parse_time(args.from_time) if args.from_time else None
+    to_sec = parse_time(args.to_time) if args.to_time else None
+
     buf, sr = render_audio(
         score,
         from_measure=args.from_measure,
         to_measure=args.to_measure,
+        from_seconds=from_sec,
+        to_seconds=to_sec,
         loop=args.loop,
     )
 
@@ -411,7 +443,11 @@ def main():
 
     # ── Play ───────────────────────────────────────────────────────
     range_str = ""
-    if args.from_measure or args.to_measure:
+    if args.from_time or args.to_time:
+        f = args.from_time or "0:00"
+        t = args.to_time or "end"
+        range_str = f" ({f}-{t})"
+    elif args.from_measure or args.to_measure:
         f = args.from_measure or 1
         t = args.to_measure or "end"
         range_str = f" (measures {f}-{t})"
