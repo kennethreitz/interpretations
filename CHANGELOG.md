@@ -1,62 +1,25 @@
 # Changelog
 
-## The Temple (Track 9)
-- New track: A Phrygian (Bhairavi), 65 BPM, shruti just intonation, A=432 Hz
-- Singing bowls, tambura drone, harmonium, bansuri, tabla, theremin
-- Triple sitar solo with 32nd note jhala shredding
-- Tabla solo with 32nd note tukra cascade
-- Electronic kick enters at bar 49, four-on-the-floor at the peak
-- Room tone pad (noise through taj_mahal reverb) for ambient space
+## 2026-04-01
 
-## The Interruption (Track 8)
-- New track: D minor, 85 BPM — string quartet ambushed by drum & bass
-- Baroque harpsichord + violin/viola/cello quartet, cathedral reverb
-- Bar 33: breakbeat + 808 kick + sub bass + reese slam in
-- Strings keep playing unshaken, beat dissolves, quartet wins
-- Sub bass cranked to 0.9, kick at 1.0, breakbeat at 0.9
+- **Track 9: The Temple** — A Phrygian, 65 BPM, shruti just intonation, A=432 Hz. Singing bowls, tambura, harmonium, bansuri, tabla solo, triple sitar solo with 32nd note shredding, theremin at the peak, electronic kick.
+- **play.py** — interactive curses track picker, progress bar playback, `--from-time`/`--to-time` seeking, `--pitch` override, `--solo`/`--mute` parts, WAV/MIDI export.
+- Acid Reign: cajon louder (0.5), less reverb (0.2)
+- ASCII art header added to README
 
-## Deep Time (Track 7)
-- New track: B minor, 40 BPM, just intonation — 7.5 min ambient drone
-- Tingsha, rainstick, finger cymbals, singing bowls, didgeridoo
-- Sine drones, harmonium, theremin emotional break, choir, cello
-- Noise wind with LFO-controlled filter and volume
+## 2026-03-31
 
-## Silk Road (Track 6)
-- New track: D minor, 95 BPM — caravan picking up musicians
-- China (koto) → India (sitar + tabla) → Persia (mandolin + doumbek) → Mediterranean (guitar + cajon) → all together
+- The Interruption: 808 kick four-on-floor, breakbeat 0.9, kick 1.0
+- The Interruption: sub bass 0.9, sub_osc 0.7
 
-## Acid Reign (Track 5)
-- New track: A minor, 140 BPM — dual 303 acid bass lines
-- Saw + square 303s with resonant filter sweeps (Q up to 20)
-- Five hand-written 16th note groove patterns
-- Cajon in cathedral reverb, Rhodes pad, 808 sub maxed at 1.0
-- Cajon volume 0.5, reverb pulled to 0.2
+## 2026-03-30
 
-## Ghost Protocol (Track 4)
-- New track: F minor, 128 BPM — Portishead intro → Strobe build
-- Dark Rhodes + trip-hop beat, hypnotic saw arp with LFO filter sweep
-- Kick doesn't arrive until bar 49
-- NES square wave melody at the emotional peak
-
-## Chakra (Track 3)
-- New track: root to crown frequency activation journey
-- Shruti tuning at A=432 Hz, ukulele opening
-- Singing bowls, harmonium, tambura, sitar, theremin
-- Metric modulation: 60 → 90 → 108 → 135 BPM
-
-## Culture Clash (Track 2)
-- New track: D minor, 95 BPM — musical fever dream
-- Didgeridoo drone → Rhodes → sitar arps + tabla → Mario World 1-1 → Hotline Bling on steel drum → Nokia ringtone → theremin solo → 16-snare DCI marching cadence
-- Mario gets an 8-bar shred solo with 32nd note scale runs
-
-## Raga Midnight (Track 1)
-- First track: D Phrygian (Bhairavi), shruti just intonation, 90 BPM
-- Tabla, sitar, tambura, dhol
-- Hand-written tabla solo: peshkara → kaida → tukra → tihai
-
-## play.py
-- Interactive curses track picker with animated header
-- Playback with progress bar
-- `--from` / `--to` measure ranges, `--from-time` / `--to-time` time ranges
-- `--solo` / `--mute` parts, `--bpm` / `--pitch` / `--volume` overrides
-- WAV export, MIDI export, `--info`, `--parts`, `--list`
+- **Track 1: Raga Midnight** — D Phrygian, 90 BPM, shruti just intonation. Tabla, sitar, tambura, dhol. Hand-written tabla solo with tihai cadence.
+- **Track 2: Culture Clash** — D minor, 95 BPM. Didgeridoo drone → Rhodes → sitar arps + tabla → Mario World 1-1 → Hotline Bling on steel drum → Nokia ringtone → theremin solo → DCI marching cadence. Mario 8-bar shred solo.
+- **Track 3: Chakra** — Root to crown journey. Shruti tuning at A=432 Hz. Ukulele, singing bowls, harmonium, tambura, sitar, theremin. Tempo: 60 → 90 → 108 → 135 BPM.
+- **Track 4: Ghost Protocol** — F minor, 128 BPM. Portishead dark Rhodes → trip-hop beat → hypnotic saw arp → kick at bar 49 → NES melody at the peak.
+- **Track 5: Acid Reign** — A minor, 140 BPM. Dual 303s (saw + square), five groove patterns, resonant filter sweeps (Q up to 20). Cajon in cathedral reverb, Rhodes pad, 808 sub at 1.0.
+- **Track 6: Silk Road** — D minor, 95 BPM. Koto (China) → sitar + tabla (India) → mandolin + doumbek (Persia) → guitar + cajon (Mediterranean) → all together.
+- **Track 7: Deep Time** — B minor, 40 BPM, just intonation. 7.5 min ambient drone. Tingsha, rainstick, finger cymbals, singing bowls, didgeridoo, sine drones, harmonium, theremin, choir, cello.
+- **Track 8: The Interruption** — D minor, 85 BPM. Harpsichord + string quartet. Bar 33: DnB breakbeat + sub + reese slam in. Strings keep playing. Beat dissolves, quartet wins.
+- Project setup: README, pyproject.toml, .gitignore
