@@ -454,9 +454,9 @@ def pick_track():
 
             key = stdscr.getch()
             if key == curses.KEY_UP or key == ord("k"):
-                selected[0] = max(0, selected[0] - 1)
+                selected[0] = (selected[0] - 1) % len(entries)
             elif key == curses.KEY_DOWN or key == ord("j"):
-                selected[0] = min(len(entries) - 1, selected[0] + 1)
+                selected[0] = (selected[0] + 1) % len(entries)
             elif key in (curses.KEY_ENTER, 10, 13):
                 result[0] = entries[selected[0]][0]
                 return

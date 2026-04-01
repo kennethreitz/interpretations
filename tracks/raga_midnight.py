@@ -100,8 +100,8 @@ for vol in [0.2, 0.12, 0.06, 0.0]:
 
 # ── SITAR — raga melody ─────────────────────────────────────────
 sitar = score.part("sitar", instrument="sitar", volume=0.75,
-                   reverb=0.3, reverb_type="taj_mahal",
-                   delay=0.3, delay_time=0.333, delay_feedback=0.3,
+                   reverb=0.15, reverb_decay=0.8,
+                   delay=0.2, delay_time=0.333, delay_feedback=0.25,
                    pan=-0.15, saturation=0.25, humanize=0.1)
 
 # ── Alap — slow, meditative opening (bars 1-4) ──────────────────
@@ -251,8 +251,8 @@ sitar.add(Sa, Duration.DOTTED_HALF, velocity=80)                # Sa — ring ou
 
 # ── SITAR ARP — fast shimmering 16ths ───────────────────────────
 sitar_arp = score.part("sitar_arp", instrument="sitar", volume=0.65,
-                       reverb=0.3, reverb_decay=1.5,
-                       delay=0.35, delay_time=0.167, delay_feedback=0.4,
+                       reverb=0.15, reverb_decay=0.8,
+                       delay=0.25, delay_time=0.167, delay_feedback=0.3,
                        lowpass=3500, pan=0.4, saturation=0.2, humanize=0.1)
 
 # Silent for 8 bars
