@@ -61,6 +61,123 @@ for _ in range(2):
 for _ in range(8):
     harpsi.rest(Duration.WHOLE)
 
+# ── FLUTE — soaring above the quartet, baroque ornamental ───────
+flute = score.part("flute", instrument="flute", volume=0.22,
+                   reverb=0.5, reverb_type="cathedral",
+                   delay=0.12, delay_time=0.35, delay_feedback=0.15,
+                   pan=0.3, humanize=0.1)
+
+# Bars 1-4: silent — let the harpsichord set the scene
+for _ in range(4):
+    flute.rest(Duration.WHOLE)
+
+# Bars 5-16: ornamental melody — floats above the strings
+flute_a = [
+    (D.add(12), Duration.QUARTER, 78), (E.add(12), Duration.EIGHTH, 72),
+    (F.add(12), Duration.EIGHTH, 75), (A.add(12), Duration.HALF, 80),
+    (G.add(12), Duration.QUARTER, 75), (F.add(12), Duration.EIGHTH, 70),
+    (E.add(12), Duration.EIGHTH, 68), (D.add(12), Duration.HALF, 72),
+    (F.add(12), Duration.QUARTER, 78), (G.add(12), Duration.QUARTER, 75),
+    (A.add(12), Duration.HALF, 82),
+    (Bb.add(12), Duration.QUARTER, 78), (A.add(12), Duration.EIGHTH, 72),
+    (G.add(12), Duration.EIGHTH, 70), (F.add(12), Duration.HALF, 75),
+]
+flute_b = [
+    (A.add(12), Duration.HALF, 80), (Bb.add(12), Duration.QUARTER, 75),
+    (A.add(12), Duration.QUARTER, 72),
+    (G.add(12), Duration.QUARTER, 70), (F.add(12), Duration.EIGHTH, 65),
+    (E.add(12), Duration.EIGHTH, 62), (D.add(12), Duration.HALF, 68),
+    (None, Duration.QUARTER, 0), (F.add(12), Duration.EIGHTH, 72),
+    (G.add(12), Duration.EIGHTH, 75), (A.add(12), Duration.HALF, 80),
+    (D.add(12), Duration.WHOLE, 75),
+]
+for _ in range(2):
+    for note, dur, vel in flute_a:
+        flute.add(note, dur, velocity=vel)
+    for note, dur, vel in flute_b:
+        if note is None:
+            flute.rest(dur)
+        else:
+            flute.add(note, dur, velocity=vel)
+
+# Bars 17-32: more active — 16th note runs between phrases
+flute_c = [
+    (D.add(12), Duration.EIGHTH, 82), (E.add(12), Duration.SIXTEENTH, 75),
+    (F.add(12), Duration.SIXTEENTH, 78), (G.add(12), Duration.QUARTER, 80),
+    (A.add(12), Duration.HALF, 85),
+    (G.add(12), Duration.EIGHTH, 78), (F.add(12), Duration.SIXTEENTH, 72),
+    (E.add(12), Duration.SIXTEENTH, 70), (D.add(12), Duration.QUARTER, 75),
+    (F.add(12), Duration.HALF, 78),
+    (A.add(12), Duration.QUARTER, 85), (Bb.add(12), Duration.EIGHTH, 80),
+    (A.add(12), Duration.EIGHTH, 78), (G.add(12), Duration.HALF, 75),
+    (D.add(12), Duration.WHOLE, 72),
+]
+for _ in range(4):
+    for note, dur, vel in flute_c:
+        flute.add(note, dur, velocity=vel)
+
+# Bars 33-64: keeps playing through the interruption — unshaken
+flute.set(volume=0.4)
+for _ in range(4):
+    for note, dur, vel in flute_a:
+        flute.add(note, dur, velocity=min(127, vel + 8))
+    for note, dur, vel in flute_b:
+        if note is None:
+            flute.rest(dur)
+        else:
+            flute.add(note, dur, velocity=min(127, vel + 8))
+
+# Bars 65-80: returns to gentle — the quartet wins
+flute.set(volume=0.3)
+for _ in range(2):
+    for note, dur, vel in flute_a:
+        flute.add(note, dur, velocity=max(40, vel - 10))
+    for note, dur, vel in flute_b:
+        if note is None:
+            flute.rest(dur)
+        else:
+            flute.add(note, dur, velocity=max(40, vel - 12))
+
+# ── HARP — arpeggiated chords, delicate, angelic ────────────────
+harp = score.part("harp", instrument="harp", volume=0.25,
+                  reverb=0.2, reverb_decay=0.8,
+                  pan=-0.25, humanize=0.1)
+
+# Bars 1-8: silent — let harpsichord establish
+for _ in range(8):
+    harp.rest(Duration.WHOLE)
+
+# Bars 9-32: arpeggiated chords — cascading 16ths
+harp_arps = {
+    "i":   [D.add(-12), A.add(-12), D, F, A, F, D, A.add(-12)],
+    "VI":  [Bb.add(-24), F.add(-12), Bb.add(-12), D, F, D, Bb.add(-12), F.add(-12)],
+    "iv":  [G.add(-12), Bb.add(-12), D, G, Bb, G, D, Bb.add(-12)],
+    "V":   [A.add(-24), E.add(-12), A.add(-12), C, E, C, A.add(-12), E.add(-12)],
+}
+chord_order = ["i", "VI", "iv", "V"]
+for _ in range(6):
+    for name in chord_order:
+        for note in harp_arps[name]:
+            harp.add(note, Duration.EIGHTH, velocity=62)
+
+# Bars 33-48: keeps going through the interruption, quieter
+harp.set(volume=0.18)
+for _ in range(4):
+    for name in chord_order:
+        for note in harp_arps[name]:
+            harp.add(note, Duration.EIGHTH, velocity=55)
+
+# Bars 49-64: silent — overwhelmed
+for _ in range(16):
+    harp.rest(Duration.WHOLE)
+
+# Bars 65-80: returns for the ending
+harp.set(volume=0.22)
+for _ in range(4):
+    for name in chord_order:
+        for note in harp_arps[name]:
+            harp.add(note, Duration.EIGHTH, velocity=58)
+
 # ── VIOLIN 1 — melody, the lead voice ──────────────────────────
 violin1 = score.part("violin_1", instrument="violin", volume=0.4,
                      reverb=0.5, reverb_type="cathedral",
@@ -296,7 +413,7 @@ for _ in range(8):
 # ── SUB BASS — DnB sub, enters with the beat ───────────────────
 sub = score.part("sub", synth="sine", envelope="pad", volume=0.9,
                  lowpass=150, distortion=0.25, distortion_drive=3.5,
-                 sub_osc=0.7, sidechain=0.3)
+                 sub_osc=0.7, sidechain=0.6)
 
 for _ in range(32):
     sub.rest(Duration.WHOLE)
