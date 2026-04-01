@@ -11,9 +11,9 @@
 
 An album of compositions written in Python using [pytheory](https://github.com/kennethreitz/pytheory).
 
-![](https://kennethreitz.org/static/images/interpretations-player.png)
-
 Each track is a `.py` file. Run it to hear it.
+
+![](https://kennethreitz.org/static/images/interpretations-player.png)
 
 ## Tracks
 
