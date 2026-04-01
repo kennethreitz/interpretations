@@ -2,10 +2,11 @@
 
 ## 2026-04-01
 
+- **Track 11: Voltage** — F minor, 138 BPM. Raw oscillators only — sine sub, saw lead, pulse counter-rhythm. Rhythm from monophonic pitch shifts. Saw arp solo, pulse arp solo, 32nd note chaos peak. Kick enters at bar 41.
 - **Track 10: The Dialogue** — E Phrygian, 75 BPM, shruti just intonation, A=432 Hz. Sitar (human) and theremin (machine) find each other through call-and-response. House kick + hats + clap enter at bar 41. 32nd note sitar shredding at the peak with dry reverb.
 - **Track 9: The Temple** — A Phrygian, 65 BPM, shruti just intonation, A=432 Hz. Singing bowls, tambura, harmonium, bansuri, tabla solo, triple sitar solo with 32nd note shredding, theremin at the peak, electronic kick.
 - Raga Midnight: sitar reverb reduced for clarity
-- **play.py** — interactive curses track picker, progress bar playback, `--from-time`/`--to-time` seeking, `--pitch` override, `--solo`/`--mute` parts, WAV/MIDI export.
+- **play.py** — interactive curses track picker with animated header, progress bar playback, `--from-time`/`--to-time` seeking, `--pitch` override, `--solo`/`--mute` parts, WAV/MIDI export, album ordering.
 - Acid Reign: cajon louder (0.5), less reverb (0.2)
 - ASCII art header added to README
 

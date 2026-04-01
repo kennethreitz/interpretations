@@ -24,6 +24,8 @@ Each track is a `.py` file. Run it to hear it.
 7. **Deep Time** — B minor, 40 BPM, just intonation. Ambient drone. Tingsha, rainstick, finger cymbals, singing bowls, didgeridoo, sine drones, harmonium, theremin, choir, cello. 7.5 minutes of deep listening.
 8. **The Interruption** — D minor, 85 BPM. A baroque harpsichord and string quartet playing beautifully. Then at bar 33, a drum & bass breakbeat slams in with sub bass and reese. The strings keep playing like nothing happened. The beat dissolves, the quartet wins.
 9. **The Temple** — A Phrygian (Bhairavi), 65 BPM, shruti just intonation, A=432 Hz. Devotional layers inside a vast stone chamber. Singing bowls, tambura drone, harmonium, sitar, bansuri, tabla. The reverb is the instrument. Everything enters slowly, sings together, then dissolves back into silence.
+10. **The Dialogue** — E Phrygian (Bhairavi), 75 BPM, shruti just intonation, A=432 Hz. Sitar (human) and theremin (machine) start alone, find each other through call-and-response, and become something neither could be on their own. House beat enters when they find the groove.
+11. **Voltage** — F minor, 138 BPM. Raw oscillators, nothing else. Sine sub, saw lead, pulse counter-rhythm. Rhythm is pitch. Saw arp solo, pulse arp solo, 32nd note chaos at the peak. Aggressive, monophonic, electric.
 
 ## Usage
 

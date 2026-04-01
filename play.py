@@ -48,6 +48,8 @@ ALBUM_ORDER = [
     "deep_time.py",
     "the_interruption.py",
     "the_temple.py",
+    "the_dialogue.py",
+    "voltage.py",
 ]
 
 
