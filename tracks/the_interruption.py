@@ -26,9 +26,10 @@ score = Score("4/4", bpm=85)
 # ═══════════════════════════════════════════════════════════════════
 
 # ── HARPSICHORD — baroque opening, sets the scene ───────────────
-harpsi = score.part("harpsichord", instrument="harpsichord", volume=0.25,
-                    reverb=0.45, reverb_type="cathedral",
-                    humanize=0.08)
+harpsi = score.part("harpsichord", instrument="harpsichord", volume=0.3,
+                    reverb=0.55, reverb_type="cathedral",
+                    delay=0.15, delay_time=0.35, delay_feedback=0.2,
+                    pan=0.1, humanize=0.08)
 
 # Bars 1-16: arpeggiated chords — elegant, formal
 for _ in range(4):
@@ -61,10 +62,11 @@ for _ in range(8):
     harpsi.rest(Duration.WHOLE)
 
 # ── VIOLIN 1 — melody, the lead voice ──────────────────────────
-violin1 = score.part("violin_1", instrument="violin", volume=0.35,
-                     reverb=0.45, reverb_type="cathedral",
-                     chorus=0.15, chorus_rate=0.3, chorus_depth=0.005,
-                     humanize=0.1)
+violin1 = score.part("violin_1", instrument="violin", volume=0.4,
+                     reverb=0.5, reverb_type="cathedral",
+                     chorus=0.18, chorus_rate=0.3, chorus_depth=0.006,
+                     delay=0.1, delay_time=0.25, delay_feedback=0.15,
+                     pan=-0.35, humanize=0.1)
 
 # Bars 1-16: opening melody — lyrical, romantic
 melody_a = [
@@ -121,10 +123,11 @@ for _ in range(2):
         violin1.add(note, dur, velocity=max(40, vel - 15))
 
 # ── VIOLIN 2 — harmony, follows violin 1 a third below ─────────
-violin2 = score.part("violin_2", instrument="violin", volume=0.3,
-                     reverb=0.45, reverb_type="cathedral",
-                     chorus=0.15, chorus_rate=0.25, chorus_depth=0.005,
-                     pan=0.2, humanize=0.1)
+violin2 = score.part("violin_2", instrument="violin", volume=0.32,
+                     reverb=0.5, reverb_type="cathedral",
+                     chorus=0.18, chorus_rate=0.25, chorus_depth=0.006,
+                     delay=0.1, delay_time=0.28, delay_feedback=0.12,
+                     pan=0.4, humanize=0.1)
 
 # Bars 1-16: harmony part
 harm_a = [
@@ -170,9 +173,9 @@ for _ in range(2):
         violin2.add(note, dur, velocity=max(35, vel - 15))
 
 # ── VIOLA — inner voice, warm ──────────────────────────────────
-viola = score.part("viola", instrument="viola", volume=0.28,
-                   reverb=0.45, reverb_type="cathedral",
-                   chorus=0.12, chorus_rate=0.2, chorus_depth=0.005,
+viola = score.part("viola", instrument="viola", volume=0.3,
+                   reverb=0.5, reverb_type="cathedral",
+                   chorus=0.15, chorus_rate=0.2, chorus_depth=0.006,
                    pan=-0.15, humanize=0.1)
 
 # Whole note chords throughout — the glue
@@ -184,9 +187,10 @@ for _ in range(10):
         viola.add(chord, Duration.WHOLE, velocity=60)
 
 # ── CELLO — bass voice, foundation ─────────────────────────────
-cello = score.part("cello", instrument="cello", volume=0.3,
-                   reverb=0.35, reverb_type="cathedral",
-                   humanize=0.1)
+cello = score.part("cello", instrument="cello", volume=0.35,
+                   reverb=0.45, reverb_type="cathedral",
+                   chorus=0.1, chorus_rate=0.15, chorus_depth=0.004,
+                   pan=0.15, humanize=0.1)
 
 # Walking bass in half notes
 cello_line = [
