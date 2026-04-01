@@ -599,8 +599,17 @@ def main():
     # ── Play ───────────────────────────────────────────────────────
     # Build info lines for the player UI
     info = []
-    info.append(f"{score.time_signature}  {score.bpm} BPM  {len(score.parts)} parts")
-    info.append(f"{score.system}  {score.temperament}  A={score.reference_pitch} Hz")
+    parts = f"{score.time_signature}  {score.bpm} BPM  {len(score.parts)} parts"
+    extras = []
+    if score.system != "western":
+        extras.append(score.system)
+    if score.temperament != "equal":
+        extras.append(score.temperament)
+    if score.reference_pitch != 440.0:
+        extras.append(f"A={score.reference_pitch} Hz")
+    if extras:
+        parts += "  —  " + "  ".join(extras)
+    info.append(parts)
 
     play_audio(buf, sr, title=title, info_lines=info)
 
