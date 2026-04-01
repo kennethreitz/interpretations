@@ -1,3 +1,12 @@
+```
+    _       _                        _        _   _
+   (_)_ __ | |_ ___ _ __ _ __  _ __ | |_ __ _| |_(_) ___  _ __  ___
+   | | '_ \| __/ _ \ '__| '_ \| '__/ _ \ __/ _` | __| |/ _ \| '_ \/ __|
+   | | | | | ||  __/ |  | |_) | | |  __/ || (_| | |_| | (_) | | | \__ \
+   |_|_| |_|\__\___|_|  | .__/|_|  \___|\__\__,_|\__|_|\___/|_| |_|___/
+                         |_|          ~ written in python ~
+```
+
 # Interpretations
 
 An album of compositions written in Python using [pytheory](https://github.com/kennethreitz/pytheory).
@@ -14,6 +23,7 @@ Each track is a `.py` file. Run it to hear it.
 6. **Silk Road** — D minor, 95 BPM. A caravan picking up musicians along the ancient trade route. Koto solo (China) → sitar + tabla (India) → mandolin + doumbek (Persia) → guitar + cajon (Mediterranean) → all together. Nobody leaves, everyone adds their voice.
 7. **Deep Time** — B minor, 40 BPM, just intonation. Ambient drone. Tingsha, rainstick, finger cymbals, singing bowls, didgeridoo, sine drones, harmonium, theremin, choir, cello. 7.5 minutes of deep listening.
 8. **The Interruption** — D minor, 85 BPM. A baroque harpsichord and string quartet playing beautifully. Then at bar 33, a drum & bass breakbeat slams in with sub bass and reese. The strings keep playing like nothing happened. The beat dissolves, the quartet wins.
+9. **The Temple** — A Phrygian (Bhairavi), 65 BPM, shruti just intonation, A=432 Hz. Devotional layers inside a vast stone chamber. Singing bowls, tambura drone, harmonium, sitar, bansuri, tabla. The reverb is the instrument. Everything enters slowly, sings together, then dissolves back into silence.
 
 ## Usage
 
