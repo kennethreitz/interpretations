@@ -195,7 +195,8 @@ for bar in range(8):
 saw = score.part("saw", synth="saw", volume=0.55,
                  lowpass=4000, distortion=0.3, distortion_drive=3.5,
                  saturation=0.7, legato=True, glide=0.03,
-                 reverb=0.25, reverb_type="spring")
+                 reverb=0.25, reverb_type="spring",
+                 delay=0.35, delay_time=0.326, delay_feedback=0.4)
 saw.lfo("lowpass", rate=0.015, min=1500, max=8000, bars=96, shape="saw")
 
 # Bars 1-8: silent
@@ -321,7 +322,8 @@ for _ in range(4):
 # ── PULSE — square wave, digital, counter-rhythm ───────────────
 pulse = score.part("pulse", synth="square", volume=0.35,
                    lowpass=3000, distortion=0.15, distortion_drive=2.0,
-                   saturation=0.5, reverb=0.15, reverb_type="taj_mahal")
+                   saturation=0.5, reverb=0.15, reverb_type="taj_mahal",
+                   delay=0.3, delay_time=0.435, delay_feedback=0.5)
 pulse.lfo("lowpass", rate=0.03, min=800, max=5000, bars=96, shape="triangle")
 
 # Bars 1-16: silent
@@ -421,7 +423,8 @@ for _ in range(4):
 
 # ── KICK — enters at bar 41 ───────────────────────────────────
 K = DrumSound.KICK
-kick = score.part("kick", volume=1.0, humanize=0.02)
+kick = score.part("kick", volume=1.0, humanize=0.02,
+                  distortion=0.15, distortion_drive=2.0)
 
 for _ in range(40):
     kick.rest(Duration.WHOLE)
