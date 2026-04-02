@@ -34,6 +34,45 @@ Gb = sn[2]; Cb = sn[5]; Db = sn[6]
 #   Bars 57-64:  GRATITUDE — full, resolved, the melody you remember
 # ═══════════════════════════════════════════════════════════════════
 
+# ── DEEP TAMBURA — washing bass, the ground you stand on ───────
+deep = score.part("deep_tambura", synth="sine", envelope="pad", volume=0.2,
+                  reverb=0.6, reverb_type="taj_mahal",
+                  chorus=0.5, chorus_rate=0.04, chorus_depth=0.015,
+                  lowpass=500, sub_osc=0.3, pan=-0.1)
+
+# Bars 1-8: present from the start — you feel it before you hear it
+for vel in [25, 30, 35, 38, 40, 40, 38, 35]:
+    deep.add(Eb.add(-24), Duration.HALF, velocity=vel)
+    deep.add(Bb.add(-24), Duration.HALF, velocity=max(10, vel - 8))
+
+# Bars 9-16: grows with the spiritual seeking
+for _ in range(8):
+    deep.add(Eb.add(-24), Duration.HALF, velocity=42)
+    deep.add(Bb.add(-24), Duration.HALF, velocity=35)
+
+# Bars 17-24: darkens with the shift
+for vel in [40, 38, 35, 32, 28, 25, 20, 15]:
+    deep.add(Eb.add(-24), Duration.HALF, velocity=vel)
+    deep.add(Gb.add(-24), Duration.HALF, velocity=max(8, vel - 10))
+
+# Bars 25-32: swallowed by psychosis bass
+for _ in range(8):
+    deep.rest(Duration.WHOLE)
+
+# Bars 33-40: returns in despair — just the root, nothing else
+for vel in [15, 18, 20, 22, 25, 28, 30, 32]:
+    deep.add(Eb.add(-24), Duration.WHOLE, velocity=vel)
+
+# Bars 41-56: recovery — Sa-Pa returns, stable
+for _ in range(16):
+    deep.add(Eb.add(-24), Duration.HALF, velocity=35)
+    deep.add(Bb.add(-24), Duration.HALF, velocity=28)
+
+# Bars 57-64: gratitude — warm and full
+for vel in [38, 40, 42, 42, 40, 35, 28, 18]:
+    deep.add(Eb.add(-24), Duration.HALF, velocity=vel)
+    deep.add(Bb.add(-24), Duration.HALF, velocity=max(10, vel - 8))
+
 # ── PIANO — the whole story, every note by hand ────────────────
 piano = score.part("piano", instrument="piano", volume=0.55,
                    reverb=0.4, reverb_type="taj_mahal",
@@ -656,7 +695,7 @@ TIT = DrumSound.TABLA_TIT
 GE  = DrumSound.TABLA_GE
 GEB = DrumSound.TABLA_GE_BEND
 
-tabla = score.part("tabla", volume=0.2,
+tabla = score.part("tabla", volume=0.38,
                    reverb=0.25, reverb_type="cathedral", reverb_decay=1.5,
                    pan=-0.15, humanize=0.1)
 
@@ -785,6 +824,69 @@ cello.add(Eb.add(-12), Duration.WHOLE, velocity=48)
 cello.add(Bb.add(-24), Duration.WHOLE, velocity=42)
 cello.add(Eb.add(-12), Duration.WHOLE, velocity=35)
 cello.rest(Duration.WHOLE)
+
+# ── SINGING BOWL CHORUS — surrounds you in the despair ─────────
+bowl_lo = score.part("bowl_lo", instrument="singing_bowl", volume=0.3,
+                     reverb=0.8, reverb_type="taj_mahal",
+                     delay=0.15, delay_time=1.5, delay_feedback=0.2,
+                     pan=-0.35)
+
+bowl_mid = score.part("bowl_mid", instrument="singing_bowl_ring", volume=0.25,
+                      reverb=0.75, reverb_type="taj_mahal",
+                      delay=0.12, delay_time=1.0, delay_feedback=0.18,
+                      pan=0.3)
+
+bowl_hi = score.part("bowl_hi", instrument="singing_bowl_ring", volume=0.2,
+                     reverb=0.7, reverb_type="taj_mahal",
+                     delay=0.1, delay_time=0.75, delay_feedback=0.15,
+                     pan=-0.15)
+
+# Silent until despair
+for _ in range(33):
+    bowl_lo.rest(Duration.WHOLE)
+    bowl_mid.rest(Duration.WHOLE)
+    bowl_hi.rest(Duration.WHOLE)
+
+# Bars 34-40: the chorus rings — each bowl at different intervals
+# Low bowl: every 2 bars
+# Mid bowl: offset, every 3 bars
+# High bowl: every 2 bars, different offset
+for bar in range(34, 41):
+    # Low
+    if bar % 2 == 0:
+        bowl_lo.add(Eb.add(-24), Duration.WHOLE, velocity=55)
+    else:
+        bowl_lo.rest(Duration.WHOLE)
+    # Mid
+    if bar in [34, 37, 40]:
+        bowl_mid.add(Bb.add(-12), Duration.WHOLE, velocity=48)
+    else:
+        bowl_mid.rest(Duration.WHOLE)
+    # High
+    if bar % 2 == 1:
+        bowl_hi.add(Eb, Duration.WHOLE, velocity=42)
+    else:
+        bowl_hi.rest(Duration.WHOLE)
+
+# Bars 41-48: continues through finding ground, fading
+for vel in [50, 45, 40, 35, 28, 22, 15, 8]:
+    bowl_lo.add(Eb.add(-24), Duration.WHOLE, velocity=vel)
+for vel in [42, 38, 32, 25, 18, 12, 0, 0]:
+    if vel > 0:
+        bowl_mid.add(Bb.add(-12), Duration.WHOLE, velocity=vel)
+    else:
+        bowl_mid.rest(Duration.WHOLE)
+for vel in [38, 32, 25, 18, 12, 0, 0, 0]:
+    if vel > 0:
+        bowl_hi.add(Eb, Duration.WHOLE, velocity=vel)
+    else:
+        bowl_hi.rest(Duration.WHOLE)
+
+# Rest of track
+for _ in range(16):
+    bowl_lo.rest(Duration.WHOLE)
+    bowl_mid.rest(Duration.WHOLE)
+    bowl_hi.rest(Duration.WHOLE)
 
 # ── Rhodes — gentle pad, only in gratitude ─────────────────────
 rhodes = score.part("rhodes", instrument="electric_piano", volume=0.15,
