@@ -45,9 +45,10 @@ su = key_upper.scale
 # ═══════════════════════════════════════════════════════════════════
 
 # ── Ukulele — gentle opening, intimate ──────────────────────────
-uke = score.part("uke", instrument="ukulele", volume=0.2,
-                 reverb=0.4, reverb_type="taj_mahal",
-                 humanize=0.1)
+uke = score.part("uke", instrument="ukulele", volume=0.22,
+                 reverb=0.3, reverb_type="taj_mahal",
+                 delay=0.1, delay_time=0.5, delay_feedback=0.15,
+                 pan=-0.2, humanize=0.1)
 
 # ROOT: simple fingerpicked G chord — lots of space
 for _ in range(4):
@@ -66,8 +67,9 @@ for _ in range(48):
     uke.rest(Duration.WHOLE)
 
 # ── 808 Sub — deep grounding tone ──────────────────────────────
-sub = score.part("sub", synth="sine", envelope="pad", volume=0.2,
-                 lowpass=100, distortion=0.1, distortion_drive=2.0)
+sub = score.part("sub", synth="sine", envelope="pad", volume=0.25,
+                 lowpass=100, distortion=0.1, distortion_drive=2.0,
+                 sub_osc=0.3)
 
 # Sub drone throughout — changes root with each section
 # ROOT (8 bars)
@@ -124,8 +126,9 @@ for chord in root_prog:
     harmonium.add(chord, Duration.WHOLE, velocity=55)
 
 # ── Singing bowl — real singing bowl synth ──────────────────────
-bowl = score.part("bowl", instrument="singing_bowl", volume=0.35,
-                  reverb=0.9, reverb_type="taj_mahal")
+bowl = score.part("bowl", instrument="singing_bowl", volume=0.38,
+                  reverb=0.7, reverb_type="taj_mahal",
+                  delay=0.15, delay_time=0.75, delay_feedback=0.2)
 
 # Strike every 4 bars — maximum space to ring, low octave
 bowl.add(sl[0].add(-24), Duration.WHOLE, velocity=85)
@@ -138,10 +141,11 @@ bowl.rest(Duration.WHOLE)
 bowl.rest(Duration.WHOLE)
 
 # ── Rhodes — very sparse, low ──────────────────────────────────
-rhodes = score.part("rhodes", instrument="electric_piano", volume=0.15,
+rhodes = score.part("rhodes", instrument="electric_piano", volume=0.18,
                     reverb=0.6, reverb_type="taj_mahal",
+                    delay=0.15, delay_time=0.333, delay_feedback=0.2,
                     tremolo_depth=0.1, tremolo_rate=3.0,
-                    humanize=0.08)
+                    pan=0.2, humanize=0.08)
 
 # ROOT: one arp every 2 bars
 rhodes.add(sl[0].add(-12), Duration.QUARTER, velocity=55)
@@ -189,10 +193,10 @@ for _ in range(4):
     rhodes.rest(Duration.WHOLE)
 
 # ── Sitar enters — flowing melody ──────────────────────────────
-sitar = score.part("sitar", instrument="sitar", volume=0.25,
-                   reverb=0.4, reverb_type="taj_mahal",
-                   delay=0.3, delay_time=0.333, delay_feedback=0.35,
-                   pan=-0.15, humanize=0.1)
+sitar = score.part("sitar", instrument="sitar", volume=0.35,
+                   reverb=0.3, reverb_type="taj_mahal",
+                   delay=0.25, delay_time=0.333, delay_feedback=0.3,
+                   pan=-0.3, humanize=0.1)
 
 # Silent during root (8 bars at 60bpm)
 for _ in range(8):
@@ -401,10 +405,10 @@ for bar in range(8):
         tabla.hit(TIT, Duration.EIGHTH, velocity=50)
 
 # ── Theremin — the voice of the throat chakra ───────────────────
-theremin = score.part("theremin", instrument="theremin", volume=0.25,
-                      reverb=0.5, reverb_type="taj_mahal",
-                      delay=0.25, delay_time=0.278, delay_feedback=0.3,
-                      pan=0.2, humanize=0.06)
+theremin = score.part("theremin", instrument="theremin", volume=0.3,
+                      reverb=0.45, reverb_type="taj_mahal",
+                      delay=0.3, delay_time=0.278, delay_feedback=0.35,
+                      pan=0.35, humanize=0.06)
 
 # Silent for root+sacral+solar+heart (32 bars)
 for _ in range(32):
