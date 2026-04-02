@@ -29,7 +29,9 @@ acid = score.part("303", synth="saw", volume=0.6,
                   lowpass=2000, lowpass_q=12.0,
                   distortion=0.35, distortion_drive=4.0,
                   saturation=0.8, legato=True, glide=0.05,
-                  sub_osc=0.6, sidechain=0.3)
+                  sub_osc=0.6, sidechain=0.3,
+                  delay=0.2, delay_time=0.214, delay_feedback=0.3,
+                  pan=-0.2)
 # Filter sweeps UP across the track — the whole point of acid
 acid.lfo("lowpass", rate=0.01, min=800, max=12000, bars=64, shape="saw")
 # Resonance also sweeps
@@ -40,7 +42,8 @@ acid2 = score.part("303_sub", synth="square", volume=0.35,
                    lowpass=400, lowpass_q=3.0,
                    distortion=0.5, distortion_drive=6.0,
                    saturation=0.8, legato=True, glide=0.08,
-                   pan=0.15)
+                   delay=0.15, delay_time=0.321, delay_feedback=0.25,
+                   pan=0.25)
 acid2.lfo("lowpass", rate=0.015, min=200, max=4000, bars=64, shape="triangle")
 
 # 16th note patterns — the groove comes from accent + rest placement
@@ -158,7 +161,9 @@ for bar in range(8):
         kick.hit(K, Duration.QUARTER, velocity=vel)
 
 # ── CLAP — 2 and 4 ─────────────────────────────────────────────
-clap = score.part("clap", volume=0.3, reverb=0.15, humanize=0.04)
+clap = score.part("clap", volume=0.3, reverb=0.2,
+                  delay=0.15, delay_time=0.321, delay_feedback=0.2,
+                  pan=-0.1, humanize=0.04)
 
 for _ in range(8):
     clap.rest(Duration.WHOLE)
@@ -175,7 +180,8 @@ for bar in range(8):
     clap.hit(CL, Duration.QUARTER, velocity=vel)
 
 # ── HATS — 16ths, enters bar 9 ─────────────────────────────────
-hats = score.part("hats", volume=0.22, humanize=0.04, sidechain=0.15)
+hats = score.part("hats", volume=0.22, pan=0.15,
+                  humanize=0.04, sidechain=0.15)
 
 for _ in range(8):
     hats.rest(Duration.WHOLE)
@@ -198,8 +204,9 @@ CS = DrumSound.CAJON_SLAP
 CT = DrumSound.CAJON_TAP
 CSS = DrumSound.CAJON_SLAP_SNARE
 
-cajon = score.part("cajon", volume=0.5, reverb=0.2, reverb_type="cathedral",
-                   humanize=0.08)
+cajon = score.part("cajon", volume=0.7, reverb=0.2, reverb_type="cathedral",
+                   delay=0.1, delay_time=0.214, delay_feedback=0.15,
+                   pan=0.3, humanize=0.08)
 
 # Bars 1-32: silent
 for _ in range(32):
@@ -271,10 +278,11 @@ for bar in range(8):
     sub.rest(Duration.HALF)
 
 # ── RHODES — dark chords in the background ──────────────────────
-rhodes = score.part("rhodes", instrument="electric_piano", volume=0.2,
-                    reverb=0.7, reverb_type="taj_mahal",
+rhodes = score.part("rhodes", instrument="electric_piano", volume=0.35,
+                    reverb=0.8, reverb_type="taj_mahal",
+                    delay=0.15, delay_time=0.428, delay_feedback=0.25,
                     tremolo_depth=0.15, tremolo_rate=3.0,
-                    sidechain=0.35, humanize=0.08)
+                    pan=-0.3, sidechain=0.35, humanize=0.08)
 
 prog = [c.transpose(-12) for c in key.progression("i", "VII", "VI", "v")]
 
