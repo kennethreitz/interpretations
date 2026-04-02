@@ -3,6 +3,7 @@
 ## 2026-04-01
 
 - **Track 12: The Observatory** — G minor, 112 BPM. Chapel through shortwave static. Square-wave organ, choir, saw arp, supersaw halo pad, theremin signal. Contributed by ChatGPT.
+- Raga Midnight: doubled to 56 bars (~2:30). Proper raga form (alap→jor→gat→jhala→tabla solo). 808 drop with Re→Ga→Re→Pa(-36) bass pattern. Delay on tabla/dhol. Velocity list fades.
 - Chakra: stereo spread (uke left, Rhodes right, theremin far right), sitar louder/drier, opening reverbs pulled back
 - Silk Road: stereo caravan (east→west = left→right), dry-to-wet koto, tabla grows with caravan, sitar dried out, play_phrases() helper
 - Culture Clash: removed for rework
