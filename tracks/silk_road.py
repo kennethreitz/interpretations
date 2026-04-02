@@ -17,6 +17,23 @@ A  = s[4]; Bb = s[5]; C  = s[6]
 
 score = Score("4/4", bpm=95)
 
+
+def play_phrase(part, phrase, vel_offset=0):
+    """Play a phrase — list of (note, duration, velocity) tuples."""
+    for note, dur, vel in phrase:
+        if note is None:
+            part.rest(dur)
+        else:
+            part.add(note, dur, velocity=min(127, max(20, vel + vel_offset)))
+
+
+def play_phrases(part, phrases, reps=1, vel_offset=0):
+    """Play a list of phrases, repeated."""
+    for _ in range(reps):
+        for phrase in phrases:
+            play_phrase(part, phrase, vel_offset)
+
+
 # ═══════════════════════════════════════════════════════════════════
 # STRUCTURE (80 bars, ~5 min):
 #   Bars  1-16:  China — koto solo, pentatonic
@@ -56,30 +73,11 @@ koto_phrases = [
      (A, Duration.QUARTER, 75)],
     [(D, Duration.WHOLE, 80)],
 ]
-for _ in range(2):
-    for phrase in koto_phrases:
-        for note, dur, vel in phrase:
-            if note is None:
-                koto.rest(dur)
-            else:
-                koto.add(note, dur, velocity=vel)
+play_phrases(koto, koto_phrases, reps=2)
 
 # Bars 17-80: koto continues, same phrases, quieter as others join
-for _ in range(2):
-    for phrase in koto_phrases:
-        for note, dur, vel in phrase:
-            if note is None:
-                koto.rest(dur)
-            else:
-                koto.add(note, dur, velocity=max(35, vel - 15))
-
-for _ in range(6):
-    for phrase in koto_phrases:
-        for note, dur, vel in phrase:
-            if note is None:
-                koto.rest(dur)
-            else:
-                koto.add(note, dur, velocity=max(30, vel - 25))
+play_phrases(koto, koto_phrases, reps=2, vel_offset=-15)
+play_phrases(koto, koto_phrases, reps=6, vel_offset=-25)
 
 # ── SITAR — India, enters bar 17 ───────────────────────────────
 sitar = score.part("sitar", instrument="sitar", volume=0.5,
@@ -102,16 +100,10 @@ sitar_phrases = [
      (F, Duration.QUARTER, 70)],
     [(E, Duration.QUARTER, 72), (D, Duration.DOTTED_HALF, 85)],
 ]
-for _ in range(4):
-    for phrase in sitar_phrases:
-        for note, dur, vel in phrase:
-            sitar.add(note, dur, velocity=vel)
+play_phrases(sitar, sitar_phrases, reps=4)
 
 # Bars 33-80: sitar continues through all sections
-for _ in range(12):
-    for phrase in sitar_phrases:
-        for note, dur, vel in phrase:
-            sitar.add(note, dur, velocity=vel)
+play_phrases(sitar, sitar_phrases, reps=12)
 
 # ── TABLA — India, enters bar 17 ───────────────────────────────
 NA  = DrumSound.TABLA_NA
@@ -171,13 +163,7 @@ oud_phrases = [
     [(Bb, Duration.QUARTER, 85), (A, Duration.EIGHTH, 78),
      (G, Duration.EIGHTH, 72), (A, Duration.HALF, 80)],
 ]
-for _ in range(12):
-    for phrase in oud_phrases:
-        for note, dur, vel in phrase:
-            if note is None:
-                oud.rest(dur)
-            else:
-                oud.add(note, dur, velocity=vel)
+play_phrases(oud, oud_phrases, reps=12)
 
 # ── DOUMBEK — Persia, enters bar 33 ────────────────────────────
 DKD = DrumSound.DOUMBEK_DUM
