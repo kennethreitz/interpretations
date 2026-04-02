@@ -52,6 +52,7 @@ ALBUM_ORDER = [
     "the_observatory.py",
     "gravity.py",
     "sleight_of_hand.py",
+    "an_exception_occurred.py",
 ]
 
 

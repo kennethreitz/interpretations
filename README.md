@@ -30,6 +30,7 @@ Each track is a `.py` file. Run it to hear it.
 11. **The Observatory** — G minor, 112 BPM. Chapel harmonies broadcast through shortwave static. Radio hiss, singing bowl, square-wave organ, choir, saw arp, supersaw halo pad, theremin signal melody. Patient house pulse arrives at bar 33.
 12. **Gravity** — C minor, 88 BPM. Sparse piano stabs, 808 sub, boom bap drums with trap hat evolution. Rhodes melody, string swell. Tambura buried underneath, singing bowl bookends, one sitar bend in the breakdown. The weight of it all.
 13. **Sleight of Hand** — D minor, 100 BPM. Music box → didgeridoo → jazz piano → 808 drop → solo theremin → choir → acid 303 rips through the choir → music box returns over boom bap. You never see the next move coming.
+14. **An Exception Occurred** — Eb major→minor→major, 80 BPM. Piano-driven arc: stability → spiritual seeking (tambura, sitar, om chant) → psychosis (wild theremin, chaos drums) → despair → hymn (pipe organ) → recovery. Every note by hand.
 
 ## Usage
 
