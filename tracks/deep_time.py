@@ -21,7 +21,9 @@ score = Score("4/4", bpm=40, temperament="just")
 
 # ── TINGSHA — crystalline strikes, etheric opening ──────────────
 tingsha = score.part("tingsha", instrument="tingsha", volume=0.2,
-                     reverb=0.4, reverb_decay=2.0)
+                     reverb=0.5, reverb_type="taj_mahal",
+                     delay=0.2, delay_time=1.5, delay_feedback=0.25,
+                     pan=0.35)
 
 # Sparse strikes in the first 8 bars — let each one ring forever
 tingsha.add(B.add(12), Duration.WHOLE, velocity=65)
@@ -46,7 +48,8 @@ for _ in range(32):
     tingsha.rest(Duration.WHOLE)
 
 # ── RAINSTICK — slow texture wash ──────────────────────────────
-rain = score.part("rain", volume=0.15, reverb=0.7, reverb_type="taj_mahal")
+rain = score.part("rain", volume=0.15, reverb=0.5, reverb_type="cathedral",
+                  pan=-0.3)
 
 RS = DrumSound.RAINSTICK_SLOW
 # One slow rainstick every 4 bars in the intro
@@ -72,7 +75,9 @@ for _ in range(32):
 
 # ── FINGER CYMBALS — a few gypsy accents ───────────────────────
 FC = DrumSound.FINGER_CYMBAL
-fingers = score.part("fingers", volume=0.12, reverb=0.6, reverb_type="taj_mahal")
+fingers = score.part("fingers", volume=0.12, reverb=0.4,
+                     delay=0.15, delay_time=1.0, delay_feedback=0.2,
+                     pan=-0.4)
 
 fingers.rest(Duration.WHOLE)
 fingers.rest(Duration.WHOLE)
@@ -98,7 +103,9 @@ for _ in range(32):
 
 # ── SINGING BOWL LOW — deep bowl in the opening ────────────────
 bowl_low = score.part("bowl_low", instrument="singing_bowl_ring", volume=0.45,
-                      reverb=0.9, reverb_type="taj_mahal")
+                      reverb=0.85, reverb_type="taj_mahal",
+                      delay=0.15, delay_time=1.5, delay_feedback=0.2,
+                      pan=-0.15)
 
 # One deep strike every 8 bars
 bowl_low.add(B.add(-24), Duration.WHOLE, velocity=70)
@@ -113,8 +120,9 @@ for _ in range(32):
 
 # ── DIDGERIDOO — primal opening, first voice heard ──────────────
 didge = score.part("didge", instrument="didgeridoo", volume=0.08,
+                   reverb=0.3, reverb_type="cathedral",
                    chorus=0.2, chorus_rate=0.05, chorus_depth=0.01,
-                   lowpass=300)
+                   lowpass=300, pan=0.1)
 
 for _ in range(16):
     didge.add(B.add(-24), Duration.WHOLE, velocity=65)
@@ -126,9 +134,9 @@ for _ in range(24):
 
 # ── DRONE 1 — deep sine, the foundation of the earth ───────────
 earth = score.part("earth", synth="sine", envelope="pad", volume=0.25,
-                   reverb=0.9, reverb_type="taj_mahal",
+                   reverb=0.7, reverb_type="taj_mahal",
                    chorus=0.3, chorus_rate=0.03, chorus_depth=0.015,
-                   lowpass=400)
+                   lowpass=400, sub_osc=0.2)
 
 for _ in range(48):
     earth.add(B.add(-36), Duration.WHOLE, velocity=60)
@@ -157,8 +165,9 @@ for _ in range(40):
 
 # ── HARMONIUM — breathing chords, glacial ──────────────────────
 harmonium = score.part("harmonium", instrument="harmonium", volume=0.06,
-                       reverb=0.8, reverb_type="taj_mahal",
-                       chorus=0.3, chorus_rate=0.1, chorus_depth=0.01)
+                       reverb=0.6, reverb_type="taj_mahal",
+                       chorus=0.3, chorus_rate=0.1, chorus_depth=0.01,
+                       pan=0.15)
 
 for _ in range(12):
     harmonium.rest(Duration.WHOLE)
@@ -183,7 +192,9 @@ for chord in chords:
 
 # ── SINGING BOWL — one strike, ages apart ──────────────────────
 bowl = score.part("bowl", instrument="singing_bowl", volume=0.4,
-                  reverb=0.95, reverb_type="taj_mahal")
+                  reverb=0.85, reverb_type="taj_mahal",
+                  delay=0.2, delay_time=1.5, delay_feedback=0.2,
+                  pan=0.2)
 
 # Strike once every 8 bars
 for i in range(6):
@@ -209,8 +220,9 @@ for note in shimmer_notes:
 
 # ── VOCAL — low "ohhh", enters bar 16 ──────────────────────────
 vocal = score.part("vocal", instrument="vocal", volume=0.12,
-                   reverb=0.85, reverb_type="taj_mahal",
-                   chorus=0.3, chorus_rate=0.06, chorus_depth=0.012)
+                   reverb=0.7, reverb_type="taj_mahal",
+                   chorus=0.3, chorus_rate=0.06, chorus_depth=0.012,
+                   pan=-0.2)
 
 for _ in range(16):
     vocal.rest(Duration.WHOLE)
@@ -226,8 +238,9 @@ for note in vocal_notes:
 
 # ── CHOIR — voices from nowhere, enters bar 20 ─────────────────
 choir = score.part("choir", instrument="choir", volume=0.1,
-                   reverb=0.9, reverb_type="taj_mahal",
-                   chorus=0.4, chorus_rate=0.08, chorus_depth=0.015)
+                   reverb=0.8, reverb_type="cathedral",
+                   chorus=0.4, chorus_rate=0.08, chorus_depth=0.015,
+                   pan=0.25)
 
 for _ in range(20):
     choir.rest(Duration.WHOLE)
@@ -260,10 +273,10 @@ for _ in range(48):
     wind.add(B, Duration.WHOLE, velocity=30)
 
 # ── THEREMIN — emotional break, center of the piece ─────────────
-theremin = score.part("theremin", instrument="theremin", volume=0.2,
-                      reverb=0.8, reverb_type="taj_mahal",
-                      delay=0.2, delay_time=0.75, delay_feedback=0.3,
-                      humanize=0.06)
+theremin = score.part("theremin", instrument="theremin", volume=0.22,
+                      reverb=0.5, reverb_type="taj_mahal",
+                      delay=0.12, delay_time=0.75, delay_feedback=0.15,
+                      pan=-0.1, humanize=0.06)
 
 for _ in range(20):
     theremin.rest(Duration.WHOLE)
@@ -288,8 +301,9 @@ for _ in range(16):
 
 # ── CELLO — one long note, enters late, the human voice ────────
 cello = score.part("cello", instrument="cello", volume=0.15,
-                   reverb=0.7, reverb_type="taj_mahal",
-                   humanize=0.05)
+                   reverb=0.5, reverb_type="cathedral",
+                   delay=0.1, delay_time=1.0, delay_feedback=0.15,
+                   pan=0.3, humanize=0.05)
 
 for _ in range(32):
     cello.rest(Duration.WHOLE)
