@@ -2,6 +2,7 @@
 
 ## 2026-04-02
 
+- **Track 12: Gravity** — C minor, 88 BPM. Hip hop with sparse piano, 808, boom bap + trap hats. Eastern touches: buried tambura, singing bowl bookends, sitar bend in breakdown.
 - The Interruption: breakbeat delay (jungle echo), reese wide with reverb+delay, kick808 distortion, velocity list fades, harp shimmer delay
 - The Observatory: stereo spread — radio left, signal right, broadcast crosses the field, clap delay
 - Voltage: stereo panning — saw left (spring), pulse right (taj_mahal), noise offset

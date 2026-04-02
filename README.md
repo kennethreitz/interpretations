@@ -28,6 +28,7 @@ Each track is a `.py` file. Run it to hear it.
 9. **The Dialogue** — E Phrygian (Bhairavi), 75 BPM, shruti just intonation, A=432 Hz. Sitar (human) and theremin (machine) start alone, find each other through call-and-response, and become something neither could be on their own. House beat enters when they find the groove.
 10. **Voltage** — F minor, 138 BPM. Raw oscillators, nothing else. Sine sub, saw lead, pulse counter-rhythm. Rhythm is pitch. Saw arp solo, pulse arp solo, 32nd note chaos at the peak. Aggressive, monophonic, electric.
 11. **The Observatory** — G minor, 112 BPM. Chapel harmonies broadcast through shortwave static. Radio hiss, singing bowl, square-wave organ, choir, saw arp, supersaw halo pad, theremin signal melody. Patient house pulse arrives at bar 33.
+12. **Gravity** — C minor, 88 BPM. Serious hip hop. Sparse piano stabs, 808 sub, boom bap drums with trap hat evolution. Rhodes melody, string swell. Tambura buried underneath, singing bowl bookends, one sitar bend in the breakdown. The weight of it all.
 
 ## Usage
 
