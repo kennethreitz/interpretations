@@ -46,7 +46,7 @@ roots = [G.add(-24), Eb.add(-24), Bb.add(-24), F.add(-24)]
 # ── RADIO HISS — the sky itself ───────────────────────────────────
 radio = score.part("radio", synth="noise", envelope="pad", volume=0.04,
                    reverb=0.85, reverb_type="taj_mahal",
-                   lowpass=900)
+                   lowpass=900, pan=-0.35)
 radio.lfo("lowpass", rate=0.012, min=300, max=1800, bars=96, shape="sine")
 radio.lfo("volume", rate=0.02, min=0.02, max=0.06, bars=96, shape="triangle")
 
@@ -56,7 +56,8 @@ for _ in range(96):
 # ── BOWL — section markers, like light reflecting off metal ──────
 bowl = score.part("bowl", instrument="singing_bowl", volume=0.42,
                   reverb=1.0, reverb_type="taj_mahal",
-                  delay=0.25, delay_time=0.875, delay_feedback=0.35)
+                  delay=0.25, delay_time=0.875, delay_feedback=0.35,
+                  pan=0.2)
 
 marker_bars = {1: 78, 9: 72, 17: 68, 33: 75, 49: 72, 65: 76, 81: 60, 89: 54}
 for bar in range(1, 97):
@@ -70,7 +71,7 @@ for bar in range(1, 97):
 organ = score.part("organ", synth="square", envelope="organ", volume=0.14,
                    reverb=0.78, reverb_type="taj_mahal",
                    chorus=0.25, chorus_rate=0.18, chorus_depth=0.01,
-                   lowpass=1800)
+                   lowpass=1800, pan=-0.15)
 
 low_prog = [c.transpose(-12) for c in prog]
 mid_prog = prog
@@ -112,7 +113,8 @@ for chord, vel in zip(low_prog * 2, [50, 44, 40, 36, 30, 24, 16, 8]):
 # ── CHOIR — the air inside the room starts singing ────────────────
 choir = score.part("choir", instrument="choir", volume=0.11,
                    reverb=0.95, reverb_type="taj_mahal",
-                   chorus=0.35, chorus_rate=0.08, chorus_depth=0.012)
+                   chorus=0.35, chorus_rate=0.08, chorus_depth=0.012,
+                   pan=0.25)
 
 # Bars 1-32: silence
 for _ in range(32):
@@ -141,7 +143,7 @@ for _ in range(8):
 halo = score.part("halo", synth="supersaw", envelope="pad", volume=0.08,
                   reverb=0.65, reverb_type="taj_mahal",
                   chorus=0.45, chorus_rate=0.2, chorus_depth=0.008,
-                  lowpass=1200)
+                  lowpass=1200, pan=-0.25)
 halo.lfo("lowpass", rate=0.01, min=500, max=2800, bars=96, shape="triangle")
 
 # Bars 1-48: silence
@@ -161,7 +163,7 @@ for _ in range(16):
 arp = score.part("arp", synth="saw", envelope="pluck", volume=0.35,
                  reverb=0.3, delay=0.35, delay_time=0.234,
                  delay_feedback=0.42, lowpass=1300, detune=5,
-                 humanize=0.03)
+                 pan=0.15, humanize=0.03)
 arp.lfo("lowpass", rate=0.009, min=900, max=5200, bars=96, shape="saw")
 
 P1 = [
@@ -273,7 +275,9 @@ for vel in [88, 82, 76, 68, 58, 46, 32, 18]:
     kick.rest(Duration.DOTTED_HALF)
 
 # ── CLAP — 2 and 4, but never aggressive ─────────────────────────
-clap = score.part("clap", volume=0.28, reverb=0.18, humanize=0.04)
+clap = score.part("clap", volume=0.28, reverb=0.18,
+                  delay=0.1, delay_time=0.268, delay_feedback=0.15,
+                  pan=-0.1, humanize=0.04)
 
 # Bars 1-32: silence
 for _ in range(32):
@@ -291,7 +295,7 @@ for _ in range(16):
     clap.rest(Duration.WHOLE)
 
 # ── HATS — offbeat shimmer ────────────────────────────────────────
-hats = score.part("hats", volume=0.22, humanize=0.04)
+hats = score.part("hats", volume=0.22, pan=0.1, humanize=0.04)
 
 # Bars 1-32: silence
 for _ in range(32):
@@ -319,7 +323,7 @@ for _ in range(8):
 signal = score.part("signal", instrument="theremin", volume=0.3,
                     reverb=0.35, reverb_type="taj_mahal",
                     delay=0.2, delay_time=0.375, delay_feedback=0.25,
-                    humanize=0.05)
+                    pan=0.35, humanize=0.05)
 
 # Bars 1-48: silence
 for _ in range(48):
