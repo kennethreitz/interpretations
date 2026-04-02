@@ -31,11 +31,13 @@ GEB = DrumSound.TABLA_GE_BEND # bayan bend
 
 # ── TABLA — with fills every 8 bars ─────────────────────────────
 score.drums("tabla solo", repeats=20, fill="bayan", fill_every=8)
-score.set_drum_effects(reverb=0.35, reverb_decay=1.5, volume=0.35, humanize=0.1)
+score.set_drum_effects(reverb=0.4, reverb_decay=1.8, volume=0.35, humanize=0.1)
 
-# ── DHOL — enters bar 9, drops before tabla solo ────────────────
-dhol = score.part("dhol", synth="sine", volume=0.0,
-                  reverb=0.2, reverb_decay=0.8, humanize=0.08)
+# ── DHOL — the driving heartbeat, enters bar 9 ─────────────────
+dhol = score.part("heartbeat", synth="sine", volume=0.0,
+                  reverb=0.25, reverb_decay=1.0,
+                  delay=0.1, delay_time=0.333, delay_feedback=0.15,
+                  humanize=0.08)
 
 # Silent for 8 bars
 for _ in range(8):
@@ -52,27 +54,23 @@ for _ in range(8):
     dhol.hit(DrumSound.DHOL_DAGGA, Duration.EIGHTH, velocity=75)
     dhol.hit(DrumSound.DHOL_BOTH, Duration.EIGHTH, velocity=90, articulation="accent")
 
-# Bars 17-20: fade out during sitar finale
-dhol.set(volume=0.2)
-for _ in range(2):
-    dhol.hit(DrumSound.DHOL_BOTH, Duration.QUARTER, velocity=90)
-    dhol.hit(DrumSound.DHOL_TILLI, Duration.EIGHTH, velocity=60)
-    dhol.hit(DrumSound.DHOL_DAGGA, Duration.EIGHTH, velocity=70)
-    dhol.hit(DrumSound.DHOL_TILLI, Duration.EIGHTH, velocity=55)
-    dhol.hit(DrumSound.DHOL_TILLI, Duration.EIGHTH, velocity=50)
-    dhol.hit(DrumSound.DHOL_DAGGA, Duration.EIGHTH, velocity=65)
-    dhol.hit(DrumSound.DHOL_BOTH, Duration.EIGHTH, velocity=80)
-dhol.set(volume=0.0)
-for _ in range(2):
-    dhol.rest(Duration.WHOLE)
+# Bars 17-20: fade out — velocity list
+for vel in [80, 60, 40, 20]:
+    dhol.hit(DrumSound.DHOL_BOTH, Duration.QUARTER, velocity=vel, articulation="accent")
+    dhol.hit(DrumSound.DHOL_TILLI, Duration.EIGHTH, velocity=max(15, vel - 25))
+    dhol.hit(DrumSound.DHOL_DAGGA, Duration.EIGHTH, velocity=max(15, vel - 15))
+    dhol.hit(DrumSound.DHOL_TILLI, Duration.EIGHTH, velocity=max(15, vel - 30))
+    dhol.hit(DrumSound.DHOL_TILLI, Duration.EIGHTH, velocity=max(15, vel - 35))
+    dhol.hit(DrumSound.DHOL_DAGGA, Duration.EIGHTH, velocity=max(15, vel - 20))
+    dhol.hit(DrumSound.DHOL_BOTH, Duration.EIGHTH, velocity=max(15, vel - 10))
 
 # Silent through tabla solo
 for _ in range(4):
     dhol.rest(Duration.WHOLE)
 
-# ── TAMBURA DRONE — the bed of everything ────────────────────────
-tambura = score.part("tambura", synth="sine", envelope="pad", volume=0.3,
-                     reverb=0.5, reverb_type="taj_mahal",
+# ── TAMBURA — the earth beneath everything ───────────────────────
+tambura = score.part("earth", synth="sine", envelope="pad", volume=0.3,
+                     reverb=0.45, reverb_type="taj_mahal",
                      chorus=0.4, chorus_rate=0.1, chorus_depth=0.01,
                      lowpass=1200, pan=-0.3, saturation=0.2)
 
@@ -80,27 +78,25 @@ tambura = score.part("tambura", synth="sine", envelope="pad", volume=0.3,
 for _ in range(20):
     tambura.add(Sa.add(-24), Duration.HALF)   # Sa low (D2)
     tambura.add(Pa.add(-24), Duration.HALF)   # Pa low (A2)
-# Fade out for tabla solo
-for vol in [0.3, 0.2, 0.1, 0.05]:
-    tambura.set(volume=vol)
-    tambura.add(Sa.add(-24), Duration.HALF)
-    tambura.add(Pa.add(-24), Duration.HALF)
+# Fade out for tabla solo — velocity list
+for vel in [50, 38, 25, 12]:
+    tambura.add(Sa.add(-24), Duration.HALF, velocity=vel)
+    tambura.add(Pa.add(-24), Duration.HALF, velocity=max(5, vel - 8))
 
-# ── TAMBURA HIGH — octave shimmer ────────────────────────────────
-tambura_hi = score.part("tambura_hi", synth="sine", envelope="pad", volume=0.3,
-                        reverb=0.5, reverb_type="taj_mahal",
+# ── TAMBURA HIGH — the sky above ─────────────────────────────────
+tambura_hi = score.part("sky", synth="sine", envelope="pad", volume=0.3,
+                        reverb=0.45, reverb_type="taj_mahal",
                         chorus=0.5, chorus_rate=0.08, chorus_depth=0.012,
                         lowpass=2000, pan=0.3, saturation=0.15)
 
 for _ in range(20):
     tambura_hi.add(Sa.add(-12), Duration.WHOLE)  # Sa mid (D3)
-for vol in [0.2, 0.12, 0.06, 0.0]:
-    tambura_hi.set(volume=vol)
-    tambura_hi.add(Sa.add(-12), Duration.WHOLE)
+for vel in [45, 30, 15, 5]:
+    tambura_hi.add(Sa.add(-12), Duration.WHOLE, velocity=vel)
 
 # ── SITAR — raga melody ─────────────────────────────────────────
 sitar = score.part("sitar", instrument="sitar", volume=0.75,
-                   reverb=0.15, reverb_decay=0.8,
+                   reverb=0.25, reverb_type="taj_mahal",
                    delay=0.2, delay_time=0.333, delay_feedback=0.25,
                    pan=-0.15, saturation=0.25, humanize=0.1)
 
@@ -249,8 +245,8 @@ sitar.hold(Sa, Duration.WHOLE, velocity=60)
 sitar.add(Sa.add(12), Duration.QUARTER, velocity=127)           # Sa high!
 sitar.add(Sa, Duration.DOTTED_HALF, velocity=80)                # Sa — ring out
 
-# ── SITAR ARP — fast shimmering 16ths ───────────────────────────
-sitar_arp = score.part("sitar_arp", instrument="sitar", volume=0.65,
+# ── SITAR ARP — shimmering cascade ──────────────────────────────
+sitar_arp = score.part("cascade", instrument="sitar", volume=0.65,
                        reverb=0.15, reverb_decay=0.8,
                        delay=0.25, delay_time=0.167, delay_feedback=0.3,
                        lowpass=3500, pan=0.4, saturation=0.2, humanize=0.1)
@@ -285,9 +281,11 @@ sitar_arp.set(volume=0.0)
 for _ in range(6):
     sitar_arp.rest(Duration.WHOLE)
 
-# ── TABLA SOLO (bars 21-24) — hand-written, virtuosic ───────────
-tabla = score.part("tabla_solo", volume=0.35,
-                   reverb=0.25, reverb_decay=1.5, humanize=0.05)
+# ── TABLA SOLO (bars 21-24) — the voice speaks alone ────────────
+tabla = score.part("voice", volume=0.35,
+                   reverb=0.2, reverb_decay=1.2,
+                   delay=0.15, delay_time=0.333, delay_feedback=0.25,
+                   humanize=0.05)
 
 # Silent for 20 bars
 for _ in range(20):
