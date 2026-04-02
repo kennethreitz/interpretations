@@ -432,7 +432,7 @@ for _ in range(44):
 
 # ── THEREMIN — psychosis, bars 21-32 ───────────────────────────
 # The mind unmoored. Wild bends. Beautiful and terrifying.
-theremin = score.part("theremin", instrument="theremin", volume=0.35,
+theremin = score.part("theremin", instrument="theremin", volume=0.25,
                       reverb=0.25, reverb_decay=1.0,
                       delay=0.12, delay_time=0.375, delay_feedback=0.2,
                       pan=-0.15, humanize=0.04)
@@ -453,7 +453,7 @@ theremin.rest(Duration.HALF)
 theremin.add(Db.add(12), Duration.HALF, velocity=68, bend=2.5)
 
 # Bars 23-24: intensifying — the bends get wider, faster
-theremin.set(volume=0.45)
+theremin.set(volume=0.35)
 theremin.add(Eb.add(12), Duration.QUARTER, velocity=78, bend=3.0)
 theremin.add(Bb.add(12), Duration.EIGHTH, velocity=72, bend=-2.5)
 theremin.add(Eb.add(12), Duration.EIGHTH, velocity=80, bend=2.0)
@@ -464,46 +464,46 @@ theremin.add(Bb.add(12), Duration.EIGHTH, velocity=72, bend=3.0)
 theremin.add(Eb.add(12), Duration.HALF, velocity=85, bend=-3.5)
 
 # Bars 25-26: FULL PSYCHOSIS — screaming, octave leaps, max bends
-theremin.set(volume=0.55)
-theremin.add(Eb.add(12), Duration.EIGHTH, velocity=95, bend=5.0)
-theremin.add(Eb, Duration.EIGHTH, velocity=70, bend=-3.0)        # 2 octave drop
-theremin.add(Eb.add(12), Duration.EIGHTH, velocity=98, bend=-4.0)
-theremin.add(Gb.add(12), Duration.EIGHTH, velocity=78, bend=3.0)
-theremin.add(Bb.add(12), Duration.QUARTER, velocity=100, bend=5.0) # highest
-theremin.add(Cb, Duration.QUARTER, velocity=65, bend=-4.0)        # crash down
-theremin.add(Eb.add(12), Duration.EIGHTH, velocity=95, bend=4.0)
-theremin.add(Bb, Duration.EIGHTH, velocity=72, bend=-3.0)
-theremin.add(Eb.add(12), Duration.EIGHTH, velocity=100, bend=-5.0)
-theremin.add(Db.add(12), Duration.EIGHTH, velocity=80, bend=4.0)
-theremin.add(Ab.add(12), Duration.QUARTER, velocity=102, bend=5.0) # screaming
-theremin.add(Gb, Duration.QUARTER, velocity=68, bend=-5.0)        # plummet
+theremin.set(volume=0.32)
+theremin.add(Eb.add(12), Duration.EIGHTH, velocity=78, bend=5.0)
+theremin.add(Eb, Duration.EIGHTH, velocity=58, bend=-3.0)
+theremin.add(Eb.add(12), Duration.EIGHTH, velocity=80, bend=-4.0)
+theremin.add(Gb.add(12), Duration.EIGHTH, velocity=65, bend=3.0)
+theremin.add(Bb.add(12), Duration.QUARTER, velocity=82, bend=5.0)
+theremin.add(Cb, Duration.QUARTER, velocity=55, bend=-4.0)
+theremin.add(Eb.add(12), Duration.EIGHTH, velocity=78, bend=4.0)
+theremin.add(Bb, Duration.EIGHTH, velocity=60, bend=-3.0)
+theremin.add(Eb.add(12), Duration.EIGHTH, velocity=82, bend=-5.0)
+theremin.add(Db.add(12), Duration.EIGHTH, velocity=68, bend=4.0)
+theremin.add(Ab.add(12), Duration.QUARTER, velocity=85, bend=5.0)
+theremin.add(Gb, Duration.QUARTER, velocity=58, bend=-5.0)
 
-# Bars 27-28: the voices — rapid, fragmented, overlapping thoughts
-theremin.add(Eb.add(12), Duration.SIXTEENTH, velocity=88, bend=2.0)
-theremin.add(Bb.add(12), Duration.SIXTEENTH, velocity=95, bend=-3.0)
-theremin.add(Gb, Duration.SIXTEENTH, velocity=70, bend=4.0)
-theremin.add(Eb.add(12), Duration.SIXTEENTH, velocity=98, bend=-4.0)
-theremin.add(Db.add(12), Duration.EIGHTH, velocity=82, bend=3.0)
-theremin.add(Ab.add(12), Duration.EIGHTH, velocity=100, bend=-5.0)
-theremin.add(Eb, Duration.QUARTER, velocity=72, bend=5.0)
-theremin.add(Bb.add(12), Duration.QUARTER, velocity=105, bend=-4.0)
+# Bars 27-28: the voices — rapid, fragmented
+theremin.add(Eb.add(12), Duration.SIXTEENTH, velocity=72, bend=2.0)
+theremin.add(Bb.add(12), Duration.SIXTEENTH, velocity=78, bend=-3.0)
+theremin.add(Gb, Duration.SIXTEENTH, velocity=58, bend=4.0)
+theremin.add(Eb.add(12), Duration.SIXTEENTH, velocity=80, bend=-4.0)
+theremin.add(Db.add(12), Duration.EIGHTH, velocity=68, bend=3.0)
+theremin.add(Ab.add(12), Duration.EIGHTH, velocity=82, bend=-5.0)
+theremin.add(Eb, Duration.QUARTER, velocity=60, bend=5.0)
+theremin.add(Bb.add(12), Duration.QUARTER, velocity=85, bend=-4.0)
 # Sustained scream
-theremin.add(Eb.add(12), Duration.HALF, velocity=108, bend=5.0)
-theremin.add(Eb.add(12), Duration.EIGHTH, velocity=100, bend=-5.0)
-theremin.add(Bb.add(12), Duration.EIGHTH, velocity=85, bend=3.0)
-theremin.add(Gb.add(12), Duration.EIGHTH, velocity=78, bend=-2.0)
-theremin.add(Db.add(12), Duration.EIGHTH, velocity=72, bend=2.0)
+theremin.add(Eb.add(12), Duration.HALF, velocity=85, bend=5.0)
+theremin.add(Eb.add(12), Duration.EIGHTH, velocity=80, bend=-5.0)
+theremin.add(Bb.add(12), Duration.EIGHTH, velocity=70, bend=3.0)
+theremin.add(Gb.add(12), Duration.EIGHTH, velocity=65, bend=-2.0)
+theremin.add(Db.add(12), Duration.EIGHTH, velocity=60, bend=2.0)
 
 # Bars 29-30: sustained madness — the peak holds
-theremin.add(Eb.add(12), Duration.QUARTER, velocity=105, bend=-5.0)
-theremin.add(Bb.add(12), Duration.QUARTER, velocity=108, bend=4.0)
-theremin.add(Gb, Duration.QUARTER, velocity=72, bend=-3.0)
-theremin.add(Eb.add(12), Duration.QUARTER, velocity=110, bend=5.0)
-theremin.add(Db.add(12), Duration.HALF, velocity=85, bend=-4.0)
-theremin.add(Ab.add(12), Duration.HALF, velocity=105, bend=5.0)
+theremin.add(Eb.add(12), Duration.QUARTER, velocity=82, bend=-5.0)
+theremin.add(Bb.add(12), Duration.QUARTER, velocity=85, bend=4.0)
+theremin.add(Gb, Duration.QUARTER, velocity=60, bend=-3.0)
+theremin.add(Eb.add(12), Duration.QUARTER, velocity=85, bend=5.0)
+theremin.add(Db.add(12), Duration.HALF, velocity=72, bend=-4.0)
+theremin.add(Ab.add(12), Duration.HALF, velocity=82, bend=5.0)
 
 # Bars 31-32: the descent — falling, falling, slower
-theremin.set(volume=0.45)
+theremin.set(volume=0.35)
 theremin.add(Eb.add(12), Duration.HALF, velocity=82, bend=-3.0)
 theremin.add(Bb, Duration.HALF, velocity=72, bend=-2.0)
 theremin.add(Gb, Duration.HALF, velocity=62, bend=-1.5)
