@@ -43,9 +43,18 @@ tingsha.rest(Duration.WHOLE)
 tingsha.add(Fs.add(12), Duration.WHOLE, velocity=42)
 tingsha.rest(Duration.WHOLE)
 tingsha.rest(Duration.WHOLE)
-# Rest of track: silent
-for _ in range(32):
-    tingsha.rest(Duration.WHOLE)
+# Bars 17-48: continues throughout — one strike every 4-6 bars
+tingsha_strikes = {
+    18: (B.add(12), 45), 22: (Fs.add(12), 40), 26: (D.add(12), 42),
+    30: (B.add(12), 38), 34: (E.add(12), 35), 38: (Fs.add(12), 38),
+    42: (B.add(12), 32), 46: (D.add(12), 28),
+}
+for bar in range(17, 49):
+    if bar in tingsha_strikes:
+        note, vel = tingsha_strikes[bar]
+        tingsha.add(note, Duration.WHOLE, velocity=vel)
+    else:
+        tingsha.rest(Duration.WHOLE)
 
 # ── RAINSTICK — slow texture wash ──────────────────────────────
 rain = score.part("rain", volume=0.15, reverb=0.5, reverb_type="cathedral",
@@ -107,16 +116,15 @@ bowl_low = score.part("bowl_low", instrument="singing_bowl_ring", volume=0.45,
                       delay=0.15, delay_time=1.5, delay_feedback=0.2,
                       pan=-0.15)
 
-# One deep strike every 8 bars
-bowl_low.add(B.add(-24), Duration.WHOLE, velocity=70)
-for _ in range(7):
-    bowl_low.rest(Duration.WHOLE)
-bowl_low.add(B.add(-24), Duration.WHOLE, velocity=62)
-for _ in range(7):
-    bowl_low.rest(Duration.WHOLE)
-# Rest of track
-for _ in range(32):
-    bowl_low.rest(Duration.WHOLE)
+# Strike every 8 bars throughout — the deep pulse of the earth
+bowl_strikes = [
+    (B.add(-24), 70), (B.add(-24), 62), (Fs.add(-24), 58),
+    (B.add(-24), 55), (D.add(-12), 50), (B.add(-24), 45),
+]
+for note, vel in bowl_strikes:
+    bowl_low.add(note, Duration.WHOLE, velocity=vel)
+    for _ in range(7):
+        bowl_low.rest(Duration.WHOLE)
 
 # ── DIDGERIDOO — primal opening, first voice heard ──────────────
 didge = score.part("didge", instrument="didgeridoo", volume=0.08,
