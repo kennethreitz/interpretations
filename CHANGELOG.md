@@ -3,6 +3,7 @@
 ## 2026-04-01
 
 - **Track 12: The Observatory** — G minor, 112 BPM. Chapel through shortwave static. Square-wave organ, choir, saw arp, supersaw halo pad, theremin signal. Contributed by ChatGPT.
+- Ghost Protocol: stereo field overhaul — Rhodes delay, trip-hop dub snare, arp panned right, NES louder, bass sidechain, pluck stabs wide
 - The Observatory: theremin louder (0.3), less reverb (0.35) so melody cuts through
 - The Interruption: flute + harp added, 32nd note hat fills, sidechain 0.6, stereo string quartet, delay on harpsichord/violins
 - Voltage: dotted delay on saw (spring) and pulse (taj_mahal), distortion on kick
