@@ -1,25 +1,26 @@
 # Changelog
 
-## 2026-04-01
+## 2026-04-02
 
-- **Track 12: The Observatory** — G minor, 112 BPM. Chapel through shortwave static. Square-wave organ, choir, saw arp, supersaw halo pad, theremin signal. Contributed by ChatGPT.
 - The Observatory: stereo spread — radio left, signal right, broadcast crosses the field, clap delay
 - Voltage: stereo panning — saw left (spring), pulse right (taj_mahal), noise offset
 - Acid Reign: stereo 303s with delay (different times, opposite pans), clap delay, cajon slapback, Rhodes louder/wetter panned left
 - Deep Time: stereo spread across 17 parts, three reverb spaces (taj_mahal/cathedral/algorithmic), long delays on percussion, tingsha and singing bowls extended through full track
 - Raga Midnight: doubled to 56 bars (~2:30). Proper raga form (alap→jor→gat→jhala→tabla solo). 808 drop with Re→Ga→Re→Pa(-36) bass pattern. Delay on tabla/dhol. Velocity list fades.
 - Chakra: stereo spread (uke left, Rhodes right, theremin far right), sitar louder/drier, opening reverbs pulled back
-- Silk Road: stereo caravan (east→west = left→right), dry-to-wet koto, tabla grows with caravan, sitar dried out, play_phrases() helper
-- Culture Clash: removed for rework
+- Silk Road: stereo caravan (east→west = left→right), dry-to-wet koto, tabla grows with caravan, play_phrases() helper
 - Ghost Protocol: stereo field overhaul — Rhodes delay, trip-hop dub snare, arp panned right, NES louder, bass sidechain, pluck stabs wide
-- The Observatory: theremin louder (0.3), less reverb (0.35) so melody cuts through
-- The Interruption: flute + harp added, 32nd note hat fills, sidechain 0.6, stereo string quartet, delay on harpsichord/violins
-- Voltage: dotted delay on saw (spring) and pulse (taj_mahal), distortion on kick
-- **Track 11: Voltage** — F minor, 138 BPM. Raw oscillators only — sine sub (dry), saw lead (spring reverb), pulse counter-rhythm (taj_mahal). Rhythm from monophonic pitch shifts. Saw arp solo, pulse arp solo, 32nd note chaos peak. Kick maxed at 1.0.
-- **Track 10: The Dialogue** — E Phrygian, 75 BPM, shruti just intonation, A=432 Hz. Sitar (human) and theremin (machine) find each other through call-and-response. House kick + hats + clap enter at bar 41. 32nd note sitar shredding at the peak with dry reverb.
-- **Track 9: The Temple** — A Phrygian, 65 BPM, shruti just intonation, A=432 Hz. Singing bowls, tambura, harmonium, bansuri, tabla solo, triple sitar solo with 32nd note shredding, theremin at the peak, electronic kick.
-- Raga Midnight: sitar reverb reduced for clarity
-- **play.py** — interactive curses track picker with animated header, progress bar playback, `--from-time`/`--to-time` seeking, `--pitch` override, `--solo`/`--mute` parts, WAV/MIDI export, album ordering.
+- pytheory v0.40.8: fix hold() inflating Part.total_beats and Score.duration_ms
+
+## 2026-04-01
+
+- **Track 12: The Observatory** — G minor, 112 BPM. Chapel through shortwave static. Square-wave organ, choir, saw arp, supersaw halo pad, theremin signal. Contributed by ChatGPT 5.2 Pro.
+- **Track 11: Voltage** — F minor, 138 BPM. Raw oscillators only — sine sub, saw lead (spring reverb), pulse counter-rhythm (taj_mahal). Saw arp solo, pulse arp solo, 32nd note chaos peak.
+- **Track 10: The Dialogue** — E Phrygian, 75 BPM, shruti just intonation, A=432 Hz. Sitar (human) and theremin (machine) find each other through call-and-response. House beat enters at bar 41.
+- **Track 9: The Temple** — A Phrygian, 65 BPM, shruti just intonation, A=432 Hz. Singing bowls, tambura, harmonium, bansuri, tabla solo, triple sitar solo, theremin at the peak, electronic kick.
+- The Interruption: flute + harp added, 32nd note hat fills, sidechain 0.6, stereo string quartet
+- Culture Clash: removed for rework
+- **play.py** — curses track picker, progress bar, `--from-time`/`--to-time`, `--pitch`, `--solo`/`--mute`, WAV/MIDI export, album ordering
 - Acid Reign: cajon louder (0.5), less reverb (0.2)
 - ASCII art header added to README
 
@@ -31,7 +32,7 @@
 ## 2026-03-30
 
 - **Track 1: Raga Midnight** — D Phrygian, 90 BPM, shruti just intonation. Tabla, sitar, tambura, dhol. Hand-written tabla solo with tihai cadence.
-- **Track 2: Culture Clash** — D minor, 95 BPM. Didgeridoo drone → Rhodes → sitar arps + tabla → Mario World 1-1 → Hotline Bling on steel drum → Nokia ringtone → theremin solo → DCI marching cadence. Mario 8-bar shred solo.
+- **Track 2: Culture Clash** — D minor, 95 BPM. Didgeridoo drone → Rhodes → sitar arps + tabla → Mario World 1-1 → Hotline Bling on steel drum → Nokia ringtone → theremin solo → DCI marching cadence.
 - **Track 3: Chakra** — Root to crown journey. Shruti tuning at A=432 Hz. Ukulele, singing bowls, harmonium, tambura, sitar, theremin. Tempo: 60 → 90 → 108 → 135 BPM.
 - **Track 4: Ghost Protocol** — F minor, 128 BPM. Portishead dark Rhodes → trip-hop beat → hypnotic saw arp → kick at bar 49 → NES melody at the peak.
 - **Track 5: Acid Reign** — A minor, 140 BPM. Dual 303s (saw + square), five groove patterns, resonant filter sweeps (Q up to 20). Cajon in cathedral reverb, Rhodes pad, 808 sub at 1.0.
