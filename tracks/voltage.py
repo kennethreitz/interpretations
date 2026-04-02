@@ -87,7 +87,8 @@ def play_pattern(part, pattern, reps=1, vel_offset=0):
 # ── SINE — the sub, the foundation, the pulse ──────────────────
 sine = score.part("sine", synth="sine", volume=0.8,
                   lowpass=200, distortion=0.2, distortion_drive=2.5,
-                  sub_osc=0.5, reverb=0.12, reverb_decay=0.6)
+                  sub_osc=0.5, reverb=0.12, reverb_decay=0.6,
+                  pan=0.05)
 
 # Bars 1-8: pulsing root
 for _ in range(8):
@@ -196,7 +197,8 @@ saw = score.part("saw", synth="saw", volume=0.55,
                  lowpass=4000, distortion=0.3, distortion_drive=3.5,
                  saturation=0.7, legato=True, glide=0.03,
                  reverb=0.25, reverb_type="spring",
-                 delay=0.35, delay_time=0.326, delay_feedback=0.4)
+                 delay=0.35, delay_time=0.326, delay_feedback=0.4,
+                 pan=-0.25)
 saw.lfo("lowpass", rate=0.015, min=1500, max=8000, bars=96, shape="saw")
 
 # Bars 1-8: silent
@@ -323,7 +325,8 @@ for _ in range(4):
 pulse = score.part("pulse", synth="square", volume=0.35,
                    lowpass=3000, distortion=0.15, distortion_drive=2.0,
                    saturation=0.5, reverb=0.15, reverb_type="taj_mahal",
-                   delay=0.3, delay_time=0.435, delay_feedback=0.5)
+                   delay=0.3, delay_time=0.435, delay_feedback=0.5,
+                   pan=0.3)
 pulse.lfo("lowpass", rate=0.03, min=800, max=5000, bars=96, shape="triangle")
 
 # Bars 1-16: silent
@@ -453,7 +456,8 @@ for bar in range(8):
 # ── NOISE HIT — percussive bursts ─────────────────────────────
 noise = score.part("noise", synth="noise", envelope="pluck", volume=0.2,
                    lowpass=6000, highpass=2000,
-                   distortion=0.5, distortion_drive=4.0)
+                   distortion=0.5, distortion_drive=4.0,
+                   pan=-0.15)
 
 for _ in range(24):
     noise.rest(Duration.WHOLE)
