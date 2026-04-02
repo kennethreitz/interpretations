@@ -81,7 +81,7 @@ play_phrases(koto, koto_phrases, reps=6, vel_offset=-25)
 
 # ── SITAR — India, enters bar 17 ───────────────────────────────
 sitar = score.part("sitar", instrument="sitar", volume=0.5,
-                   reverb=0.2, reverb_decay=1.0,
+                   reverb=0.35, reverb_type="taj_mahal",
                    delay=0.2, delay_time=0.333, delay_feedback=0.3,
                    pan=-0.3, humanize=0.1)
 
