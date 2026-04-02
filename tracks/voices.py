@@ -284,7 +284,7 @@ for _ in range(16):
 # The thing that's real. Cuts through the voices.
 piano = score.part("piano", instrument="piano", volume=0.45,
                    reverb=0.35, reverb_type="taj_mahal",
-                   delay=0.1, delay_time=0.462, delay_feedback=0.15,
+                   delay=0.2, delay_time=0.346, delay_feedback=0.3,
                    pan=0.1, humanize=0.1)
 
 for _ in range(32):
