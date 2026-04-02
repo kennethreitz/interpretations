@@ -2,6 +2,8 @@
 
 ## 2026-04-01
 
+- **Track 12: The Observatory** — G minor, 112 BPM. Chapel through shortwave static. Square-wave organ, choir, saw arp, supersaw halo pad, theremin signal. Contributed by ChatGPT.
+- The Observatory: theremin louder (0.3), less reverb (0.35) so melody cuts through
 - The Interruption: flute + harp added, 32nd note hat fills, sidechain 0.6, stereo string quartet, delay on harpsichord/violins
 - Voltage: dotted delay on saw (spring) and pulse (taj_mahal), distortion on kick
 - **Track 11: Voltage** — F minor, 138 BPM. Raw oscillators only — sine sub (dry), saw lead (spring reverb), pulse counter-rhythm (taj_mahal). Rhythm from monophonic pitch shifts. Saw arp solo, pulse arp solo, 32nd note chaos peak. Kick maxed at 1.0.

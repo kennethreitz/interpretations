@@ -316,9 +316,9 @@ for _ in range(8):
     hats.rest(Duration.WHOLE)
 
 # ── SIGNAL — the melody finally resolves the transmission ────────
-signal = score.part("signal", instrument="theremin", volume=0.16,
-                    reverb=0.82, reverb_type="taj_mahal",
-                    delay=0.28, delay_time=0.375, delay_feedback=0.32,
+signal = score.part("signal", instrument="theremin", volume=0.3,
+                    reverb=0.35, reverb_type="taj_mahal",
+                    delay=0.2, delay_time=0.375, delay_feedback=0.25,
                     humanize=0.05)
 
 # Bars 1-48: silence
