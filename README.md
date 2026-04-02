@@ -31,6 +31,7 @@ Each track is a `.py` file. Run it to hear it.
 12. **Gravity** — C minor, 88 BPM. Sparse piano stabs, 808 sub, boom bap drums with trap hat evolution. Rhodes melody, string swell. Tambura buried underneath, singing bowl bookends, one sitar bend in the breakdown. The weight of it all.
 13. **Sleight of Hand** — D minor, 100 BPM. Music box → didgeridoo → jazz piano → 808 drop → solo theremin → choir → acid 303 rips through the choir → music box returns over boom bap. You never see the next move coming.
 14. **An Exception Occurred** — Eb major→minor→major, 80 BPM. Piano-driven arc: stability → spiritual seeking (tambura, sitar, om chant) → psychosis (wild theremin, chaos drums) → despair → hymn (pipe organ) → recovery. Every note by hand.
+15. **Voices** — F# minor, 65 BPM. Five vocal parts multiplying from one to five, each panned differently, different vowels, different delay times. They overlap and overwhelm. Piano enters as reality. One last whisper, then silence.
 
 ## Usage
 
