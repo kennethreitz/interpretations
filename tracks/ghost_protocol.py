@@ -35,10 +35,11 @@ prog = key.progression("i", "VI", "VII", "i")
 # ═══════════════════════════════════════════════════════════════════
 
 # ── RHODES — Portishead dark chords, sparse, tremolo ────────────
-rhodes = score.part("rhodes", instrument="electric_piano", volume=0.3,
-                    reverb=0.5, reverb_type="taj_mahal",
+rhodes = score.part("rhodes", instrument="electric_piano", volume=0.25,
+                    reverb=0.6, reverb_type="taj_mahal",
+                    delay=0.2, delay_time=0.468, delay_feedback=0.3,
                     tremolo_depth=0.2, tremolo_rate=2.5,
-                    humanize=0.1)
+                    pan=-0.2, humanize=0.1)
 
 # Bars 1-16: dark sparse chords — Portishead vibe
 for _ in range(4):
@@ -66,7 +67,8 @@ for _ in range(80):
 
 # ── TRIP-HOP BEAT — Portishead style, bars 5-32 ────────────────
 trip = score.part("trip_hop", volume=0.3, humanize=0.08,
-                  reverb=0.15, reverb_decay=0.6)
+                  reverb=0.25, reverb_decay=1.2,
+                  delay=0.3, delay_time=0.468, delay_feedback=0.35)
 
 # Bars 1-4: silence — let rhodes breathe
 for _ in range(4):
@@ -100,10 +102,10 @@ for _ in range(96):
     trip.rest(Duration.WHOLE)
 
 # ── THE ARP — the soul of the track, enters quietly bar 17 ─────
-arp = score.part("arp", synth="saw", envelope="pluck", volume=0.2,
-                 reverb=0.3, delay=0.4, delay_time=0.234,
+arp = score.part("arp", synth="saw", envelope="pluck", volume=0.22,
+                 reverb=0.35, delay=0.4, delay_time=0.234,
                  delay_feedback=0.45, lowpass=1200, detune=6,
-                 humanize=0.04)
+                 pan=0.15, humanize=0.04)
 # Slow filter open over the entire track
 arp.lfo("lowpass", rate=0.008, min=800, max=6000, bars=128, shape="saw")
 
@@ -169,8 +171,9 @@ for rep in range(4):
             arp.add(note, Duration.SIXTEENTH, velocity=vel)
 
 # ── PAD — supersaw atmosphere, builds imperceptibly ─────────────
-pad = score.part("pad", synth="supersaw", envelope="pad", volume=0.15,
-                 reverb=0.6, chorus=0.4, chorus_rate=0.2,
+pad = score.part("pad", synth="supersaw", envelope="pad", volume=0.12,
+                 reverb=0.75, reverb_type="taj_mahal",
+                 chorus=0.4, chorus_rate=0.2,
                  chorus_depth=0.01, lowpass=600)
 pad.lfo("lowpass", rate=0.008, min=400, max=5000, bars=128, shape="triangle")
 
@@ -198,7 +201,7 @@ for rep in range(8):
 # ── BASS — enters with the kick, bar 49 ────────────────────────
 bass = score.part("bass", synth="saw", envelope="pluck", volume=0.35,
                   lowpass=250, distortion=0.15, distortion_drive=2.5,
-                  sub_osc=0.5)
+                  sub_osc=0.5, sidechain=0.3)
 
 # Bars 1-48: silence
 for _ in range(48):
@@ -228,7 +231,7 @@ for rep in range(8):
             bass.add(note, dur, velocity=vel)
 
 # ── KICK — the Strobe moment, enters bar 49 ────────────────────
-kick = score.part("kick", volume=0.5, humanize=0.03)
+kick = score.part("kick", volume=0.6, humanize=0.03)
 
 # Bars 1-48: no kick — this IS the point
 for _ in range(48):
@@ -293,10 +296,10 @@ for bar in range(32):
         hats.hit(CH, Duration.EIGHTH, velocity=vel)
 
 # ── NES MELODY — emotional square wave, the heart of the peak ───
-nes = score.part("nes", synth="square", envelope="organ", volume=0.2,
-                 reverb=0.4, reverb_type="taj_mahal",
-                 delay=0.3, delay_time=0.234, delay_feedback=0.4,
-                 lowpass=4000, humanize=0.05)
+nes = score.part("nes", synth="square", envelope="organ", volume=0.28,
+                 reverb=0.5, reverb_type="taj_mahal",
+                 delay=0.35, delay_time=0.234, delay_feedback=0.45,
+                 lowpass=4000, pan=-0.1, humanize=0.05)
 
 # Bars 1-64: silence
 for _ in range(64):
@@ -332,8 +335,9 @@ for _ in range(32):
 
 # ── PLUCK STABS — offbeat chords, bars 65-96 ───────────────────
 pluck = score.part("pluck", synth="saw", envelope="pluck", volume=0.18,
-                   reverb=0.2, delay=0.2, delay_time=0.234,
-                   delay_feedback=0.3, lowpass=2500, detune=8)
+                   reverb=0.25, delay=0.25, delay_time=0.234,
+                   delay_feedback=0.35, lowpass=2500, detune=8,
+                   pan=0.25)
 
 # Bars 1-64: silence
 for _ in range(64):
