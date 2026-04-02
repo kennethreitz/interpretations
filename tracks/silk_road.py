@@ -29,9 +29,9 @@ score = Score("4/4", bpm=95)
 # ── KOTO — China, pentatonic, sparse ───────────────────────────
 # D minor pentatonic: D F G A C (removes E and Bb)
 koto = score.part("koto", instrument="koto", volume=0.4,
-                  reverb=0.5, reverb_type="taj_mahal",
-                  delay=0.2, delay_time=0.316, delay_feedback=0.3,
-                  humanize=0.1)
+                  reverb=0.55, reverb_type="taj_mahal",
+                  delay=0.3, delay_time=0.316, delay_feedback=0.4,
+                  pan=-0.45, humanize=0.1)
 
 # Bars 1-16: solo koto — contemplative, lots of space
 koto_phrases = [
@@ -82,10 +82,10 @@ for _ in range(6):
                 koto.add(note, dur, velocity=max(30, vel - 25))
 
 # ── SITAR — India, enters bar 17 ───────────────────────────────
-sitar = score.part("sitar", instrument="sitar", volume=0.45,
-                   reverb=0.35, reverb_type="taj_mahal",
-                   delay=0.25, delay_time=0.333, delay_feedback=0.3,
-                   pan=-0.2, humanize=0.1)
+sitar = score.part("sitar", instrument="sitar", volume=0.5,
+                   reverb=0.2, reverb_decay=1.0,
+                   delay=0.2, delay_time=0.333, delay_feedback=0.3,
+                   pan=-0.3, humanize=0.1)
 
 # Bars 1-16: silent
 for _ in range(16):
@@ -120,8 +120,8 @@ GE  = DrumSound.TABLA_GE
 tDHA = DrumSound.TABLA_DHA
 GEB = DrumSound.TABLA_GE_BEND
 
-tabla = score.part("tabla", volume=0.3, reverb=0.2, reverb_decay=1.0,
-                   humanize=0.08)
+tabla = score.part("tabla", volume=0.3, reverb=0.3, reverb_type="cathedral",
+                   reverb_decay=1.5, pan=-0.15, humanize=0.08)
 
 for _ in range(16):
     tabla.rest(Duration.WHOLE)
@@ -149,9 +149,9 @@ for bar in range(64):
 
 # ── MANDOLIN (oud) — Persia, enters bar 33 ─────────────────────
 oud = score.part("oud", instrument="mandolin", volume=0.4,
-                 reverb=0.4, reverb_type="cathedral",
-                 delay=0.15, delay_time=0.25, delay_feedback=0.25,
-                 pan=0.2, humanize=0.08)
+                 reverb=0.45, reverb_type="cathedral",
+                 delay=0.3, delay_time=0.316, delay_feedback=0.35,
+                 pan=0.15, humanize=0.08)
 
 for _ in range(32):
     oud.rest(Duration.WHOLE)
@@ -184,7 +184,8 @@ DKD = DrumSound.DOUMBEK_DUM
 DKT = DrumSound.DOUMBEK_TEK
 DKK = DrumSound.DOUMBEK_KA
 
-doumbek = score.part("doumbek", volume=0.3, reverb=0.15, humanize=0.06)
+doumbek = score.part("doumbek", volume=0.3, reverb=0.2, reverb_decay=1.0,
+                     pan=0.2, humanize=0.06)
 
 for _ in range(32):
     doumbek.rest(Duration.WHOLE)
@@ -219,8 +220,9 @@ for bar in range(48):
 
 # ── GUITAR — Mediterranean, enters bar 49 ──────────────────────
 guitar = score.part("guitar", instrument="acoustic_guitar", volume=0.35,
-                    reverb=0.35, reverb_type="cathedral",
-                    humanize=0.1)
+                    reverb=0.4, reverb_type="cathedral",
+                    delay=0.2, delay_time=0.316, delay_feedback=0.25,
+                    pan=0.35, humanize=0.1)
 
 for _ in range(48):
     guitar.rest(Duration.WHOLE)
@@ -247,8 +249,8 @@ CS = DrumSound.CAJON_SLAP
 CT = DrumSound.CAJON_TAP
 CSS = DrumSound.CAJON_SLAP_SNARE
 
-cajon = score.part("cajon", volume=0.25, reverb=0.3, reverb_type="cathedral",
-                   humanize=0.08)
+cajon = score.part("cajon", volume=0.25, reverb=0.15, reverb_decay=0.6,
+                   pan=0.4, humanize=0.08)
 
 for _ in range(48):
     cajon.rest(Duration.WHOLE)
@@ -281,10 +283,10 @@ for bar in range(32):
         cajon.hit(CT, Duration.EIGHTH, velocity=45)
 
 # ── TAMBURA — the thread connecting everything ──────────────────
-tambura = score.part("tambura", synth="sine", envelope="pad", volume=0.15,
-                     reverb=0.7, reverb_type="taj_mahal",
-                     chorus=0.3, chorus_rate=0.08, chorus_depth=0.01,
-                     lowpass=1000)
+tambura = score.part("tambura", synth="sine", envelope="pad", volume=0.18,
+                     reverb=0.8, reverb_type="taj_mahal",
+                     chorus=0.4, chorus_rate=0.06, chorus_depth=0.012,
+                     lowpass=1000, sub_osc=0.3)
 
 for _ in range(80):
     tambura.add(D.add(-24), Duration.HALF)
