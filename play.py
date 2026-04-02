@@ -54,6 +54,7 @@ ALBUM_ORDER = [
     "sleight_of_hand.py",
     "an_exception_occurred.py",
     "voices.py",
+    "intrusive.py",
 ]
 
 
