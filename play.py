@@ -448,15 +448,33 @@ def pick_track():
                         stdscr.addstr(y, 8 + name_col, meta_str,
                                       curses.A_DIM)
 
-            # Description of selected track
+            # Description of selected track — word-wrapped
             _, _, _, _, _, _, desc = entries[selected[0]]
             if desc:
                 desc_y = list_start + len(entries) + 1
-                if desc_y < h - 2:
-                    # Wrap description to fit width
-                    desc = desc[:w - 6]
-                    stdscr.addstr(desc_y, 3, desc,
-                                  curses.A_DIM | curses.color_pair(3))
+                max_w = w - 8
+                if desc_y < h - 2 and max_w > 20:
+                    # Word wrap
+                    words = desc.split()
+                    lines = []
+                    line = ""
+                    for word in words:
+                        if len(line) + len(word) + 1 > max_w:
+                            lines.append(line)
+                            line = word
+                        else:
+                            line = f"{line} {word}" if line else word
+                    if line:
+                        lines.append(line)
+                    for li, text in enumerate(lines):
+                        y_pos = desc_y + li
+                        if y_pos >= h - 1:
+                            break
+                        try:
+                            stdscr.addstr(y_pos, 4, text,
+                                          curses.A_DIM | curses.color_pair(3))
+                        except curses.error:
+                            pass
 
             stdscr.refresh()
             curses.napms(50)
