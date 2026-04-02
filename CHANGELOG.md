@@ -2,6 +2,7 @@
 
 ## 2026-04-02
 
+- **Track 13: Sleight of Hand** — D minor, 100 BPM. Nine genre shifts in 72 bars. The 303 through the choir is the moment.
 - **Track 12: Gravity** — C minor, 88 BPM. Hip hop with sparse piano, 808, boom bap + trap hats. Eastern touches: buried tambura, singing bowl bookends, sitar bend in breakdown.
 - The Interruption: breakbeat delay (jungle echo), reese wide with reverb+delay, kick808 distortion, velocity list fades, harp shimmer delay
 - The Observatory: stereo spread — radio left, signal right, broadcast crosses the field, clap delay
