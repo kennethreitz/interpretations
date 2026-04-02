@@ -3,7 +3,9 @@
 ## 2026-04-01
 
 - **Track 12: The Observatory** — G minor, 112 BPM. Chapel through shortwave static. Square-wave organ, choir, saw arp, supersaw halo pad, theremin signal. Contributed by ChatGPT.
-- Silk Road: stereo caravan (east→west = left→right), sitar dried out, play_phrases() helper refactor
+- Chakra: stereo spread (uke left, Rhodes right, theremin far right), sitar louder/drier, opening reverbs pulled back
+- Silk Road: stereo caravan (east→west = left→right), dry-to-wet koto, tabla grows with caravan, sitar dried out, play_phrases() helper
+- Culture Clash: removed for rework
 - Ghost Protocol: stereo field overhaul — Rhodes delay, trip-hop dub snare, arp panned right, NES louder, bass sidechain, pluck stabs wide
 - The Observatory: theremin louder (0.3), less reverb (0.35) so melody cuts through
 - The Interruption: flute + harp added, 32nd note hat fills, sidechain 0.6, stereo string quartet, delay on harpsichord/violins
