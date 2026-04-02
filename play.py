@@ -40,7 +40,6 @@ TRACKS_DIR = Path(__file__).parent / "tracks"
 # Album order — defines the canonical tracklist
 ALBUM_ORDER = [
     "raga_midnight.py",
-    "culture_clash.py",
     "chakra.py",
     "ghost_protocol.py",
     "acid_reign.py",

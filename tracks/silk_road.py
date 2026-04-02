@@ -46,11 +46,11 @@ def play_phrases(part, phrases, reps=1, vel_offset=0):
 # ── KOTO — China, pentatonic, sparse ───────────────────────────
 # D minor pentatonic: D F G A C (removes E and Bb)
 koto = score.part("koto", instrument="koto", volume=0.4,
-                  reverb=0.55, reverb_type="taj_mahal",
-                  delay=0.3, delay_time=0.316, delay_feedback=0.4,
+                  reverb=0.0,
+                  delay=0.0,
                   pan=-0.45, humanize=0.1)
 
-# Bars 1-16: solo koto — contemplative, lots of space
+# Bars 1-16: solo koto — starts dry, reverb fades in like mist
 koto_phrases = [
     # Phrase 1: simple, announcing
     [(D.add(12), Duration.HALF, 80), (None, Duration.QUARTER, 0),
@@ -73,11 +73,19 @@ koto_phrases = [
      (A, Duration.QUARTER, 75)],
     [(D, Duration.WHOLE, 80)],
 ]
-play_phrases(koto, koto_phrases, reps=2)
+# First pass: dry, intimate, close
+play_phrases(koto, koto_phrases, reps=1)
+# Second pass: reverb creeping in
+koto.set(reverb=0.15, reverb_type="taj_mahal", delay=0.1, delay_time=0.316, delay_feedback=0.15)
+play_phrases(koto, koto_phrases, reps=1)
 
-# Bars 17-80: koto continues, same phrases, quieter as others join
+# Bars 17-80: koto continues, reverb grows as the caravan fills
+koto.set(reverb=0.3, delay=0.2, delay_feedback=0.25)
 play_phrases(koto, koto_phrases, reps=2, vel_offset=-15)
-play_phrases(koto, koto_phrases, reps=6, vel_offset=-25)
+koto.set(reverb=0.45, delay=0.3, delay_feedback=0.35)
+play_phrases(koto, koto_phrases, reps=2, vel_offset=-20)
+koto.set(reverb=0.55, delay=0.3, delay_feedback=0.4)
+play_phrases(koto, koto_phrases, reps=4, vel_offset=-25)
 
 # ── SITAR — India, enters bar 17 ───────────────────────────────
 sitar = score.part("sitar", instrument="sitar", volume=0.5,
@@ -118,8 +126,10 @@ tabla = score.part("tabla", volume=0.3, reverb=0.3, reverb_type="cathedral",
 for _ in range(16):
     tabla.rest(Duration.WHOLE)
 
-# Bars 17-80: keherwa groove throughout
-for bar in range(64):
+# Bars 17-80: keherwa groove — gets louder as the caravan grows
+# Bars 17-32: India section — gentle
+tabla.set(volume=0.2)
+for bar in range(16):
     if bar % 8 == 7:
         tabla.hit(tDHA, Duration.EIGHTH, velocity=95, articulation="accent")
         tabla.hit(GEB, Duration.EIGHTH, velocity=108)
@@ -138,6 +148,72 @@ for bar in range(64):
         tabla.hit(TIT, Duration.EIGHTH, velocity=38)
         tabla.hit(tDHA, Duration.EIGHTH, velocity=80, articulation="accent")
         tabla.hit(NA, Duration.EIGHTH, velocity=58)
+
+# Bars 33-48: Persia joins — fuller
+tabla.set(volume=0.3)
+for bar in range(16):
+    if bar % 8 == 7:
+        tabla.hit(tDHA, Duration.EIGHTH, velocity=100, articulation="accent")
+        tabla.hit(GEB, Duration.EIGHTH, velocity=112)
+        tabla.hit(NA, Duration.EIGHTH, velocity=78)
+        tabla.hit(GEB, Duration.EIGHTH, velocity=110)
+        tabla.hit(tDHA, Duration.EIGHTH, velocity=95, articulation="accent")
+        tabla.hit(NA, Duration.SIXTEENTH, velocity=68)
+        tabla.hit(TIT, Duration.SIXTEENTH, velocity=55)
+        tabla.hit(GEB, Duration.QUARTER, velocity=118)
+    else:
+        tabla.hit(tDHA, Duration.EIGHTH, velocity=90, articulation="accent")
+        tabla.hit(GE, Duration.EIGHTH, velocity=60)
+        tabla.hit(NA, Duration.EIGHTH, velocity=70)
+        tabla.hit(TIT, Duration.EIGHTH, velocity=48)
+        tabla.hit(NA, Duration.EIGHTH, velocity=65)
+        tabla.hit(TIT, Duration.EIGHTH, velocity=42)
+        tabla.hit(tDHA, Duration.EIGHTH, velocity=85, articulation="accent")
+        tabla.hit(NA, Duration.EIGHTH, velocity=62)
+
+# Bars 49-64: Mediterranean joins — confident
+tabla.set(volume=0.38)
+for bar in range(16):
+    if bar % 8 == 7:
+        tabla.hit(tDHA, Duration.EIGHTH, velocity=105, articulation="accent")
+        tabla.hit(GEB, Duration.EIGHTH, velocity=115)
+        tabla.hit(NA, Duration.EIGHTH, velocity=82)
+        tabla.hit(GEB, Duration.EIGHTH, velocity=112)
+        tabla.hit(tDHA, Duration.EIGHTH, velocity=100, articulation="accent")
+        tabla.hit(NA, Duration.SIXTEENTH, velocity=72)
+        tabla.hit(TIT, Duration.SIXTEENTH, velocity=58)
+        tabla.hit(GEB, Duration.QUARTER, velocity=120)
+    else:
+        tabla.hit(tDHA, Duration.EIGHTH, velocity=95, articulation="accent")
+        tabla.hit(GE, Duration.EIGHTH, velocity=65)
+        tabla.hit(NA, Duration.EIGHTH, velocity=75)
+        tabla.hit(TIT, Duration.EIGHTH, velocity=52)
+        tabla.hit(NA, Duration.EIGHTH, velocity=70)
+        tabla.hit(TIT, Duration.EIGHTH, velocity=45)
+        tabla.hit(tDHA, Duration.EIGHTH, velocity=90, articulation="accent")
+        tabla.hit(NA, Duration.EIGHTH, velocity=68)
+
+# Bars 65-80: all together — full power
+tabla.set(volume=0.45)
+for bar in range(16):
+    if bar % 8 == 7:
+        tabla.hit(tDHA, Duration.EIGHTH, velocity=110, articulation="accent")
+        tabla.hit(GEB, Duration.EIGHTH, velocity=118)
+        tabla.hit(NA, Duration.EIGHTH, velocity=85)
+        tabla.hit(GEB, Duration.EIGHTH, velocity=115)
+        tabla.hit(tDHA, Duration.EIGHTH, velocity=105, articulation="accent")
+        tabla.hit(NA, Duration.SIXTEENTH, velocity=75)
+        tabla.hit(TIT, Duration.SIXTEENTH, velocity=62)
+        tabla.hit(GEB, Duration.QUARTER, velocity=122)
+    else:
+        tabla.hit(tDHA, Duration.EIGHTH, velocity=100, articulation="accent")
+        tabla.hit(GE, Duration.EIGHTH, velocity=70)
+        tabla.hit(NA, Duration.EIGHTH, velocity=80)
+        tabla.hit(TIT, Duration.EIGHTH, velocity=55)
+        tabla.hit(NA, Duration.EIGHTH, velocity=75)
+        tabla.hit(TIT, Duration.EIGHTH, velocity=48)
+        tabla.hit(tDHA, Duration.EIGHTH, velocity=95, articulation="accent")
+        tabla.hit(NA, Duration.EIGHTH, velocity=72)
 
 # ── MANDOLIN (oud) — Persia, enters bar 33 ─────────────────────
 oud = score.part("oud", instrument="mandolin", volume=0.4,
