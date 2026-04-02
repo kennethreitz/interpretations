@@ -46,11 +46,11 @@ def play_phrases(part, phrases, reps=1, vel_offset=0):
 # ── KOTO — China, pentatonic, sparse ───────────────────────────
 # D minor pentatonic: D F G A C (removes E and Bb)
 koto = score.part("koto", instrument="koto", volume=0.4,
-                  reverb=0.0,
-                  delay=0.0,
+                  reverb=0.15, reverb_type="taj_mahal",
+                  delay=0.08, delay_time=0.316, delay_feedback=0.1,
                   pan=-0.45, humanize=0.1)
 
-# Bars 1-16: solo koto — starts dry, reverb fades in like mist
+# Bars 1-16: solo koto — starts intimate, reverb grows
 koto_phrases = [
     # Phrase 1: simple, announcing
     [(D.add(12), Duration.HALF, 80), (None, Duration.QUARTER, 0),
