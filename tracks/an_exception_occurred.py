@@ -168,15 +168,26 @@ piano.rest(Duration.HALF)
 piano.add(Eb, Duration.QUARTER, velocity=40)
 piano.rest(Duration.DOTTED_HALF)
 
-# ── 5a. DESPAIR (bars 33-36) — the bottom. Nothing left. ────────
-# The lowest notes. Eb minor. Barely alive.
+# ── 5a. DESPAIR (bars 33-40) — the bottom. Nothing left. ────────
+# The lowest, saddest notes. Eb minor. Barely alive.
 piano.add(Eb.add(-24), Duration.WHOLE, velocity=28)
 piano.rest(Duration.WHOLE)
 piano.add(Gb.add(-12), Duration.HALF, velocity=22)
 piano.add(Eb.add(-12), Duration.HALF, velocity=25)
 piano.rest(Duration.WHOLE)
+# The melody tries to come back — in minor. Broken.
+piano.add(Eb, Duration.QUARTER, velocity=30)
+piano.add(Gb, Duration.QUARTER, velocity=25)
+piano.add(Bb, Duration.HALF, velocity=32)
+piano.add(Ab, Duration.QUARTER, velocity=28)
+piano.add(Gb, Duration.EIGHTH, velocity=22)
+piano.add(F, Duration.EIGHTH, velocity=20)
+piano.add(Eb, Duration.HALF, velocity=25)
+# Lowest note of the whole piece
+piano.add(Eb.add(-24), Duration.WHOLE, velocity=22)
+piano.rest(Duration.WHOLE)
 
-# ── 5b. THE ROOM (bars 37-40) — the hymn finds you ─────────────
+# ── 5b. THE ROOM (bars 41-44) — the hymn finds you ─────────────
 # A single note. Then another. The major key returns.
 piano.rest(Duration.WHOLE)
 piano.add(Eb, Duration.QUARTER, velocity=30)
@@ -404,53 +415,53 @@ theremin.add(Db.add(12), Duration.HALF, velocity=68, bend=2.5)
 
 # Bars 23-24: intensifying — the bends get wider, faster
 theremin.set(volume=0.45)
-theremin.add(Eb.add(24), Duration.QUARTER, velocity=78, bend=3.0)
+theremin.add(Eb.add(12), Duration.QUARTER, velocity=78, bend=3.0)
 theremin.add(Bb.add(12), Duration.EIGHTH, velocity=72, bend=-2.5)
-theremin.add(Eb.add(24), Duration.EIGHTH, velocity=80, bend=2.0)
+theremin.add(Eb.add(12), Duration.EIGHTH, velocity=80, bend=2.0)
 theremin.add(Gb.add(12), Duration.QUARTER, velocity=70, bend=-3.0)
-theremin.add(Eb.add(24), Duration.QUARTER, velocity=82, bend=4.0)
+theremin.add(Eb.add(12), Duration.QUARTER, velocity=82, bend=4.0)
 theremin.add(Db.add(12), Duration.EIGHTH, velocity=68, bend=-2.0)
 theremin.add(Bb.add(12), Duration.EIGHTH, velocity=72, bend=3.0)
-theremin.add(Eb.add(24), Duration.HALF, velocity=85, bend=-3.5)
+theremin.add(Eb.add(12), Duration.HALF, velocity=85, bend=-3.5)
 
 # Bars 25-26: FULL PSYCHOSIS — screaming, octave leaps, max bends
 theremin.set(volume=0.55)
-theremin.add(Eb.add(24), Duration.EIGHTH, velocity=95, bend=5.0)
+theremin.add(Eb.add(12), Duration.EIGHTH, velocity=95, bend=5.0)
 theremin.add(Eb, Duration.EIGHTH, velocity=70, bend=-3.0)        # 2 octave drop
-theremin.add(Eb.add(24), Duration.EIGHTH, velocity=98, bend=-4.0)
+theremin.add(Eb.add(12), Duration.EIGHTH, velocity=98, bend=-4.0)
 theremin.add(Gb.add(12), Duration.EIGHTH, velocity=78, bend=3.0)
-theremin.add(Bb.add(24), Duration.QUARTER, velocity=100, bend=5.0) # highest
+theremin.add(Bb.add(12), Duration.QUARTER, velocity=100, bend=5.0) # highest
 theremin.add(Cb, Duration.QUARTER, velocity=65, bend=-4.0)        # crash down
-theremin.add(Eb.add(24), Duration.EIGHTH, velocity=95, bend=4.0)
+theremin.add(Eb.add(12), Duration.EIGHTH, velocity=95, bend=4.0)
 theremin.add(Bb, Duration.EIGHTH, velocity=72, bend=-3.0)
-theremin.add(Eb.add(24), Duration.EIGHTH, velocity=100, bend=-5.0)
+theremin.add(Eb.add(12), Duration.EIGHTH, velocity=100, bend=-5.0)
 theremin.add(Db.add(12), Duration.EIGHTH, velocity=80, bend=4.0)
-theremin.add(Ab.add(24), Duration.QUARTER, velocity=102, bend=5.0) # screaming
+theremin.add(Ab.add(12), Duration.QUARTER, velocity=102, bend=5.0) # screaming
 theremin.add(Gb, Duration.QUARTER, velocity=68, bend=-5.0)        # plummet
 
 # Bars 27-28: the voices — rapid, fragmented, overlapping thoughts
 theremin.add(Eb.add(12), Duration.SIXTEENTH, velocity=88, bend=2.0)
-theremin.add(Bb.add(24), Duration.SIXTEENTH, velocity=95, bend=-3.0)
+theremin.add(Bb.add(12), Duration.SIXTEENTH, velocity=95, bend=-3.0)
 theremin.add(Gb, Duration.SIXTEENTH, velocity=70, bend=4.0)
-theremin.add(Eb.add(24), Duration.SIXTEENTH, velocity=98, bend=-4.0)
+theremin.add(Eb.add(12), Duration.SIXTEENTH, velocity=98, bend=-4.0)
 theremin.add(Db.add(12), Duration.EIGHTH, velocity=82, bend=3.0)
-theremin.add(Ab.add(24), Duration.EIGHTH, velocity=100, bend=-5.0)
+theremin.add(Ab.add(12), Duration.EIGHTH, velocity=100, bend=-5.0)
 theremin.add(Eb, Duration.QUARTER, velocity=72, bend=5.0)
-theremin.add(Bb.add(24), Duration.QUARTER, velocity=105, bend=-4.0)
+theremin.add(Bb.add(12), Duration.QUARTER, velocity=105, bend=-4.0)
 # Sustained scream
-theremin.add(Eb.add(24), Duration.HALF, velocity=108, bend=5.0)
-theremin.add(Eb.add(24), Duration.EIGHTH, velocity=100, bend=-5.0)
+theremin.add(Eb.add(12), Duration.HALF, velocity=108, bend=5.0)
+theremin.add(Eb.add(12), Duration.EIGHTH, velocity=100, bend=-5.0)
 theremin.add(Bb.add(12), Duration.EIGHTH, velocity=85, bend=3.0)
 theremin.add(Gb.add(12), Duration.EIGHTH, velocity=78, bend=-2.0)
 theremin.add(Db.add(12), Duration.EIGHTH, velocity=72, bend=2.0)
 
 # Bars 29-30: sustained madness — the peak holds
-theremin.add(Eb.add(24), Duration.QUARTER, velocity=105, bend=-5.0)
-theremin.add(Bb.add(24), Duration.QUARTER, velocity=108, bend=4.0)
+theremin.add(Eb.add(12), Duration.QUARTER, velocity=105, bend=-5.0)
+theremin.add(Bb.add(12), Duration.QUARTER, velocity=108, bend=4.0)
 theremin.add(Gb, Duration.QUARTER, velocity=72, bend=-3.0)
-theremin.add(Eb.add(24), Duration.QUARTER, velocity=110, bend=5.0)
+theremin.add(Eb.add(12), Duration.QUARTER, velocity=110, bend=5.0)
 theremin.add(Db.add(12), Duration.HALF, velocity=85, bend=-4.0)
-theremin.add(Ab.add(24), Duration.HALF, velocity=105, bend=5.0)
+theremin.add(Ab.add(12), Duration.HALF, velocity=105, bend=5.0)
 
 # Bars 31-32: the descent — falling, falling, slower
 theremin.set(volume=0.45)
@@ -476,10 +487,10 @@ organ = score.part("organ", instrument="pipe_organ", volume=0.22,
                    chorus=0.15, chorus_rate=0.12, chorus_depth=0.006,
                    pan=0.1)
 
-for _ in range(36):
+for _ in range(40):
     organ.rest(Duration.WHOLE)
 
-# Bars 37-40: the hymn emerges from the despair — barely there, then swells
+# Bars 41-44: the hymn emerges from the despair — barely there, then swells
 hymn_a = key_major.progression("IV", "V", "vi", "IV")
 organ.add(hymn_a[0], Duration.WHOLE, velocity=22)
 organ.add(hymn_a[1], Duration.HALF, velocity=28)
@@ -523,7 +534,7 @@ for _ in range(8):
     organ.rest(Duration.WHOLE)
 
 # ── PSYCHOSIS BASS — deep, menacing, bars 23-32 ────────────────
-psycho_bass = score.part("psycho_bass", synth="sine", envelope="pad", volume=0.5,
+psycho_bass = score.part("psycho_bass", synth="sine", envelope="pad", volume=0.7,
                          lowpass=180, distortion=0.25, distortion_drive=3.5,
                          sub_osc=0.6, saturation=0.4)
 
