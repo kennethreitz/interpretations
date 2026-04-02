@@ -2,6 +2,7 @@
 
 ## 2026-04-02
 
+- The Interruption: breakbeat delay (jungle echo), reese wide with reverb+delay, kick808 distortion, velocity list fades, harp shimmer delay
 - The Observatory: stereo spread — radio left, signal right, broadcast crosses the field, clap delay
 - Voltage: stereo panning — saw left (spring), pulse right (taj_mahal), noise offset
 - Acid Reign: stereo 303s with delay (different times, opposite pans), clap delay, cajon slapback, Rhodes louder/wetter panned left

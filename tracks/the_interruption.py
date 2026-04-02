@@ -139,8 +139,9 @@ for _ in range(2):
             flute.add(note, dur, velocity=max(40, vel - 12))
 
 # ── HARP — arpeggiated chords, delicate, angelic ────────────────
-harp = score.part("harp", instrument="harp", volume=0.25,
-                  reverb=0.2, reverb_decay=0.8,
+harp = score.part("harp", instrument="harp", volume=0.28,
+                  reverb=0.25, reverb_decay=1.0,
+                  delay=0.1, delay_time=0.353, delay_feedback=0.15,
                   pan=-0.25, humanize=0.1)
 
 # Bars 1-8: silent — let harpsichord establish
@@ -332,7 +333,9 @@ OH = DrumSound.OPEN_HAT
 
 # ── BREAKBEAT — enters bar 33, no warning ──────────────────────
 beat = score.part("breakbeat", volume=0.9, humanize=0.06,
-                  reverb=0.2, reverb_decay=0.8)
+                  reverb=0.25, reverb_decay=1.0,
+                  delay=0.15, delay_time=0.353, delay_feedback=0.2,
+                  pan=-0.1)
 
 # Bars 1-32: silence — the audience suspects nothing
 for _ in range(32):
@@ -417,7 +420,8 @@ for _ in range(8):
     beat.rest(Duration.WHOLE)
 
 # ── 808 KICK — four on the floor, the slap ─────────────────────
-kick808 = score.part("kick808", volume=1.0, humanize=0.03)
+kick808 = score.part("kick808", volume=1.0, humanize=0.03,
+                     distortion=0.1, distortion_drive=1.5)
 
 for _ in range(32):
     kick808.rest(Duration.WHOLE)
@@ -452,14 +456,16 @@ for _ in range(8):
         sub.add(root, Duration.WHOLE, velocity=95)
 
 # Bars 65-80: fading
-for bar in range(16):
-    vel = max(20, 90 - bar * 5)
+for vel in [85, 78, 70, 62, 55, 48, 40, 35, 30, 25, 22, 20, 18, 15, 12, 8]:
     sub.add(D.add(-24), Duration.WHOLE, velocity=vel)
 
 # ── REESE BASS — detuned saw, DnB signature ────────────────────
-reese = score.part("reese", synth="saw", envelope="pad", volume=0.25,
+reese = score.part("reese", synth="saw", envelope="pad", volume=0.28,
                    lowpass=400, detune=15, spread=0.3,
-                   distortion=0.2, sidechain=0.35)
+                   distortion=0.2, sidechain=0.35,
+                   reverb=0.2, reverb_decay=1.5,
+                   delay=0.1, delay_time=0.706, delay_feedback=0.2,
+                   pan=0.15)
 
 for _ in range(32):
     reese.rest(Duration.WHOLE)
@@ -470,8 +476,7 @@ for _ in range(8):
         reese.add(root.add(12), Duration.WHOLE, velocity=75)
 
 # Bars 65-80: fading
-for bar in range(16):
-    vel = max(15, 70 - bar * 4)
+for vel in [65, 58, 52, 46, 40, 35, 30, 26, 22, 18, 16, 14, 12, 10, 8, 5]:
     reese.add(D.add(-12), Duration.WHOLE, velocity=vel)
 
 # ═════════════════════════════════════════════════════════════════
