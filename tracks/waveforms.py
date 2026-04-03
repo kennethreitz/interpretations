@@ -1,8 +1,8 @@
 """
-WAVEFORMS — harmonic, melodic, percussive.
-Synth blips in open space. Each waveform sings.
-Light reverb, clean lines, rhythm from the notes themselves.
-A minor, 118 BPM.
+WAVEFORMS — every oscillator gets a turn.
+Sine, triangle, square, saw, FM, PWM, wavefold, supersaw, noise.
+Percussive blips stacking into a machine. Occasional sustained pads.
+F minor, 118 BPM.
 """
 
 from pytheory import Key, Duration, Score, Tone, play_score
@@ -372,6 +372,111 @@ for vel in [42, 35, 28, 22, 15, 10, 5, 0]:
         pad.add(prog[0], Duration.WHOLE, velocity=vel)
     else:
         pad.rest(Duration.WHOLE)
+
+# ── FM — metallic, bell-like blips, enters bar 25 ─────────────
+fm = score.part("fm", synth="fm", envelope="pluck", volume=0.3,
+                reverb=0.3, reverb_type="cathedral",
+                delay=0.15, delay_time=0.254, delay_feedback=0.2,
+                pan=-0.35)
+
+for _ in range(24):
+    fm.rest(Duration.WHOLE)
+
+# FM phrase — metallic, inharmonic, fills gaps
+fm_phrase = [
+    (Ab, Duration.SIXTEENTH, 68), (None, Duration.SIXTEENTH, 0),
+    (None, Duration.EIGHTH, 0),
+    (Db, Duration.SIXTEENTH, 65), (None, Duration.SIXTEENTH, 0),
+    (Eb, Duration.SIXTEENTH, 70), (None, Duration.SIXTEENTH, 0),
+    (None, Duration.EIGHTH, 0),
+    (C, Duration.SIXTEENTH, 62), (None, Duration.SIXTEENTH, 0),
+    (None, Duration.QUARTER, 0),
+]
+for _ in range(32):
+    for note, dur, vel in fm_phrase:
+        if note is None:
+            fm.rest(dur)
+        else:
+            fm.add(note, dur, velocity=vel)
+
+# Bars 57-64: fading
+for rep in range(8):
+    off = rep * -8
+    for note, dur, vel in fm_phrase:
+        if note is None:
+            fm.rest(dur)
+        else:
+            fm.add(note, dur, velocity=max(15, vel + off))
+
+# ── PWM — wobbling pulse width, enters bar 33 ─────────────────
+pwm = score.part("pwm", synth="pwm", envelope="pluck", volume=0.25,
+                 reverb=0.2, reverb_decay=1.0,
+                 delay=0.12, delay_time=0.127, delay_feedback=0.18,
+                 pan=0.35)
+
+for _ in range(32):
+    pwm.rest(Duration.WHOLE)
+
+# PWM phrase — the wobble gives it movement even on single notes
+pwm_phrase = [
+    (F, Duration.SIXTEENTH, 72), (None, Duration.SIXTEENTH, 0),
+    (Eb, Duration.SIXTEENTH, 65), (None, Duration.SIXTEENTH, 0),
+    (None, Duration.EIGHTH, 0),
+    (Db, Duration.SIXTEENTH, 68), (F, Duration.SIXTEENTH, 70),
+    (None, Duration.EIGHTH, 0),
+    (Eb, Duration.SIXTEENTH, 65), (None, Duration.SIXTEENTH, 0),
+    (None, Duration.QUARTER, 0),
+]
+for _ in range(24):
+    for note, dur, vel in pwm_phrase:
+        if note is None:
+            pwm.rest(dur)
+        else:
+            pwm.add(note, dur, velocity=vel)
+
+# Bars 57-64: fading
+for rep in range(8):
+    off = rep * -8
+    for note, dur, vel in pwm_phrase:
+        if note is None:
+            pwm.rest(dur)
+        else:
+            pwm.add(note, dur, velocity=max(15, vel + off))
+
+# ── WAVEFOLD — harsh, complex harmonics, enters bar 41 ────────
+wf = score.part("wavefold", synth="wavefold", envelope="pluck", volume=0.2,
+                reverb=0.15, reverb_decay=0.8,
+                delay=0.1, delay_time=0.254, delay_feedback=0.15,
+                pan=-0.2)
+
+for _ in range(40):
+    wf.rest(Duration.WHOLE)
+
+# Wavefold phrase — aggressive, complex
+wf_phrase = [
+    (C, Duration.SIXTEENTH, 72), (Db, Duration.SIXTEENTH, 68),
+    (None, Duration.EIGHTH, 0),
+    (Ab.add(-12), Duration.SIXTEENTH, 65), (None, Duration.SIXTEENTH, 0),
+    (None, Duration.EIGHTH, 0),
+    (F, Duration.SIXTEENTH, 70), (Eb, Duration.SIXTEENTH, 65),
+    (None, Duration.EIGHTH, 0),
+    (Db, Duration.EIGHTH, 68),
+]
+for _ in range(16):
+    for note, dur, vel in wf_phrase:
+        if note is None:
+            wf.rest(dur)
+        else:
+            wf.add(note, dur, velocity=vel)
+
+# Bars 57-64: fading
+for rep in range(8):
+    off = rep * -8
+    for note, dur, vel in wf_phrase:
+        if note is None:
+            wf.rest(dur)
+        else:
+            wf.add(note, dur, velocity=max(15, vel + off))
 
 # ── 808 — sustained sub, the grit underneath ──────────────────
 sub = score.part("808", synth="sine", envelope="pad", volume=0.55,
