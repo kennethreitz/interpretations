@@ -499,7 +499,7 @@ def pick_track():
                 num = f"{i + 1:>2}."
 
                 # Fixed bar width — pad to consistent length
-                bar_width = name_col + 35  # enough for all columns
+                bar_width = name_col + 50  # enough for all columns + extras
                 if i == selected[0]:
                     full = f" ▸ {num} {name_display}{meta_str}"
                     full = full[:bar_width].ljust(bar_width)
