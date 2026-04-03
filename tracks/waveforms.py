@@ -646,7 +646,7 @@ for vel in [88, 75, 62, 48, 35, 22, 0, 0]:
         snare.rest(Duration.WHOLE)
 
 # ── MELODIC PEAK — sine lead, bars 49-56 ─────────────────────
-lead = score.part("lead", synth="sine", volume=0.4,
+lead = score.part("lead", synth="sine", volume=0.55,
                   reverb=0.25, reverb_type="taj_mahal",
                   delay=0.18, delay_time=0.254, delay_feedback=0.25,
                   pan=-0.05)
@@ -681,6 +681,358 @@ lead.add(Ab, Duration.HALF, velocity=65)
 lead.add(G, Duration.HALF, velocity=58)
 lead.add(F, Duration.WHOLE, velocity=52)
 for _ in range(6):
+    lead.rest(Duration.WHOLE)
+
+# ═══════════════════════════════════════════════════════════════════
+# EXTENSION — solos, harmonies, and a proper ending (bars 65-96)
+# The track doesn't fade — it evolves.
+# ═══════════════════════════════════════════════════════════════════
+
+# ── Bars 65-72: FM SOLO — metallic melody floats above the bed ──
+# Everything else drops to drones/pads, FM takes the spotlight
+sine.add(F.add(-12), Duration.WHOLE, velocity=40)
+sine.add(F.add(-12), Duration.WHOLE, velocity=40)
+sine.add(F.add(-12), Duration.WHOLE, velocity=40)
+sine.add(F.add(-12), Duration.WHOLE, velocity=40)
+sine.add(F.add(-12), Duration.WHOLE, velocity=40)
+sine.add(F.add(-12), Duration.WHOLE, velocity=40)
+sine.add(F.add(-12), Duration.WHOLE, velocity=40)
+sine.add(F.add(-12), Duration.WHOLE, velocity=40)
+
+for _ in range(8):
+    tri.rest(Duration.WHOLE)
+
+for _ in range(8):
+    sq.rest(Duration.WHOLE)
+
+# Saw holds a drone
+for _ in range(8):
+    saw.add(F.add(-12), Duration.WHOLE, velocity=35)
+
+# FM solo melody — bell-like, singing
+fm_solo = [
+    (Ab, Duration.QUARTER, 75), (G, Duration.EIGHTH, 68),
+    (F, Duration.EIGHTH, 65), (Eb, Duration.HALF, 72),
+    (Db, Duration.QUARTER, 70), (C, Duration.QUARTER, 65),
+    (Db, Duration.HALF, 72), (Eb, Duration.HALF, 68),
+    (F, Duration.QUARTER, 75), (Ab, Duration.QUARTER, 72),
+    (G, Duration.QUARTER, 68), (F, Duration.QUARTER, 72),
+    (Eb, Duration.HALF, 70), (Db, Duration.HALF, 72),
+    (C, Duration.QUARTER, 65), (Db, Duration.QUARTER, 70),
+    (F, Duration.HALF, 75),
+    (Ab, Duration.QUARTER, 78), (Bb, Duration.QUARTER, 72),
+    (Ab, Duration.QUARTER, 70), (G, Duration.QUARTER, 65),
+    (F, Duration.WHOLE, 72),
+    (None, Duration.WHOLE, 0),
+]
+for note, dur, vel in fm_solo:
+    if note is None:
+        fm.rest(dur)
+    else:
+        fm.add(note, dur, velocity=vel)
+
+for _ in range(8):
+    pwm.rest(Duration.WHOLE)
+for _ in range(8):
+    wf.rest(Duration.WHOLE)
+
+# Supersaw pad underneath
+for _ in range(2):
+    for chord in prog:
+        pad.add(chord, Duration.WHOLE, velocity=42)
+
+# Sub continues
+for _ in range(8):
+    sub.add(F.add(-24), Duration.WHOLE, velocity=35)
+
+# Drums light
+for _ in range(8):
+    kick.hit(K, Duration.QUARTER, velocity=85)
+    kick.rest(Duration.DOTTED_HALF)
+for _ in range(8):
+    hats.rest(Duration.WHOLE)
+    snare.rest(Duration.WHOLE)
+
+sine_pad.add(F.add(-12), Duration.WHOLE, velocity=35)
+sine_pad.add(Ab.add(-12), Duration.WHOLE, velocity=32)
+sine_pad.add(Db, Duration.WHOLE, velocity=35)
+sine_pad.add(F.add(-12), Duration.WHOLE, velocity=32)
+sine_pad.add(Ab.add(-12), Duration.WHOLE, velocity=35)
+sine_pad.add(Db, Duration.WHOLE, velocity=32)
+sine_pad.add(F.add(-12), Duration.WHOLE, velocity=30)
+sine_pad.add(F.add(-12), Duration.WHOLE, velocity=28)
+
+for _ in range(8):
+    tri_pad.rest(Duration.WHOLE)
+for _ in range(8):
+    saw_pad.rest(Duration.WHOLE)
+for _ in range(8):
+    lead.rest(Duration.WHOLE)
+
+# ── Bars 73-80: SAW + SQUARE DUET — harmony in thirds ──────────
+# Two voices singing together, harmonized
+duet_melody = [
+    (F, Duration.QUARTER, 72), (G, Duration.QUARTER, 68),
+    (Ab, Duration.HALF, 75),
+    (Bb, Duration.QUARTER, 70), (Ab, Duration.EIGHTH, 65),
+    (G, Duration.EIGHTH, 62), (F, Duration.HALF, 68),
+    (Eb, Duration.QUARTER, 65), (F, Duration.QUARTER, 70),
+    (G, Duration.HALF, 72),
+    (Ab, Duration.WHOLE, 75),
+    (Bb, Duration.QUARTER, 72), (C, Duration.QUARTER, 70),
+    (Bb, Duration.QUARTER, 68), (Ab, Duration.QUARTER, 72),
+    (G, Duration.HALF, 70), (F, Duration.HALF, 72),
+    (F, Duration.WHOLE, 68),
+    (None, Duration.WHOLE, 0),
+]
+# Harmony — a third below
+duet_harmony = [
+    (Db, Duration.QUARTER, 65), (Eb, Duration.QUARTER, 62),
+    (F, Duration.HALF, 68),
+    (G, Duration.QUARTER, 62), (F, Duration.EIGHTH, 58),
+    (Eb, Duration.EIGHTH, 55), (Db, Duration.HALF, 60),
+    (C, Duration.QUARTER, 58), (Db, Duration.QUARTER, 62),
+    (Eb, Duration.HALF, 65),
+    (F, Duration.WHOLE, 68),
+    (G, Duration.QUARTER, 65), (Ab, Duration.QUARTER, 62),
+    (G, Duration.QUARTER, 60), (F, Duration.QUARTER, 65),
+    (Eb, Duration.HALF, 62), (Db, Duration.HALF, 65),
+    (Db, Duration.WHOLE, 62),
+    (None, Duration.WHOLE, 0),
+]
+
+saw.set(volume=0.4)
+for note, dur, vel in duet_melody:
+    if note is None:
+        saw.rest(dur)
+    else:
+        saw.add(note, dur, velocity=vel)
+
+sq.set(volume=0.3)
+for note, dur, vel in duet_harmony:
+    if note is None:
+        sq.rest(dur)
+    else:
+        sq.add(note, dur, velocity=vel)
+
+# Others hold drones or rest
+for _ in range(8):
+    sine.add(F.add(-12), Duration.WHOLE, velocity=35)
+for _ in range(8):
+    tri.rest(Duration.WHOLE)
+for _ in range(8):
+    fm.rest(Duration.WHOLE)
+for _ in range(8):
+    pwm.rest(Duration.WHOLE)
+for _ in range(8):
+    wf.rest(Duration.WHOLE)
+for _ in range(2):
+    for chord in prog:
+        pad.add(chord, Duration.WHOLE, velocity=38)
+for _ in range(8):
+    sub.add(F.add(-24), Duration.WHOLE, velocity=32)
+for _ in range(8):
+    kick.hit(K, Duration.QUARTER, velocity=90)
+    kick.rest(Duration.QUARTER)
+    kick.hit(K, Duration.QUARTER, velocity=82)
+    kick.rest(Duration.QUARTER)
+for _ in range(8):
+    hats.rest(Duration.EIGHTH)
+    hats.hit(CH, Duration.EIGHTH, velocity=48)
+    hats.rest(Duration.EIGHTH)
+    hats.hit(CH, Duration.EIGHTH, velocity=42)
+    hats.rest(Duration.HALF)
+for _ in range(8):
+    snare.rest(Duration.QUARTER)
+    snare.hit(S, Duration.QUARTER, velocity=75)
+    snare.rest(Duration.HALF)
+for _ in range(8):
+    sine_pad.rest(Duration.WHOLE)
+for _ in range(8):
+    tri_pad.rest(Duration.WHOLE)
+for _ in range(8):
+    saw_pad.rest(Duration.WHOLE)
+for _ in range(8):
+    lead.rest(Duration.WHOLE)
+
+# ── Bars 81-88: CANON — sine, triangle, PWM in staggered entries ─
+# Same phrase, entering 2 beats apart — three voices in a round
+canon_phrase = [
+    (Ab, Duration.QUARTER, 72), (G, Duration.EIGHTH, 65),
+    (F, Duration.EIGHTH, 62), (Eb, Duration.QUARTER, 68),
+    (Db, Duration.QUARTER, 70),
+    (C, Duration.QUARTER, 65), (Db, Duration.QUARTER, 68),
+    (F, Duration.HALF, 72),
+]
+
+# Sine starts
+for note, dur, vel in canon_phrase:
+    sine.add(note, dur, velocity=vel)
+for note, dur, vel in canon_phrase:
+    sine.add(note, dur, velocity=max(20, vel - 10))
+
+# Triangle enters 2 beats late
+tri.rest(Duration.HALF)
+for note, dur, vel in canon_phrase:
+    tri.add(note, dur, velocity=max(20, vel - 5))
+for note, dur, vel in canon_phrase:
+    tri.add(note, dur, velocity=max(20, vel - 12))
+tri.rest(Duration.HALF)
+
+# PWM enters 4 beats late
+pwm.rest(Duration.WHOLE)
+for note, dur, vel in canon_phrase:
+    pwm.add(note, dur, velocity=max(20, vel - 8))
+for note, dur, vel in canon_phrase:
+    pwm.add(note, dur, velocity=max(20, vel - 15))
+pwm.rest(Duration.WHOLE)
+
+# Others drone
+for _ in range(8):
+    sq.rest(Duration.WHOLE)
+saw.set(volume=0.25)
+for _ in range(8):
+    saw.add(F.add(-12), Duration.WHOLE, velocity=30)
+for _ in range(8):
+    fm.rest(Duration.WHOLE)
+for _ in range(8):
+    wf.rest(Duration.WHOLE)
+for _ in range(2):
+    for chord in prog:
+        pad.add(chord, Duration.WHOLE, velocity=35)
+for _ in range(8):
+    sub.add(F.add(-24), Duration.WHOLE, velocity=30)
+for _ in range(8):
+    kick.rest(Duration.WHOLE)
+for _ in range(8):
+    hats.rest(Duration.WHOLE)
+for _ in range(8):
+    snare.rest(Duration.WHOLE)
+for _ in range(8):
+    sine_pad.rest(Duration.WHOLE)
+tri_pad.add(Ab.add(-12), Duration.WHOLE, velocity=35)
+tri_pad.add(Db, Duration.WHOLE, velocity=32)
+for _ in range(6):
+    tri_pad.rest(Duration.WHOLE)
+for _ in range(8):
+    saw_pad.rest(Duration.WHOLE)
+for _ in range(8):
+    lead.rest(Duration.WHOLE)
+
+# ── Bars 89-96: FINALE — all 9 back together, then dissolve ────
+# One last full statement, then they leave one by one
+
+# Everyone plays their phrase one more time — fortissimo
+sine.set(volume=0.45)
+for _ in range(4):
+    for note, dur, vel in sine_phrase:
+        if note is None:
+            sine.rest(dur)
+        else:
+            sine.add(note, dur, velocity=vel)
+    for note, dur, vel in sine_phrase_b:
+        if note is None:
+            sine.rest(dur)
+        else:
+            sine.add(note, dur, velocity=max(20, vel - 15))
+
+tri.set(volume=0.35)
+for _ in range(4):
+    for note, dur, vel in tri_phrase:
+        if note is None:
+            tri.rest(dur)
+        else:
+            tri.add(note, dur, velocity=vel)
+    for note, dur, vel in tri_phrase_b:
+        if note is None:
+            tri.rest(dur)
+        else:
+            tri.add(note, dur, velocity=max(18, vel - 15))
+
+sq.set(volume=0.25)
+for _ in range(8):
+    for note, dur, vel in sq_stab:
+        if note is None:
+            sq.rest(dur)
+        else:
+            sq.add(note, dur, velocity=max(20, vel - 15))
+
+saw.set(volume=0.3)
+for _ in range(4):
+    for note in arp_a:
+        saw.add(note, Duration.EIGHTH, velocity=55)
+    for note in arp_b:
+        saw.add(note, Duration.EIGHTH, velocity=52)
+
+fm.set(volume=0.2)
+for _ in range(8):
+    for note, dur, vel in fm_phrase:
+        if note is None:
+            fm.rest(dur)
+        else:
+            fm.add(note, dur, velocity=max(18, vel - 18))
+
+pwm.set(volume=0.18)
+for _ in range(8):
+    for note, dur, vel in pwm_phrase:
+        if note is None:
+            pwm.rest(dur)
+        else:
+            pwm.add(note, dur, velocity=max(15, vel - 20))
+
+wf.set(volume=0.12)
+for _ in range(8):
+    for note, dur, vel in wf_phrase:
+        if note is None:
+            wf.rest(dur)
+        else:
+            wf.add(note, dur, velocity=max(15, vel - 22))
+
+for _ in range(2):
+    for chord in prog:
+        pad.add(chord, Duration.WHOLE, velocity=35)
+
+for vel in [30, 25, 22, 18, 15, 12, 8, 0]:
+    if vel > 0:
+        sub.add(F.add(-24), Duration.WHOLE, velocity=vel)
+    else:
+        sub.rest(Duration.WHOLE)
+
+for vel in [80, 68, 55, 42, 30, 18, 0, 0]:
+    if vel > 0:
+        for beat in range(4):
+            kick.hit(K, Duration.QUARTER, velocity=vel)
+    else:
+        kick.rest(Duration.WHOLE)
+
+for vel in [45, 38, 30, 22, 15, 0, 0, 0]:
+    if vel > 0:
+        for beat in range(4):
+            hats.rest(Duration.EIGHTH)
+            hats.hit(CH, Duration.EIGHTH, velocity=vel)
+    else:
+        hats.rest(Duration.WHOLE)
+
+for vel in [70, 58, 45, 32, 20, 0, 0, 0]:
+    if vel > 0:
+        snare.rest(Duration.QUARTER)
+        snare.hit(S, Duration.QUARTER, velocity=vel)
+        snare.rest(Duration.HALF)
+    else:
+        snare.rest(Duration.WHOLE)
+
+for vel in [30, 25, 20, 15, 10, 5, 0, 0]:
+    if vel > 0:
+        sine_pad.add(F.add(-12), Duration.WHOLE, velocity=vel)
+    else:
+        sine_pad.rest(Duration.WHOLE)
+
+for _ in range(8):
+    tri_pad.rest(Duration.WHOLE)
+for _ in range(8):
+    saw_pad.rest(Duration.WHOLE)
+
+for _ in range(8):
     lead.rest(Duration.WHOLE)
 
 # ═════════════════════════════════════════════════════════════════
