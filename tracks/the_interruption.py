@@ -460,7 +460,7 @@ for vel in [85, 78, 70, 62, 55, 48, 40, 35, 30, 25, 22, 20, 18, 15, 12, 8]:
     sub.add(D.add(-24), Duration.WHOLE, velocity=vel)
 
 # ── REESE BASS — detuned saw, DnB signature ────────────────────
-reese = score.part("reese", synth="drift", envelope="pad", volume=0.28,
+reese = score.part("reese", synth="drift", envelope="pad", volume=0.2,
                    lowpass=400, detune=15, spread=0.3,
                    distortion=0.2, sidechain=0.55,
                    reverb=0.2, reverb_decay=1.5,
