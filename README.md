@@ -13,6 +13,8 @@ An album of compositions written in Python using [pytheory](https://github.com/k
 
 Each track is a `.py` file. Run it to hear it.
 
+![Album Cover](cover.png)
+
 ![](https://kennethreitz.org/static/images/interpretations-player.png)
 
 ## Usage
