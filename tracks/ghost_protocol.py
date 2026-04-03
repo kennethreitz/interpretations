@@ -1,6 +1,7 @@
 """
-GHOST PROTOCOL — Portishead intro → deadmau5 Strobe-style build.
-Dark, patient, hypnotic. One pluck arp that IS the track.
+GHOST PROTOCOL — dark, patient, hypnotic.
+Trip-hop intro dissolves into a slow-building trance arp.
+One pluck line that IS the track.
 The kick doesn't arrive until you've forgotten you're waiting for it.
 """
 

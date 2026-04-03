@@ -1,7 +1,7 @@
 """
-APEX — beast mode's meaner sibling.
-Koto hook instead of sitar. Wavefold bass. Faster. Harder.
-Eb minor, 140 BPM.
+APEX — the fastest, the hardest.
+Koto hook, wavefold bass, mellotron strings, timpani.
+Two hooks, 32nd note koto runs. Eb minor, 140 BPM.
 """
 
 from pytheory import Key, Duration, Score, Tone, play_score

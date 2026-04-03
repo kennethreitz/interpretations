@@ -73,12 +73,12 @@ See the [changelog](CHANGELOG.md) for detailed track history.
 |---|-------|-----|-----|--------|------|
 | 1 | [Raga Midnight](tracks/raga_midnight.py) | D Phrygian | 90 | shruti / just | Sitar raga with 808 drop |
 | 2 | [Shruti Lofi](tracks/shruti_lofi.py) | D minor | 75 | shruti / just | Microtonal lo-fi hip hop |
-| 3 | [Ghost Protocol](tracks/ghost_protocol.py) | F minor | 128 | equal | Portishead → Strobe |
+| 3 | [Ghost Protocol](tracks/ghost_protocol.py) | F minor | 128 | equal | Trip-hop → trance build |
 | 4 | [Silk Road](tracks/silk_road.py) | D minor | 95 | equal | World music caravan |
 | 5 | [The Observatory](tracks/the_observatory.py) | G minor | 112 | equal | Chapel through shortwave |
 | 6 | [Acid Reign](tracks/acid_reign.py) | A minor | 140 | equal | Dual 303 acid |
 | 7 | [Beast Mode](tracks/beast_mode.py) | G minor | 135 | equal | Trap + sitar hook |
-| 8 | [Apex](tracks/apex.py) | Eb minor | 140 | equal | Koto hook, wavefold bass |
+| 8 | [Apex](tracks/apex.py) | Eb minor | 140 | equal | The fastest, the hardest |
 | 9 | [Voltage](tracks/voltage.py) | F minor | 138 | equal | Raw oscillators |
 | 10 | [An Exception Occurred](tracks/an_exception_occurred.py) | Eb major→minor | 80 | equal | Mental health arc |
 | 11 | [Voices](tracks/voices.py) | F# minor | 65 | equal | Auditory hallucinations |
