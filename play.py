@@ -972,19 +972,19 @@ def main():
             elif act == "render":
                 _play_track(path, args, force_render=True)
             else:
-                result_action = _play_track(path, args)
-                if result_action in ("next", "prev"):
-                    files = sorted_tracks(list(TRACKS_DIR.glob("*.py")))
-                    try:
-                        idx = next(i for i, f in enumerate(files) if f.name == Path(path).name)
-                    except StopIteration:
-                        continue
+                files = sorted_tracks(list(TRACKS_DIR.glob("*.py")))
+                try:
+                    idx = next(i for i, f in enumerate(files) if f.name == Path(path).name)
+                except StopIteration:
+                    idx = 0
+                while True:
+                    result_action = _play_track(files[idx], args)
                     if result_action == "next":
                         idx = (idx + 1) % len(files)
-                    else:
+                    elif result_action == "prev":
                         idx = (idx - 1) % len(files)
-                    result_action2 = _play_track(files[idx], args)
-                    # Could chain further but return to picker
+                    else:
+                        break  # q, Ctrl+C, or track ended — back to picker
         return
     else:
         path = Path(args.score)
