@@ -470,13 +470,12 @@ def pick_track():
                 f, title, bpm, m, s, parts, desc, pitch, track_key, tuning = entry
                 name_col = 24
                 cached = "✓" if _wav_path(f).exists() else " "
-                pitch_str = f"  {int(pitch)}Hz" if pitch else ""
-                # Shorten key: "D phrygian" → "D phr", "F minor" → "Fm", "G major" → "G"
+                # Shorten key
                 short_key = ""
                 if track_key:
-                    parts_k = track_key.split()
-                    if len(parts_k) == 2:
-                        root, mode = parts_k
+                    pk = track_key.split()
+                    if len(pk) == 2:
+                        root, mode = pk
                         if mode == "major":
                             short_key = root
                         elif mode == "minor":
@@ -485,15 +484,22 @@ def pick_track():
                             short_key = f"{root} {mode[:3]}"
                     else:
                         short_key = track_key
-                key_str = f"  {short_key}" if short_key else ""
-                tuning_str = f"  {tuning}" if tuning else ""
-                meta_str = f"{cached} {bpm:>3} BPM  {m}:{s:02d}{key_str}{pitch_str}{tuning_str}" if bpm else ""
+                # Fixed-width columns for table alignment
+                bpm_col = f"{bpm:>3} BPM" if bpm else "       "
+                time_col = f"{m}:{s:02d}" if bpm else "    "
+                key_col = f"{short_key:>8s}"
+                extras = ""
+                if pitch:
+                    extras += f" {int(pitch)}Hz"
+                if tuning:
+                    extras += f" {tuning}"
+                meta_str = f"{cached} {bpm_col}  {time_col}  {key_col}{extras}"
                 name_display = title[:name_col - 1].ljust(name_col - 1)
 
                 num = f"{i + 1:>2}."
 
                 if i == selected[0]:
-                    full = f" ▸ {num} {name_display}  {meta_str}"
+                    full = f" ▸ {num} {name_display}{meta_str}"
                     stdscr.addstr(y, 1, full[:w - 2],
                                   curses.A_BOLD | curses.color_pair(1))
                 else:
@@ -502,7 +508,7 @@ def pick_track():
                                   curses.A_BOLD)
                     stdscr.addstr(y, 8, name_display,
                                   curses.color_pair(track_color))
-                    if meta_str:
+                    if meta_str.strip():
                         stdscr.addstr(y, 8 + name_col, meta_str,
                                       curses.A_DIM)
 
