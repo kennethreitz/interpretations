@@ -734,18 +734,30 @@ def main():
                 total = len(files)
                 done = [0]
 
+                import time as _time
+
                 def render_one(track_path):
                     wav = WAVS_DIR / (track_path.stem + ".wav")
-                    subprocess.run(
+                    start = _time.monotonic()
+                    result = subprocess.run(
                         [sys.executable, str(Path(__file__).resolve()),
                          str(track_path), "-o", str(wav)],
-                        capture_output=True
+                        capture_output=True, text=True
                     )
+                    elapsed = _time.monotonic() - start
                     done[0] += 1
-                    print(f"  {GREEN}✓{RESET} {CYAN}{track_path.name}{RESET}  {DIM}({done[0]}/{total}){RESET}")
+                    if result.returncode == 0:
+                        size_mb = wav.stat().st_size / 1024 / 1024 if wav.exists() else 0
+                        print(f"  {GREEN}✓{RESET} {CYAN}{track_path.name:30s}{RESET} {DIM}{elapsed:5.1f}s  {size_mb:5.1f}MB  ({done[0]}/{total}){RESET}", flush=True)
+                    else:
+                        print(f"  {MAGENTA}✗{RESET} {CYAN}{track_path.name:30s}{RESET} {DIM}FAILED after {elapsed:.1f}s ({done[0]}/{total}){RESET}", flush=True)
+                        if result.stderr:
+                            for line in result.stderr.strip().split('\n')[-3:]:
+                                print(f"    {DIM}{line}{RESET}", flush=True)
 
                 workers = min(4, total)
                 print(f"\n  {DIM}Rendering {total} tracks with {workers} workers...{RESET}\n")
+                batch_start = _time.monotonic()
 
                 with ThreadPoolExecutor(max_workers=workers) as pool:
                     futures = {pool.submit(render_one, f): f for f in files}
@@ -756,7 +768,9 @@ def main():
                             f = futures[future]
                             print(f"  {MAGENTA}✗{RESET} {f.name}: {e}")
 
-                print(f"\n  {GREEN}{BOLD}Done! {done[0]} tracks cached.{RESET}\n")
+                batch_elapsed = _time.monotonic() - batch_start
+                bm, bs = int(batch_elapsed // 60), int(batch_elapsed % 60)
+                print(f"\n  {GREEN}{BOLD}Done! {done[0]} tracks cached in {bm}:{bs:02d}{RESET}\n")
 
         while True:
             result = pick_track()
