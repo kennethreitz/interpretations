@@ -405,10 +405,18 @@ def pick_track():
             s = int(duration_sec % 60)
             pitch = score.reference_pitch if score.reference_pitch != 440.0 else None
             track_key = str(getattr(mod, 'key', '')) if hasattr(mod, 'key') else ""
+            tuning = ""
+            if score.system != "western" or score.temperament != "equal":
+                bits = []
+                if score.system != "western":
+                    bits.append(score.system)
+                if score.temperament != "equal":
+                    bits.append(score.temperament)
+                tuning = "/".join(bits)
             desc = get_description(mod)
-            entries.append((f, title, bpm, m, s, parts, desc, pitch, track_key))
+            entries.append((f, title, bpm, m, s, parts, desc, pitch, track_key, tuning))
         except Exception:
-            entries.append((f, f.stem.replace("_", " ").title(), 0, 0, 0, 0, "", None, ""))
+            entries.append((f, f.stem.replace("_", " ").title(), 0, 0, 0, 0, "", None, "", ""))
 
     selected = [0]
     result = [None]
@@ -456,7 +464,7 @@ def pick_track():
                 if y >= h - 4:
                     break
 
-                f, title, bpm, m, s, parts, desc, pitch, track_key = entry
+                f, title, bpm, m, s, parts, desc, pitch, track_key, tuning = entry
                 name_col = 24
                 cached = "✓" if _wav_path(f).exists() else " "
                 pitch_str = f"  {int(pitch)}Hz" if pitch else ""
@@ -475,7 +483,8 @@ def pick_track():
                     else:
                         short_key = track_key
                 key_str = f"  {short_key}" if short_key else ""
-                meta_str = f"{cached} {bpm:>3} BPM  {m}:{s:02d}{key_str}{pitch_str}" if bpm else ""
+                tuning_str = f"  {tuning}" if tuning else ""
+                meta_str = f"{cached} {bpm:>3} BPM  {m}:{s:02d}{key_str}{tuning_str}{pitch_str}" if bpm else ""
                 name_display = title[:name_col - 1].ljust(name_col - 1)
 
                 num = f"{i + 1:>2}."
