@@ -58,6 +58,8 @@ ALBUM_ORDER = [
     "waveforms.py",
     "tape_memory.py",
     "emergence.py",
+    "music_box_factory.py",
+    "cathedral.py",
 ]
 
 

@@ -35,7 +35,9 @@ Each track is a `.py` file. Run it to hear it.
 16. **Intrusive** — Bb minor, 92 BPM. One saw synth phrase repeating. Rhodes tries to play something else. Drums try to drown it. Stop fighting — acceptance, sub bass, cello. It passes.
 17. **Waveforms** — F minor, 118 BPM. Pure synthesis showcase — percussive blips stacking, FM solo, saw/square duet in thirds, sine/triangle/PWM canon.
 18. **Tape Memory** — Db minor, 90 BPM. Mellotron flute dreams surrounded by new synthesis. FM bells, drift oscillator, crotales, granular texture, hard_sync bass, PWM lead, wavefold, ring_mod. Theremin solo at the peak.
-19. **Emergence** — E minor, 100 BPM. The acoustic world births the electronic one. Singing bowls, tingsha, didgeridoo, mellotron flute, sitar 16th arps with 32nd shreds — then synths emerge. Saw, FM, square, supersaw. Both worlds collide at the peak. Bowls alone at the end.
+19. **Emergence** — E minor, 100 BPM. Acoustic births electronic. Singing bowls, tingsha, didgeridoo, mellotron flute, sitar 16th arps with 32nd shreds, then synths emerge. Both worlds collide at the peak.
+20. **Music Box Factory** — G major, 108 BPM. Eight tuned percussion instruments only. Kalimba, vibraphone, celesta, marimba, glockenspiel, xylophone, crotales, timpani. Tubular bells mark sections. No synths, no strings — just metal and wood.
+21. **Cathedral** — D minor, 60 BPM. Ancient stone. Tubular bells in taj_mahal reverb, bagpipe drone, mellotron choir, timpani thunder with 16th note rolls, pipe organ hymn, kick in cathedral reverb. Mellotron choir solo. Bells alone at the end.
 
 ## Usage
 
