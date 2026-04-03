@@ -20,8 +20,8 @@ On first run, you'll be prompted to render all tracks to WAV (parallel, ~3-4 min
 **Interactive player** — animated track picker with album order:
 
 ```bash
-uv run play                                                    # pick from list
-uv run play tracks/the_temple.py                                      # play specific track
+uv run play
+uv run play tracks/the_temple.py
 ```
 
 **Picker controls:**
