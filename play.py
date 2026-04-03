@@ -262,7 +262,7 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
     seek_amount = int(5 * sample_rate)
     big_seek = int(30 * sample_rate)
 
-    state = {"pos": 0, "playing": True, "quit": False}
+    state = {"pos": 0, "playing": True, "quit": False, "action": None}
     lock = threading.Lock()
 
     def callback(outdata, frames, time_info, status):
@@ -289,7 +289,7 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
         for line in info_lines:
             print(f"  {line}")
     print()
-    print("  [+/f] +5s  [-/s] -5s  [d] +30s  [a] -30s  [space] pause  [q] quit")
+    print("  [+/f] +5s  [-/s] -5s  [d] +30s  [a] -30s  [space] pause  [n] next  [p] prev  [q] quit")
     print()
 
     stream = sd.OutputStream(
@@ -342,6 +342,12 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
                 elif ch == "a":
                     with lock:
                         state["pos"] = max(0, state["pos"] - big_seek)
+                elif ch == "n":
+                    state["action"] = "next"
+                    state["quit"] = True
+                elif ch == "p":
+                    state["action"] = "prev"
+                    state["quit"] = True
 
         sys.stderr.write("\n")
     except KeyboardInterrupt:
@@ -350,6 +356,8 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
         termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
         stream.stop()
         stream.close()
+
+    return state.get("action")
 
 
 def save_wav(buf, sample_rate, path):
@@ -772,7 +780,8 @@ def _render_and_cache(path, args):
 
 
 def _play_track(path, args, force_render=False, render_only=False):
-    """Load, render, and play a single track. Uses cached WAV if available."""
+    """Load, render, and play a single track. Uses cached WAV if available.
+    Returns 'next', 'prev', or None."""
     path = Path(path)
     if not path.exists():
         print(f"File not found: {path}")
@@ -824,7 +833,7 @@ def _play_track(path, args, force_render=False, render_only=False):
         parts += "  —  " + "  ".join(extras)
     info.append(parts)
 
-    play_audio(buf, sr, title=title, info_lines=info, offset_sec=offset_sec)
+    return play_audio(buf, sr, title=title, info_lines=info, offset_sec=offset_sec)
 
 
 def main():
@@ -915,9 +924,16 @@ def main():
             path, act = result
             if act == "play_all":
                 files = sorted_tracks(list(TRACKS_DIR.glob("*.py")))
-                for f in files:
+                i = 0
+                while i < len(files):
                     print(f"\n{'═' * 40}")
-                    _play_track(f, args)
+                    result_action = _play_track(files[i], args)
+                    if result_action == "next":
+                        i += 1
+                    elif result_action == "prev":
+                        i = max(0, i - 1)
+                    else:
+                        i += 1
             elif act == "render_all":
                 import subprocess
                 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -953,7 +969,19 @@ def main():
             elif act == "render":
                 _play_track(path, args, force_render=True)
             else:
-                _play_track(path, args)
+                result_action = _play_track(path, args)
+                if result_action in ("next", "prev"):
+                    files = sorted_tracks(list(TRACKS_DIR.glob("*.py")))
+                    try:
+                        idx = next(i for i, f in enumerate(files) if f.name == Path(path).name)
+                    except StopIteration:
+                        continue
+                    if result_action == "next":
+                        idx = (idx + 1) % len(files)
+                    else:
+                        idx = (idx - 1) % len(files)
+                    result_action2 = _play_track(files[idx], args)
+                    # Could chain further but return to picker
         return
     else:
         path = Path(args.score)
