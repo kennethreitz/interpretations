@@ -717,8 +717,13 @@ WAVS_DIR = Path(__file__).parent / "wavs"
 
 
 def _wav_path(track_path):
-    """Get the WAV cache path for a track."""
-    return WAVS_DIR / (Path(track_path).stem + ".wav")
+    """Get the WAV cache path for a track. Checks for numbered prefix too."""
+    stem = Path(track_path).stem
+    # Check for numbered version first (e.g. 01_raga_midnight.wav)
+    for f in WAVS_DIR.glob(f"*_{stem}.wav"):
+        return f
+    # Fall back to unnumbered
+    return WAVS_DIR / (stem + ".wav")
 
 
 def _render_and_cache(path, args):
@@ -753,7 +758,13 @@ def _render_and_cache(path, args):
                 args.from_time, args.to_time,
                 args.volume != 1.0, args.loop != 1]):
         WAVS_DIR.mkdir(exist_ok=True)
-        wav = _wav_path(path)
+        # Use numbered prefix if track is in album order
+        stem = Path(path).name
+        if stem in ALBUM_ORDER:
+            idx = ALBUM_ORDER.index(stem) + 1
+            wav = WAVS_DIR / f"{idx:02d}_{Path(path).stem}.wav"
+        else:
+            wav = WAVS_DIR / (Path(path).stem + ".wav")
         save_wav(buf, sr, str(wav))
         sys.stderr.write(f"  Cached -> {wav}\n")
 
