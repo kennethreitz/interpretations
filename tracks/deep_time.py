@@ -211,7 +211,7 @@ for i in range(6):
         bowl.rest(Duration.WHOLE)
 
 # ── HIGH TEXTURE — triangle shimmer, almost subliminal ─────────
-shimmer = score.part("shimmer", synth="triangle", envelope="pad", volume=0.06,
+shimmer = score.part("shimmer", synth="drift", envelope="pad", volume=0.06,
                      reverb=0.9, reverb_type="taj_mahal",
                      chorus=0.6, chorus_rate=0.05, chorus_depth=0.03,
                      lowpass=2000, pan=-0.4)
@@ -279,6 +279,23 @@ wind.lfo("volume", rate=0.015, min=0.01, max=0.05, bars=48, shape="triangle")
 
 for _ in range(48):
     wind.add(B, Duration.WHOLE, velocity=30)
+
+# ── GRAIN — deep granular texture, barely perceptible ──────────
+grain = score.part("grain", instrument="granular_pad", volume=0.06,
+                   reverb=0.5, reverb_type="taj_mahal",
+                   pan=0.35)
+
+# Bars 1-16: silence
+for _ in range(16):
+    grain.rest(Duration.WHOLE)
+
+# Bars 17-40: low B drone, glacial
+for _ in range(24):
+    grain.add(B.add(-12), Duration.WHOLE, velocity=30)
+
+# Bars 41-48: silence — dissolve
+for _ in range(8):
+    grain.rest(Duration.WHOLE)
 
 # ── THEREMIN — emotional break, center of the piece ─────────────
 theremin = score.part("theremin", instrument="theremin", volume=0.22,

@@ -424,6 +424,24 @@ play_pattern(pulse, pulse_line, 4, vel_offset=-25)
 for _ in range(4):
     pulse.rest(Duration.WHOLE)
 
+# ── SYNC — hard sync oscillator, enters late ───────────────────
+sync = score.part("sync", synth="hard_sync", volume=0.25,
+                  lowpass=4000, distortion=0.2, distortion_drive=2.5,
+                  reverb=0.15, reverb_type="spring",
+                  delay=0.15, delay_time=0.234, delay_feedback=0.2,
+                  pan=-0.15)
+
+# Bars 1-48: silence
+for _ in range(48):
+    sync.rest(Duration.WHOLE)
+
+# Bars 49-72: plays saw_line_a pattern
+play_pattern(sync, saw_line_a, 24)
+
+# Bars 73-96: silence
+for _ in range(24):
+    sync.rest(Duration.WHOLE)
+
 # ── KICK — enters at bar 41 ───────────────────────────────────
 K = DrumSound.KICK
 kick = score.part("kick", volume=1.0, humanize=0.02,

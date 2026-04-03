@@ -519,6 +519,26 @@ theremin.add(Eb.add(-12), Duration.WHOLE, velocity=20, bend=-0.25)
 for _ in range(30):
     theremin.rest(Duration.WHOLE)
 
+# ── RING — sparse ring mod hits, spectral accents ──────────────
+ring = score.part("ring", synth="ring_mod", envelope="pluck", volume=0.12,
+                  reverb=0.2, reverb_type="cathedral",
+                  delay=0.1, delay_time=0.375, delay_feedback=0.15,
+                  pan=0.35)
+
+# Bars 1-24: silence
+for _ in range(24):
+    ring.rest(Duration.WHOLE)
+
+# Bars 25-32: sparse hits — every other bar
+for _ in range(4):
+    ring.add(Eb.add(12), Duration.QUARTER, velocity=55)
+    ring.rest(Duration.DOTTED_HALF)
+    ring.rest(Duration.WHOLE)
+
+# Bars 33-68: silence — let it dissolve (remaining bars)
+for _ in range(32):
+    ring.rest(Duration.WHOLE)
+
 # ── ORGAN — the hospital, the hymn, bars 33-40 ─────────────────
 # Christian hymn on a pipe organ. Institutional. But grounding.
 # "Be still and know."

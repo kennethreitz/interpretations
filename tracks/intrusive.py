@@ -43,7 +43,7 @@ def play_thought(part, vel_offset=0, rest_after=Duration.WHOLE):
 
 
 # ── THE THOUGHT — piano, the thing you can't unthink ──────────
-thought = score.part("thought", synth="saw", volume=0.4,
+thought = score.part("thought", synth="wavefold", envelope="organ", volume=0.4,
                      lowpass=3000, distortion=0.1, distortion_drive=1.5,
                      saturation=0.4, legato=True, glide=0.03,
                      reverb=0.25, reverb_type="spring",

@@ -103,7 +103,7 @@ for _ in range(96):
     trip.rest(Duration.WHOLE)
 
 # ── THE ARP — the soul of the track, enters quietly bar 17 ─────
-arp = score.part("arp", synth="saw", envelope="pluck", volume=0.22,
+arp = score.part("arp", synth="drift", envelope="pluck", volume=0.22,
                  reverb=0.35, delay=0.4, delay_time=0.234,
                  delay_feedback=0.45, lowpass=1200, detune=6,
                  pan=0.15, humanize=0.04)
