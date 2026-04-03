@@ -404,7 +404,13 @@ def pick_track():
             m = int(duration_sec // 60)
             s = int(duration_sec % 60)
             pitch = score.reference_pitch if score.reference_pitch != 440.0 else None
-            track_key = str(getattr(mod, 'key', '')) if hasattr(mod, 'key') else ""
+            # Detect multi-key tracks
+            if hasattr(mod, 'key_lower'):
+                track_key = "(multi)"
+            elif hasattr(mod, 'key'):
+                track_key = str(mod.key)
+            else:
+                track_key = ""
             tuning = ""
             if score.system != "western":
                 tuning = score.system

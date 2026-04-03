@@ -31,6 +31,7 @@ score = Score("4/4", bpm=60, system="shruti", reference_pitch=432.0)
 # Throat/Third Eye: E major (bright, expressive)
 # Crown: dissolves into pure frequency
 
+key = Key("G", "major")          # primary key (multi-key track)
 key_lower = Key("G", "major")    # root, sacral
 key_middle = Key("C", "major")   # solar, heart
 key_upper = Key("E", "major")    # throat, third eye
