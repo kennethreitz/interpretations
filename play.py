@@ -498,9 +498,11 @@ def pick_track():
 
                 num = f"{i + 1:>2}."
 
+                # Fixed bar width — pad to consistent length
+                bar_width = name_col + 35  # enough for all columns
                 if i == selected[0]:
-                    sel_meta = f"{cached} {bpm_col}  {time_col}  {key_col}"
-                    full = f" ▸ {num} {name_display}{sel_meta}"
+                    full = f" ▸ {num} {name_display}{meta_str}"
+                    full = full[:bar_width].ljust(bar_width)
                     stdscr.addstr(y, 1, full[:w - 2],
                                   curses.A_BOLD | curses.color_pair(1))
                 else:
