@@ -3,6 +3,7 @@
 ## 2026-04-03
 
 - **Track 18: Tape Memory** — Db minor, 90 BPM. Mellotron flute, FM bells, drift oscillator, crotales, granular texture, hard_sync bass, PWM lead, wavefold, ring_mod. Theremin solo at peak. Singing bowls + tingsha. Everything pytheory 0.40.9 can do.
+- **Track 24: Apex** — Eb minor, 140 BPM. Koto hook, wavefold bass, mellotron strings, timpani, two hooks, 32nd koto shreds.
 - **Track 23: Shruti Lofi** — D minor, shruti just intonation, 75 BPM. Microtonal lo-fi hip hop. Kalimba, Rhodes, sitar, mellotron flute, tambura drone, lazy boom bap, vinyl crackle.
 - **Track 22: Beast Mode** — G minor, 135 BPM. Trap + sitar hook + mellotron flute drop + timpani war drums + 808 slides. Sidechained saw bass.
 - **Track 21: Cathedral** — D minor, 60 BPM. Tubular bells (taj_mahal 0.85), bagpipe, mellotron choir, timpani, pipe organ, mellotron strings, kick in cathedral reverb.

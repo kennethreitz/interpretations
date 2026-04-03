@@ -40,6 +40,7 @@ Each track is a `.py` file. Run it to hear it.
 21. **Cathedral** — D minor, 60 BPM. Ancient stone. Tubular bells in taj_mahal, bagpipe drone, mellotron choir, timpani thunder, pipe organ, kick in cathedral reverb.
 22. **Beast Mode** — G minor, 135 BPM. Trap drums, 808 slides, distorted saw bass, sitar hook + shred solo, mellotron flute drop, timpani war drums. The hardest track on the album.
 23. **Shruti Lofi** — D minor, shruti just intonation, 75 BPM. Microtonal lo-fi hip hop. Kalimba, Rhodes, sitar hook, mellotron flute, tambura drone, lazy boom bap. Sounds like a tape found in a temple thrift store.
+24. **Apex** — Eb minor, 140 BPM. Beast Mode's meaner sibling. Koto hook + shreds, wavefold bass, mellotron strings, timpani throughout, two hooks, 32nd note koto runs. The fastest track on the album.
 
 ## Usage
 

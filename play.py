@@ -62,6 +62,7 @@ ALBUM_ORDER = [
     "cathedral.py",
     "beast_mode.py",
     "shruti_lofi.py",
+    "apex.py",
 ]
 
 
@@ -428,7 +429,7 @@ def pick_track():
                     pass
             stdscr.addstr(3, max(0, (w - 15) // 2), "─" * 15,
                           curses.color_pair(2))
-            stdscr.addstr(4, max(0, (w - 42) // 2), "↑/↓ navigate  ↵ play  r render  q quit",
+            stdscr.addstr(4, max(0, (w - 56) // 2), "↑/↓ navigate  ↵ play  r render  a play all  R render all  q quit",
                           curses.A_DIM)
 
             # Track list
@@ -488,7 +489,7 @@ def pick_track():
                             pass
 
             stdscr.refresh()
-            curses.napms(50)
+            curses.napms(33)
 
             key = stdscr.getch()
             if key == curses.KEY_UP or key == ord("k"):
@@ -502,6 +503,14 @@ def pick_track():
             elif key == ord("r"):
                 result[0] = entries[selected[0]][0]
                 action[0] = "render"
+                return
+            elif key == ord("a"):
+                result[0] = "ALL"
+                action[0] = "play_all"
+                return
+            elif key == ord("R"):
+                result[0] = "ALL"
+                action[0] = "render_all"
                 return
             elif key == ord("q") or key == 27:
                 return
@@ -626,7 +635,7 @@ def _render_and_cache(path, args):
     return buf, sr, offset_sec, score, mod
 
 
-def _play_track(path, args, force_render=False):
+def _play_track(path, args, force_render=False, render_only=False):
     """Load, render, and play a single track. Uses cached WAV if available."""
     path = Path(path)
     if not path.exists():
@@ -655,6 +664,9 @@ def _play_track(path, args, force_render=False):
         offset_sec = 0.0
     else:
         buf, sr, offset_sec, score, mod = _render_and_cache(path, args)
+
+    if render_only:
+        return
 
     if args.output:
         save_wav(buf, sr, args.output)
@@ -690,12 +702,45 @@ def main():
 
     # ── Track picker when no score given ─────────────────────────
     if not args.score:
+        # First run — offer to render all if no cached WAVs
+        if not WAVS_DIR.exists() or not list(WAVS_DIR.glob("*.wav")):
+            print()
+            print("  Welcome to Interpretations!")
+            print()
+            print("  No cached WAVs found. First play of each track requires")
+            print("  rendering (~30-80s per track). You can render all tracks")
+            print("  now for instant playback later, or render on demand.")
+            print()
+            try:
+                choice = input("  Render all tracks now? [y/N] ").strip().lower()
+            except (KeyboardInterrupt, EOFError):
+                print()
+                return
+            if choice == "y":
+                files = sorted_tracks(list(TRACKS_DIR.glob("*.py")))
+                WAVS_DIR.mkdir(exist_ok=True)
+                for i, f in enumerate(files, 1):
+                    print(f"\n  [{i}/{len(files)}] {f.name}")
+                    _play_track(f, args, force_render=True, render_only=True)
+                print(f"\n  Done! {len(files)} tracks cached.\n")
+
         while True:
             result = pick_track()
             if result is None or result[0] is None:
                 return
             path, act = result
-            if act == "render":
+            if act == "play_all":
+                files = sorted_tracks(list(TRACKS_DIR.glob("*.py")))
+                for f in files:
+                    print(f"\n{'═' * 40}")
+                    _play_track(f, args)
+            elif act == "render_all":
+                files = sorted_tracks(list(TRACKS_DIR.glob("*.py")))
+                WAVS_DIR.mkdir(exist_ok=True)
+                for f in files:
+                    print(f"\n{'═' * 40}")
+                    _play_track(f, args, force_render=True, render_only=True)
+            elif act == "render":
                 _play_track(path, args, force_render=True)
             else:
                 _play_track(path, args)
