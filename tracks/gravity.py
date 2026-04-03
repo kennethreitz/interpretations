@@ -286,7 +286,7 @@ for vel in [60, 52, 44, 36, 28, 22, 15, 0]:
         hats.rest(Duration.WHOLE)
 
 # ── TAMBURA — buried drone, barely there, just warmth ──────────
-tambura = score.part("tambura", synth="sine", envelope="pad", volume=0.08,
+tambura = score.part("tambura", synth="drift", envelope="pad", volume=0.08,
                      reverb=0.5, reverb_type="taj_mahal",
                      chorus=0.3, chorus_rate=0.06, chorus_depth=0.01,
                      lowpass=800, pan=-0.3)

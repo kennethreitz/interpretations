@@ -46,6 +46,26 @@ room.lfo("volume", rate=0.008, min=0.015, max=0.04, bars=72, shape="triangle")
 for _ in range(72):
     room.add(Sa, Duration.WHOLE, velocity=25)
 
+# ── GRAIN — granular pad, subliminal texture ───────────────────
+grain = score.part("grain", instrument="granular_pad", volume=0.05,
+                   reverb=0.4, reverb_type="taj_mahal",
+                   pan=0.25)
+
+# Bars 1-8: silent
+for _ in range(8):
+    grain.rest(Duration.WHOLE)
+
+# Bars 9-64: Sa drone an octave below, whole notes
+for _ in range(56):
+    grain.add(Sa.add(-12), Duration.WHOLE, velocity=28)
+
+# Bars 65-72: fade out
+for vel in [22, 18, 14, 10, 6, 0, 0, 0]:
+    if vel > 0:
+        grain.add(Sa.add(-12), Duration.WHOLE, velocity=vel)
+    else:
+        grain.rest(Duration.WHOLE)
+
 # ── SINGING BOWL — the space itself ─────────────────────────────
 bowl = score.part("bowl", instrument="singing_bowl", volume=0.55,
                   reverb=1.0, reverb_type="taj_mahal",

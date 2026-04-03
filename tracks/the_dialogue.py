@@ -544,7 +544,7 @@ for _ in range(8):
     harmonium.rest(Duration.WHOLE)
 
 # ── PAD — the shared understanding ─────────────────────────────
-pad = score.part("pad", synth="supersaw", envelope="pad", volume=0.1,
+pad = score.part("pad", synth="drift", envelope="pad", volume=0.1,
                  reverb=0.7, reverb_type="taj_mahal",
                  chorus=0.4, chorus_rate=0.15, chorus_depth=0.01,
                  lowpass=1500)
@@ -568,6 +568,25 @@ for vel in [45, 38, 30, 22, 15, 10, 5, 0]:
 # Bars 73-80: silence
 for _ in range(8):
     pad.rest(Duration.WHOLE)
+
+# ── MELLOTRON — ghostly flute underneath the shared understanding ──
+mello = score.part("mellotron", instrument="mellotron_flute", volume=0.12,
+                   reverb=0.3, reverb_type="taj_mahal",
+                   pan=-0.15)
+
+# Bars 1-64: silent
+for _ in range(64):
+    mello.rest(Duration.WHOLE)
+
+# Bars 65-72: plays the progression as whole notes
+mello_prog = key.progression("i", "VII", "VI", "iv")
+for _ in range(2):
+    for chord in mello_prog:
+        mello.add(chord, Duration.WHOLE, velocity=42)
+
+# Bars 73-80: silence
+for _ in range(8):
+    mello.rest(Duration.WHOLE)
 
 # ── ROOM TONE — the space itself ───────────────────────────────
 room = score.part("room", synth="noise", envelope="pad", volume=0.025,

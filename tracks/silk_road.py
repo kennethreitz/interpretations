@@ -368,6 +368,19 @@ for _ in range(4):
     for chord in prog:
         pad.add(chord, Duration.WHOLE, velocity=60)
 
+# ── MELLOTRON — ghostly flute layer in the finale ──────────────
+mello = score.part("mellotron", instrument="mellotron_flute", volume=0.15,
+                   reverb=0.3, reverb_type="taj_mahal",
+                   pan=0.1, humanize=0.08)
+
+for _ in range(64):
+    mello.rest(Duration.WHOLE)
+
+# Bars 65-80: plays the progression as whole notes
+for _ in range(4):
+    for chord in prog:
+        mello.add(chord, Duration.WHOLE, velocity=48)
+
 # ═════════════════════════════════════════════════════════════════
 import sys
 

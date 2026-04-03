@@ -297,7 +297,7 @@ for bar in range(32):
         hats.hit(CH, Duration.EIGHTH, velocity=vel)
 
 # ── NES MELODY — emotional square wave, the heart of the peak ───
-nes = score.part("nes", synth="square", envelope="organ", volume=0.28,
+nes = score.part("nes", synth="square", envelope="organ", volume=0.18,
                  reverb=0.5, reverb_type="taj_mahal",
                  delay=0.35, delay_time=0.234, delay_feedback=0.45,
                  lowpass=4000, pan=-0.1, humanize=0.05)

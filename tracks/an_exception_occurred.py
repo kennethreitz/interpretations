@@ -594,7 +594,7 @@ for _ in range(8):
     organ.rest(Duration.WHOLE)
 
 # ── PSYCHOSIS BASS — deep, menacing, bars 23-32 ────────────────
-psycho_bass = score.part("psycho_bass", synth="sine", envelope="pad", volume=0.7,
+psycho_bass = score.part("psycho_bass", synth="sine", envelope="pad", volume=0.3,
                          lowpass=180, distortion=0.25, distortion_drive=3.5,
                          sub_osc=0.6, saturation=0.4)
 

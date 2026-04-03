@@ -317,7 +317,7 @@ for _ in range(32):
     theremin.rest(Duration.WHOLE)
 
 # ── CHOIR — swells from nowhere, bar 41 ──────────────────────
-choir = score.part("choir", instrument="choir", volume=0.15,
+choir = score.part("choir", instrument="mellotron_choir", volume=0.15,
                    reverb=0.8, reverb_type="cathedral",
                    chorus=0.3, chorus_rate=0.08, chorus_depth=0.012,
                    pan=0.2)

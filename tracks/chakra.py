@@ -556,6 +556,23 @@ theremin.add(su[0].add(12), Duration.WHOLE, velocity=45, bend=1.0)
 for _ in range(5):
     theremin.rest(Duration.WHOLE)
 
+# ── CROWN DRIFT — dissolving shimmer for the crown chakra ──────
+crown_drift = score.part("crown_drift", synth="drift", envelope="pad", volume=0.08,
+                         reverb=0.4, reverb_type="taj_mahal",
+                         chorus=0.3, chorus_rate=0.03, chorus_depth=0.015,
+                         pan=0.1)
+
+# Bars 1-48: silent (first 6 chakra sections)
+for _ in range(48):
+    crown_drift.rest(Duration.WHOLE)
+
+# Bars 49-56: crown chakra — velocity fading
+for vel in [35, 32, 28, 22, 18, 12, 8, 0]:
+    if vel > 0:
+        crown_drift.add(su[0], Duration.WHOLE, velocity=vel)
+    else:
+        crown_drift.rest(Duration.WHOLE)
+
 # ═════════════════════════════════════════════════════════════════
 import sys
 
