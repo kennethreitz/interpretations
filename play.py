@@ -390,16 +390,24 @@ def pick_track():
     for f in files:
         try:
             score, mod = load_score(f)
-            name = f.name
+            # Get clean title from docstring first line
+            title = f.stem.replace("_", " ").title()
+            if mod.__doc__:
+                first_line = mod.__doc__.strip().split("\n")[0].strip()
+                if first_line and "—" in first_line:
+                    title = first_line.split("—")[0].strip()
+                elif first_line:
+                    title = first_line
             bpm = score.bpm
             parts = len(score.parts)
             duration_sec = (score.total_beats / bpm) * 60 if bpm else 0
             m = int(duration_sec // 60)
             s = int(duration_sec % 60)
+            pitch = score.reference_pitch if score.reference_pitch != 440.0 else None
             desc = get_description(mod)
-            entries.append((f, name, bpm, m, s, parts, desc))
+            entries.append((f, title, bpm, m, s, parts, desc, pitch))
         except Exception:
-            entries.append((f, f.name, 0, 0, 0, 0, ""))
+            entries.append((f, f.stem.replace("_", " ").title(), 0, 0, 0, 0, "", None))
 
     selected = [0]
     result = [None]
@@ -442,14 +450,16 @@ def pick_track():
 
             # Track list
             list_start = 6
-            for i, (f, title, bpm, m, s, parts, desc) in enumerate(entries):
+            for i, entry in enumerate(entries):
                 y = list_start + i
                 if y >= h - 4:
                     break
 
-                name_col = 22
+                f, title, bpm, m, s, parts, desc, pitch = entry
+                name_col = 24
                 cached = "✓" if _wav_path(f).exists() else " "
-                meta_str = f"{cached} {bpm:>3} BPM  {m}:{s:02d}" if bpm else ""
+                pitch_str = f"  {int(pitch)}Hz" if pitch else ""
+                meta_str = f"{cached} {bpm:>3} BPM  {m}:{s:02d}{pitch_str}" if bpm else ""
                 name_display = title[:name_col - 1].ljust(name_col - 1)
 
                 num = f"{i + 1:>2}."
@@ -469,7 +479,7 @@ def pick_track():
                                       curses.A_DIM)
 
             # Description of selected track — word-wrapped
-            _, _, _, _, _, _, desc = entries[selected[0]]
+            desc = entries[selected[0]][6]
             if desc:
                 desc_y = list_start + len(entries) + 1
                 max_w = w - 8
