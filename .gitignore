@@ -5,3 +5,4 @@ __pycache__/
 wavs/
 mp3s/
 .claude/
+.DS_Store
