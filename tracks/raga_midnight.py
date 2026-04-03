@@ -501,20 +501,6 @@ for _ in range(2):
 for _ in range(8):
     tabla.rest(Duration.WHOLE)
 
-# ── MELLOTRON — strings layer over the 808 drop ───────────────
-mello = score.part("mellotron", instrument="mellotron_strings", volume=0.12,
-                   reverb=0.3, reverb_type="taj_mahal",
-                   pan=0.1)
-
-# Bars 1-48: silent
-for _ in range(48):
-    mello.rest(Duration.WHOLE)
-
-# Bars 49-56: whole note chords over the drop
-mello_prog = key.progression("i", "VII", "VI", "iv")
-for _ in range(2):
-    for chord in mello_prog:
-        mello.add(chord, Duration.WHOLE, velocity=42)
 
 # ═════════════════════════════════════════════════════════════════
 import sys

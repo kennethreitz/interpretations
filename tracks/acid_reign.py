@@ -297,23 +297,6 @@ for _ in range(12):
 for bar in range(8):
     rhodes.rest(Duration.WHOLE)
 
-# ── WAVEFOLD — metallic sustain in the breakdown ───────────────
-wavefold = score.part("wavefold", synth="wavefold", volume=0.2,
-                      lowpass=2000, distortion=0.15, distortion_drive=2.0,
-                      reverb=0.12, reverb_type="spring",
-                      pan=-0.2)
-
-# Bars 1-32: silent
-for _ in range(32):
-    wavefold.rest(Duration.WHOLE)
-
-# Bars 33-40: sustained A whole notes through the breakdown
-for _ in range(8):
-    wavefold.add(A, Duration.WHOLE, velocity=70)
-
-# Bars 41-64: silent
-for _ in range(24):
-    wavefold.rest(Duration.WHOLE)
 
 # ═════════════════════════════════════════════════════════════════
 import sys
