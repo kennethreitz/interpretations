@@ -6,10 +6,20 @@ license = "ISC"
 authors = [
     { name = "Kenneth Reitz", email = "me@kennethreitz.org" },
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.14"
 dependencies = [
     "pytheory>=0.40.9",
 ]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["play"]
+
+[project.scripts]
+play = "play:main"
 
 [project.urls]
 Repository = "https://github.com/kennethreitz/interpretations"
