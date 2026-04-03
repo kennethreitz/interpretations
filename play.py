@@ -61,6 +61,7 @@ ALBUM_ORDER = [
     "music_box_factory.py",
     "cathedral.py",
     "beast_mode.py",
+    "shruti_lofi.py",
 ]
 
 

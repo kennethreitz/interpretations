@@ -39,6 +39,7 @@ Each track is a `.py` file. Run it to hear it.
 20. **Music Box Factory** — G major, 108 BPM. Eight tuned percussion instruments only. Kalimba, vibraphone, celesta, marimba, glockenspiel, xylophone, crotales, timpani. Tubular bells mark sections. No synths, no strings — just metal and wood.
 21. **Cathedral** — D minor, 60 BPM. Ancient stone. Tubular bells in taj_mahal, bagpipe drone, mellotron choir, timpani thunder, pipe organ, kick in cathedral reverb.
 22. **Beast Mode** — G minor, 135 BPM. Trap drums, 808 slides, distorted saw bass, sitar hook + shred solo, mellotron flute drop, timpani war drums. The hardest track on the album.
+23. **Shruti Lofi** — D minor, shruti just intonation, 75 BPM. Microtonal lo-fi hip hop. Kalimba, Rhodes, sitar hook, mellotron flute, tambura drone, lazy boom bap. Sounds like a tape found in a temple thrift store.
 
 ## Usage
 
