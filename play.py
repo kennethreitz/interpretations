@@ -326,6 +326,7 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
             if select.select([sys.stdin], [], [], 0.15)[0]:
                 ch = sys.stdin.read(1)
                 if ch == "q" or ch == "\x03":  # q or Ctrl+C
+                    state["action"] = "stop"
                     state["quit"] = True
                 elif ch == " ":
                     with lock:
@@ -928,12 +929,14 @@ def main():
                 while i < len(files):
                     print(f"\n{'═' * 40}")
                     result_action = _play_track(files[i], args)
-                    if result_action == "next":
+                    if result_action == "stop":
+                        break  # q or Ctrl+C — back to menu
+                    elif result_action == "next":
                         i += 1
                     elif result_action == "prev":
                         i = max(0, i - 1)
                     else:
-                        i += 1
+                        i += 1  # track ended naturally — auto-advance
             elif act == "render_all":
                 import subprocess
                 from concurrent.futures import ThreadPoolExecutor, as_completed
