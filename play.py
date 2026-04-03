@@ -60,6 +60,7 @@ ALBUM_ORDER = [
     "emergence.py",
     "music_box_factory.py",
     "cathedral.py",
+    "beast_mode.py",
 ]
 
 
