@@ -487,7 +487,7 @@ def pick_track():
                 # Fixed-width columns for table alignment
                 bpm_col = f"{bpm:>3} BPM" if bpm else "       "
                 time_col = f"{m}:{s:02d}" if bpm else "    "
-                key_col = f"{short_key:>8s}"
+                key_col = f"{short_key:<8s}"
                 extras = ""
                 if pitch:
                     extras += f" {int(pitch)}Hz"
