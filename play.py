@@ -39,30 +39,38 @@ TRACKS_DIR = Path(__file__).parent / "tracks"
 
 # Album order — defines the canonical tracklist
 ALBUM_ORDER = [
+    # Opening — the statement
     "raga_midnight.py",
-    "chakra.py",
+    # Cool down, settle in
+    "shruti_lofi.py",
     "ghost_protocol.py",
-    "acid_reign.py",
+    # World journey
     "silk_road.py",
-    "deep_time.py",
-    "the_interruption.py",
-    "the_temple.py",
-    "the_dialogue.py",
-    "voltage.py",
     "the_observatory.py",
-    "gravity.py",
-    "sleight_of_hand.py",
+    # Energy climb
+    "acid_reign.py",
+    "beast_mode.py",
+    "apex.py",
+    "voltage.py",
+    # The heart — personal, emotional
     "an_exception_occurred.py",
     "voices.py",
     "intrusive.py",
+    "gravity.py",
+    # The exploration
+    "the_interruption.py",
+    "sleight_of_hand.py",
     "waveforms.py",
-    "tape_memory.py",
     "emergence.py",
-    "music_box_factory.py",
+    # The sacred
+    "chakra.py",
+    "the_temple.py",
+    "the_dialogue.py",
     "cathedral.py",
-    "beast_mode.py",
-    "shruti_lofi.py",
-    "apex.py",
+    # Closing
+    "tape_memory.py",
+    "music_box_factory.py",
+    "deep_time.py",
 ]
 
 

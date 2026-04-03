@@ -15,33 +15,6 @@ Each track is a `.py` file. Run it to hear it.
 
 ![](https://kennethreitz.org/static/images/interpretations-player.png)
 
-## Tracks
-
-1. **Raga Midnight** — D Phrygian (Bhairavi), shruti just intonation, 90 BPM. Tabla, sitar, tambura, dhol. Hand-written tabla solo with tihai cadence.
-2. **Chakra** — Root to crown frequency activation journey. Shruti tuning at A=432 Hz. Ukulele opening, singing bowls, harmonium, tambura, sitar, theremin. Metric modulation tempo changes (60 → 90 → 108 → 135 BPM) ascending through seven chakras.
-3. **Ghost Protocol** — F minor, 128 BPM. Portishead-style dark Rhodes intro with trip-hop beat, morphing into a Strobe-inspired hypnotic build. Saw arp emerges, kick doesn't arrive until bar 49. NES square wave melody at the emotional peak.
-4. **Acid Reign** — A minor, 140 BPM. Dual 303 acid bass lines (saw + square) with resonant filter sweeps (Q up to 20). Cajon in cathedral reverb, Rhodes pad, 808 sub. Five hand-written groove patterns.
-5. **Silk Road** — D minor, 95 BPM. A caravan picking up musicians along the ancient trade route. Koto solo (China) → sitar + tabla (India) → mandolin + doumbek (Persia) → guitar + cajon (Mediterranean) → all together. Nobody leaves, everyone adds their voice.
-6. **Deep Time** — B minor, 40 BPM, just intonation. Ambient drone. Tingsha, rainstick, finger cymbals, singing bowls, didgeridoo, sine drones, harmonium, theremin, choir, cello. 7.5 minutes of deep listening.
-7. **The Interruption** — D minor, 85 BPM. A baroque harpsichord and string quartet playing beautifully. Then at bar 33, a drum & bass breakbeat slams in with sub bass and reese. The strings keep playing like nothing happened. The beat dissolves, the quartet wins.
-8. **The Temple** — A Phrygian (Bhairavi), 65 BPM, shruti just intonation, A=432 Hz. Devotional layers inside a vast stone chamber. Singing bowls, tambura drone, harmonium, sitar, bansuri, tabla. The reverb is the instrument. Everything enters slowly, sings together, then dissolves back into silence.
-9. **The Dialogue** — E Phrygian (Bhairavi), 75 BPM, shruti just intonation, A=432 Hz. Sitar (human) and theremin (machine) start alone, find each other through call-and-response, and become something neither could be on their own. House beat enters when they find the groove.
-10. **Voltage** — F minor, 138 BPM. Raw oscillators, nothing else. Sine sub, saw lead, pulse counter-rhythm. Rhythm is pitch. Saw arp solo, pulse arp solo, 32nd note chaos at the peak. Aggressive, monophonic, electric.
-11. **The Observatory** — G minor, 112 BPM. Chapel harmonies broadcast through shortwave static. Radio hiss, singing bowl, square-wave organ, choir, saw arp, supersaw halo pad, theremin signal melody. Patient house pulse arrives at bar 33.
-12. **Gravity** — C minor, 88 BPM. Sparse piano stabs, 808 sub, boom bap drums with trap hat evolution. Rhodes melody, string swell. Tambura buried underneath, singing bowl bookends, one sitar bend in the breakdown. The weight of it all.
-13. **Sleight of Hand** — D minor, 100 BPM. Music box → didgeridoo → jazz piano → 808 drop → solo theremin → choir → acid 303 rips through the choir → music box returns over boom bap. You never see the next move coming.
-14. **An Exception Occurred** — Eb major→minor→major, 80 BPM. Piano-driven arc: stability → spiritual seeking (tambura, sitar, om chant) → psychosis (wild theremin, chaos drums) → despair → hymn (pipe organ) → recovery. Every note by hand.
-15. **Voices** — F# minor, 65 BPM. Five vocal parts multiplying across the stereo field. Piano enters as reality. One last whisper, then silence.
-16. **Intrusive** — Bb minor, 92 BPM. One saw synth phrase repeating. Rhodes tries to play something else. Drums try to drown it. Stop fighting — acceptance, sub bass, cello. It passes.
-17. **Waveforms** — F minor, 118 BPM. Pure synthesis showcase — percussive blips stacking, FM solo, saw/square duet in thirds, sine/triangle/PWM canon.
-18. **Tape Memory** — Db minor, 90 BPM. Mellotron flute dreams surrounded by new synthesis. FM bells, drift oscillator, crotales, granular texture, hard_sync bass, PWM lead, wavefold, ring_mod. Theremin solo at the peak.
-19. **Emergence** — E minor, 100 BPM. Acoustic births electronic. Singing bowls, tingsha, didgeridoo, mellotron flute, sitar 16th arps with 32nd shreds, then synths emerge. Both worlds collide at the peak.
-20. **Music Box Factory** — G major, 108 BPM. Eight tuned percussion instruments only. Kalimba, vibraphone, celesta, marimba, glockenspiel, xylophone, crotales, timpani. Tubular bells mark sections. No synths, no strings — just metal and wood.
-21. **Cathedral** — D minor, 60 BPM. Ancient stone. Tubular bells in taj_mahal, bagpipe drone, mellotron choir, timpani thunder, pipe organ, kick in cathedral reverb.
-22. **Beast Mode** — G minor, 135 BPM. Trap drums, 808 slides, distorted saw bass, sitar hook + shred solo, mellotron flute drop, timpani war drums. The hardest track on the album.
-23. **Shruti Lofi** — D minor, shruti just intonation, 75 BPM. Microtonal lo-fi hip hop. Kalimba, Rhodes, sitar hook, mellotron flute, tambura drone, lazy boom bap. Sounds like a tape found in a temple thrift store.
-24. **Apex** — Eb minor, 140 BPM. Beast Mode's meaner sibling. Koto hook + shreds, wavefold bass, mellotron strings, timpani throughout, two hooks, 32nd note koto runs. The fastest track on the album.
-
 ## Usage
 
 ```bash
@@ -93,6 +66,35 @@ uv run play --list                                                    # list all
 `Ctrl+C` to stop playback.
 
 See the [changelog](CHANGELOG.md) for detailed track history.
+
+## Tracklist
+
+| # | Track | Key | BPM | Tuning | Vibe |
+|---|-------|-----|-----|--------|------|
+| 1 | [Raga Midnight](tracks/raga_midnight.py) | D Phrygian | 90 | shruti / just | Sitar raga with 808 drop |
+| 2 | [Shruti Lofi](tracks/shruti_lofi.py) | D minor | 75 | shruti / just | Microtonal lo-fi hip hop |
+| 3 | [Ghost Protocol](tracks/ghost_protocol.py) | F minor | 128 | equal | Portishead → Strobe |
+| 4 | [Silk Road](tracks/silk_road.py) | D minor | 95 | equal | World music caravan |
+| 5 | [The Observatory](tracks/the_observatory.py) | G minor | 112 | equal | Chapel through shortwave |
+| 6 | [Acid Reign](tracks/acid_reign.py) | A minor | 140 | equal | Dual 303 acid |
+| 7 | [Beast Mode](tracks/beast_mode.py) | G minor | 135 | equal | Trap + sitar hook |
+| 8 | [Apex](tracks/apex.py) | Eb minor | 140 | equal | Koto hook, wavefold bass |
+| 9 | [Voltage](tracks/voltage.py) | F minor | 138 | equal | Raw oscillators |
+| 10 | [An Exception Occurred](tracks/an_exception_occurred.py) | Eb major→minor | 80 | equal | Mental health arc |
+| 11 | [Voices](tracks/voices.py) | F# minor | 65 | equal | Auditory hallucinations |
+| 12 | [Intrusive](tracks/intrusive.py) | Bb minor | 92 | equal | Invasive thoughts |
+| 13 | [Gravity](tracks/gravity.py) | C minor | 88 | equal | Hip hop + eastern |
+| 14 | [The Interruption](tracks/the_interruption.py) | D minor | 85 | equal | String quartet vs DnB |
+| 15 | [Sleight of Hand](tracks/sleight_of_hand.py) | D minor | 100 | equal | Nine genre shifts |
+| 16 | [Waveforms](tracks/waveforms.py) | F minor | 118 | equal | Synth showcase |
+| 17 | [Emergence](tracks/emergence.py) | E minor | 100 | equal | Acoustic births electronic |
+| 18 | [Chakra](tracks/chakra.py) | G→C→E major | 60→135 | shruti / A=432 | Root to crown journey |
+| 19 | [The Temple](tracks/the_temple.py) | A Phrygian | 65 | shruti / A=432 | Devotional reverb |
+| 20 | [The Dialogue](tracks/the_dialogue.py) | E Phrygian | 75 | shruti / A=432 | Human + machine |
+| 21 | [Cathedral](tracks/cathedral.py) | D minor | 60 | equal | Ancient stone |
+| 22 | [Tape Memory](tracks/tape_memory.py) | Db minor | 90 | equal | Mellotron + new synths |
+| 23 | [Music Box Factory](tracks/music_box_factory.py) | G major | 108 | equal | Tuned percussion only |
+| 24 | [Deep Time](tracks/deep_time.py) | B minor | 40 | just | 7.5 min ambient drone |
 
 ## License
 
