@@ -9,11 +9,13 @@
 
 # Interpretations
 
-An album of compositions written in Python using [pytheory](https://github.com/kennethreitz/pytheory).
-
-Each track is a `.py` file. Run it to hear it.
-
 ![Album Cover](cover.png)
+
+A 24-track album where Indian classical ragas collide with trap beats, singing bowls ring over 808 sub bass, and a mellotron flute recorded on magnetic tape in 1967 plays alongside wavefolded oscillators that didn't exist until last week. Sitar arps shred at 140 BPM. A string quartet gets ambushed by drum & bass. Five vocal synths simulate auditory hallucinations. A piano tells the story of a psychotic break — from stability through spiritual seeking into chaos, despair, a hymn, and recovery — every note placed by hand.
+
+The tuning systems span equal temperament, just intonation, and shruti (22 microtonal divisions per octave). Reference pitches range from standard 440 Hz to 432 Hz. Keys range from G major to Eb minor. Tempos from 40 BPM ambient drone to 140 BPM trap.
+
+**Every sound is generated from code.** Each track is a `.py` file — a Python script that defines instruments, notes, rhythms, effects, and structure using [pytheory](https://github.com/kennethreitz/pytheory). There are no samples, no DAW, no audio files checked in. The music is the source code. Run it and it renders to audio in real time — sine waves, saw waves, FM synthesis, physical modeling of sitars and mellotrons and singing bowls, all computed from math and played through your speakers.
 
 ![](https://kennethreitz.org/static/images/interpretations-player.png)
 
