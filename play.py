@@ -55,6 +55,7 @@ ALBUM_ORDER = [
     "an_exception_occurred.py",
     "voices.py",
     "intrusive.py",
+    "waveforms.py",
 ]
 
 

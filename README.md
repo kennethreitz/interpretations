@@ -32,7 +32,8 @@ Each track is a `.py` file. Run it to hear it.
 13. **Sleight of Hand** — D minor, 100 BPM. Music box → didgeridoo → jazz piano → 808 drop → solo theremin → choir → acid 303 rips through the choir → music box returns over boom bap. You never see the next move coming.
 14. **An Exception Occurred** — Eb major→minor→major, 80 BPM. Piano-driven arc: stability → spiritual seeking (tambura, sitar, om chant) → psychosis (wild theremin, chaos drums) → despair → hymn (pipe organ) → recovery. Every note by hand.
 15. **Voices** — F# minor, 65 BPM. Five vocal parts multiplying across the stereo field. Piano enters as reality. One last whisper, then silence.
-16. **Intrusive** — Bb minor, 92 BPM. One saw synth phrase repeating. Rhodes tries to play something else. Drums try to drown it. It gets louder. Stop fighting — acceptance. The thought slows, spaces open, sub bass enters as ground. It passes.
+16. **Intrusive** — Bb minor, 92 BPM. One saw synth phrase repeating. Rhodes tries to play something else. Drums try to drown it. Stop fighting — acceptance, sub bass, cello. It passes.
+17. **Waveforms** — F minor, 118 BPM. Pure synthesis showcase. Sine, triangle, square, saw — percussive blips layering one by one. Occasional sustained pads open the waveforms up. 808 sub underneath, drums at bar 33, sine melody at the peak.
 
 ## Usage
 
