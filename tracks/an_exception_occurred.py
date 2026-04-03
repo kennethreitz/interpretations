@@ -8,7 +8,8 @@ Eb major → minor → resolution. 80 BPM.
 from pytheory import Key, Duration, Score, Tone, play_score
 from pytheory.rhythm import DrumSound
 
-key_major = Key("Eb", "major")
+key = Key("Eb", "major")
+key_major = key
 key_minor = Key("Eb", "minor")
 sm = key_major.scale  # Eb F G Ab Bb C D
 sn = key_minor.scale  # Eb F Gb Ab Bb Cb Db
