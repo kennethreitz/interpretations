@@ -704,25 +704,59 @@ def main():
     if not args.score:
         # First run — offer to render all if no cached WAVs
         if not WAVS_DIR.exists() or not list(WAVS_DIR.glob("*.wav")):
+            # ANSI colors
+            CYAN = "\033[36m"
+            YELLOW = "\033[33m"
+            GREEN = "\033[32m"
+            MAGENTA = "\033[35m"
+            DIM = "\033[2m"
+            BOLD = "\033[1m"
+            RESET = "\033[0m"
+
             print()
-            print("  Welcome to Interpretations!")
+            print(f"  {CYAN}{BOLD}Welcome to Interpretations!{RESET}")
             print()
-            print("  No cached WAVs found. First play of each track requires")
-            print("  rendering (~30-80s per track). You can render all tracks")
-            print("  now for instant playback later, or render on demand.")
+            print(f"  {DIM}No cached WAVs found. First play of each track requires{RESET}")
+            print(f"  {DIM}rendering (~30-80s per track). You can render all tracks{RESET}")
+            print(f"  {DIM}now for instant playback later, or render on demand.{RESET}")
             print()
             try:
-                choice = input("  Render all tracks now? [y/N] ").strip().lower()
+                choice = input(f"  {YELLOW}Render all tracks now?{RESET} {DIM}[y/N]{RESET} ").strip().lower()
             except (KeyboardInterrupt, EOFError):
                 print()
                 return
             if choice == "y":
+                import subprocess
+                from concurrent.futures import ThreadPoolExecutor, as_completed
+
                 files = sorted_tracks(list(TRACKS_DIR.glob("*.py")))
                 WAVS_DIR.mkdir(exist_ok=True)
-                for i, f in enumerate(files, 1):
-                    print(f"\n  [{i}/{len(files)}] {f.name}")
-                    _play_track(f, args, force_render=True, render_only=True)
-                print(f"\n  Done! {len(files)} tracks cached.\n")
+                total = len(files)
+                done = [0]
+
+                def render_one(track_path):
+                    wav = WAVS_DIR / (track_path.stem + ".wav")
+                    subprocess.run(
+                        [sys.executable, str(Path(__file__).resolve()),
+                         str(track_path), "-o", str(wav)],
+                        capture_output=True
+                    )
+                    done[0] += 1
+                    print(f"  {GREEN}✓{RESET} {CYAN}{track_path.name}{RESET}  {DIM}({done[0]}/{total}){RESET}")
+
+                workers = min(4, total)
+                print(f"\n  {DIM}Rendering {total} tracks with {workers} workers...{RESET}\n")
+
+                with ThreadPoolExecutor(max_workers=workers) as pool:
+                    futures = {pool.submit(render_one, f): f for f in files}
+                    for future in as_completed(futures):
+                        try:
+                            future.result()
+                        except Exception as e:
+                            f = futures[future]
+                            print(f"  {MAGENTA}✗{RESET} {f.name}: {e}")
+
+                print(f"\n  {GREEN}{BOLD}Done! {done[0]} tracks cached.{RESET}\n")
 
         while True:
             result = pick_track()
@@ -735,11 +769,37 @@ def main():
                     print(f"\n{'═' * 40}")
                     _play_track(f, args)
             elif act == "render_all":
+                import subprocess
+                from concurrent.futures import ThreadPoolExecutor, as_completed
+
                 files = sorted_tracks(list(TRACKS_DIR.glob("*.py")))
                 WAVS_DIR.mkdir(exist_ok=True)
-                for f in files:
-                    print(f"\n{'═' * 40}")
-                    _play_track(f, args, force_render=True, render_only=True)
+                total = len(files)
+                done = [0]
+
+                def render_one(track_path):
+                    wav = WAVS_DIR / (track_path.stem + ".wav")
+                    subprocess.run(
+                        [sys.executable, str(Path(__file__).resolve()),
+                         str(track_path), "-o", str(wav)],
+                        capture_output=True
+                    )
+                    done[0] += 1
+                    print(f"  ✓ {track_path.name}  ({done[0]}/{total})")
+
+                workers = min(4, total)
+                print(f"\n  Rendering {total} tracks with {workers} workers...\n")
+
+                with ThreadPoolExecutor(max_workers=workers) as pool:
+                    futures = {pool.submit(render_one, f): f for f in files}
+                    for future in as_completed(futures):
+                        try:
+                            future.result()
+                        except Exception as e:
+                            f = futures[future]
+                            print(f"  ✗ {f.name}: {e}")
+
+                print(f"\n  Done! {done[0]} tracks cached.\n")
             elif act == "render":
                 _play_track(path, args, force_render=True)
             else:
