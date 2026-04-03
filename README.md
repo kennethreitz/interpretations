@@ -34,7 +34,8 @@ Each track is a `.py` file. Run it to hear it.
 15. **Voices** — F# minor, 65 BPM. Five vocal parts multiplying across the stereo field. Piano enters as reality. One last whisper, then silence.
 16. **Intrusive** — Bb minor, 92 BPM. One saw synth phrase repeating. Rhodes tries to play something else. Drums try to drown it. Stop fighting — acceptance, sub bass, cello. It passes.
 17. **Waveforms** — F minor, 118 BPM. Pure synthesis showcase — percussive blips stacking, FM solo, saw/square duet in thirds, sine/triangle/PWM canon.
-18. **Tape Memory** — Db minor, 90 BPM. Mellotron flute dreams surrounded by new synthesis. FM bells, drift oscillator, crotales, granular texture, hard_sync bass, PWM lead, wavefold grit, ring_mod aliens. Theremin solo at the peak. Singing bowls and tingsha throughout.
+18. **Tape Memory** — Db minor, 90 BPM. Mellotron flute dreams surrounded by new synthesis. FM bells, drift oscillator, crotales, granular texture, hard_sync bass, PWM lead, wavefold, ring_mod. Theremin solo at the peak.
+19. **Emergence** — E minor, 100 BPM. The acoustic world births the electronic one. Singing bowls, tingsha, didgeridoo, mellotron flute, sitar 16th arps with 32nd shreds — then synths emerge. Saw, FM, square, supersaw. Both worlds collide at the peak. Bowls alone at the end.
 
 ## Usage
 

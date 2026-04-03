@@ -57,6 +57,7 @@ ALBUM_ORDER = [
     "intrusive.py",
     "waveforms.py",
     "tape_memory.py",
+    "emergence.py",
 ]
 
 

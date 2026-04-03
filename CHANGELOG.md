@@ -3,6 +3,7 @@
 ## 2026-04-03
 
 - **Track 18: Tape Memory** — Db minor, 90 BPM. Mellotron flute, FM bells, drift oscillator, crotales, granular texture, hard_sync bass, PWM lead, wavefold, ring_mod. Theremin solo at peak. Singing bowls + tingsha. Everything pytheory 0.40.9 can do.
+- **Track 19: Emergence** — E minor, 100 BPM. Singing bowls + tingsha opening, didgeridoo, mellotron flute, sitar 16th arps building to 32nd shreds, synths emerge at bar 33, both worlds collide, mellotron solo, bowls alone ending.
 - Waveforms: extended to 3:16 with FM solo, saw/square duet, sine/triangle/PWM canon, finale. Added FM, PWM, wavefold synths.
 - play.py: track picker loops back after playback, extracted _play_track()
 
