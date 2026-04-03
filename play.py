@@ -404,10 +404,11 @@ def pick_track():
             m = int(duration_sec // 60)
             s = int(duration_sec % 60)
             pitch = score.reference_pitch if score.reference_pitch != 440.0 else None
+            track_key = str(getattr(mod, 'key', '')) if hasattr(mod, 'key') else ""
             desc = get_description(mod)
-            entries.append((f, title, bpm, m, s, parts, desc, pitch))
+            entries.append((f, title, bpm, m, s, parts, desc, pitch, track_key))
         except Exception:
-            entries.append((f, f.stem.replace("_", " ").title(), 0, 0, 0, 0, "", None))
+            entries.append((f, f.stem.replace("_", " ").title(), 0, 0, 0, 0, "", None, ""))
 
     selected = [0]
     result = [None]
@@ -455,11 +456,12 @@ def pick_track():
                 if y >= h - 4:
                     break
 
-                f, title, bpm, m, s, parts, desc, pitch = entry
+                f, title, bpm, m, s, parts, desc, pitch, track_key = entry
                 name_col = 24
                 cached = "✓" if _wav_path(f).exists() else " "
                 pitch_str = f"  {int(pitch)}Hz" if pitch else ""
-                meta_str = f"{cached} {bpm:>3} BPM  {m}:{s:02d}{pitch_str}" if bpm else ""
+                key_str = f"  {track_key}" if track_key else ""
+                meta_str = f"{cached} {bpm:>3} BPM  {m}:{s:02d}{key_str}{pitch_str}" if bpm else ""
                 name_display = title[:name_col - 1].ljust(name_col - 1)
 
                 num = f"{i + 1:>2}."
