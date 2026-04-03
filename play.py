@@ -460,7 +460,21 @@ def pick_track():
                 name_col = 24
                 cached = "✓" if _wav_path(f).exists() else " "
                 pitch_str = f"  {int(pitch)}Hz" if pitch else ""
-                key_str = f"  {track_key}" if track_key else ""
+                # Shorten key: "D phrygian" → "D phr", "F minor" → "Fm", "G major" → "G"
+                short_key = ""
+                if track_key:
+                    parts_k = track_key.split()
+                    if len(parts_k) == 2:
+                        root, mode = parts_k
+                        if mode == "major":
+                            short_key = root
+                        elif mode == "minor":
+                            short_key = f"{root}m"
+                        else:
+                            short_key = f"{root} {mode[:3]}"
+                    else:
+                        short_key = track_key
+                key_str = f"  {short_key}" if short_key else ""
                 meta_str = f"{cached} {bpm:>3} BPM  {m}:{s:02d}{key_str}{pitch_str}" if bpm else ""
                 name_display = title[:name_col - 1].ljust(name_col - 1)
 
