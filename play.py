@@ -406,13 +406,10 @@ def pick_track():
             pitch = score.reference_pitch if score.reference_pitch != 440.0 else None
             track_key = str(getattr(mod, 'key', '')) if hasattr(mod, 'key') else ""
             tuning = ""
-            if score.system != "western" or score.temperament != "equal":
-                bits = []
-                if score.system != "western":
-                    bits.append(score.system)
-                if score.temperament != "equal":
-                    bits.append(score.temperament)
-                tuning = "/".join(bits)
+            if score.system != "western":
+                tuning = score.system
+            elif score.temperament != "equal":
+                tuning = score.temperament
             desc = get_description(mod)
             entries.append((f, title, bpm, m, s, parts, desc, pitch, track_key, tuning))
         except Exception:
@@ -484,7 +481,7 @@ def pick_track():
                         short_key = track_key
                 key_str = f"  {short_key}" if short_key else ""
                 tuning_str = f"  {tuning}" if tuning else ""
-                meta_str = f"{cached} {bpm:>3} BPM  {m}:{s:02d}{key_str}{tuning_str}{pitch_str}" if bpm else ""
+                meta_str = f"{cached} {bpm:>3} BPM  {m}:{s:02d}{key_str}{pitch_str}{tuning_str}" if bpm else ""
                 name_display = title[:name_col - 1].ljust(name_col - 1)
 
                 num = f"{i + 1:>2}."
