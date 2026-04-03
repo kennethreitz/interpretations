@@ -246,14 +246,42 @@ def render_audio(score, *, from_measure=None, to_measure=None,
 
 
 def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
-    """Simple terminal playback with progress bar."""
+    """Terminal playback with progress bar and skip controls."""
     import sounddevice as sd
+    import threading
     import time
+    import tty
+    import termios
+    import select
 
     total_frames = len(buf)
     total_sec = total_frames / sample_rate
     full_sec = total_sec + offset_sec
     tot_m, tot_s = int(full_sec // 60), int(full_sec % 60)
+    channels = buf.shape[1] if buf.ndim == 2 else 1
+    seek_amount = int(5 * sample_rate)
+    big_seek = int(30 * sample_rate)
+
+    state = {"pos": 0, "playing": True, "quit": False}
+    lock = threading.Lock()
+
+    def callback(outdata, frames, time_info, status):
+        with lock:
+            pos = state["pos"]
+            if not state["playing"] or pos >= total_frames:
+                outdata[:] = 0
+                if pos >= total_frames:
+                    state["quit"] = True
+                return
+            end = min(pos + frames, total_frames)
+            n = end - pos
+            if buf.ndim == 2:
+                outdata[:n] = buf[pos:end]
+                outdata[n:] = 0
+            else:
+                outdata[:n, 0] = buf[pos:end]
+                outdata[n:] = 0
+            state["pos"] = end
 
     if title:
         print(f"\n  {title}")
@@ -261,25 +289,67 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
         for line in info_lines:
             print(f"  {line}")
     print()
+    print("  [+/f] +5s  [-/s] -5s  [d] +30s  [a] -30s  [space] pause  [q] quit")
+    print()
 
-    start = time.monotonic()
+    stream = sd.OutputStream(
+        samplerate=sample_rate,
+        channels=channels,
+        blocksize=1024,
+        callback=callback,
+    )
+
+    fd = sys.stdin.fileno()
+    old_settings = termios.tcgetattr(fd)
+
     try:
-        sd.play(buf, sample_rate)
-        while sd.get_stream().active:
-            elapsed = time.monotonic() - start
-            cur_sec = elapsed + offset_sec
+        tty.setraw(fd)
+        stream.start()
+
+        while not state["quit"]:
+            with lock:
+                pos = state["pos"]
+                playing = state["playing"]
+
+            cur_sec = pos / sample_rate + offset_sec
             cur_m, cur_s = int(cur_sec // 60), int(cur_sec % 60)
             pct = min(1.0, cur_sec / full_sec) if full_sec > 0 else 0
             bar_w = 40
             filled = int(pct * bar_w)
             bar = "█" * filled + "░" * (bar_w - filled)
-            sys.stderr.write(f"\r  ▶ {cur_m}:{cur_s:02d} / {tot_m}:{tot_s:02d}  {bar}")
+            icon = "▶" if playing else "⏸"
+
+            sys.stderr.write(f"\r  {icon} {cur_m}:{cur_s:02d} / {tot_m}:{tot_s:02d}  {bar} ")
             sys.stderr.flush()
-            time.sleep(0.25)
+
+            # Non-blocking single char read
+            if select.select([sys.stdin], [], [], 0.15)[0]:
+                ch = sys.stdin.read(1)
+                if ch == "q" or ch == "\x03":  # q or Ctrl+C
+                    state["quit"] = True
+                elif ch == " ":
+                    with lock:
+                        state["playing"] = not state["playing"]
+                elif ch in ("f", "+", "="):
+                    with lock:
+                        state["pos"] = min(total_frames, state["pos"] + seek_amount)
+                elif ch in ("s", "-"):
+                    with lock:
+                        state["pos"] = max(0, state["pos"] - seek_amount)
+                elif ch == "d":
+                    with lock:
+                        state["pos"] = min(total_frames, state["pos"] + big_seek)
+                elif ch == "a":
+                    with lock:
+                        state["pos"] = max(0, state["pos"] - big_seek)
+
         sys.stderr.write("\n")
     except KeyboardInterrupt:
-        sd.stop()
         sys.stderr.write("\n  Stopped.\n")
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        stream.stop()
+        stream.close()
 
 
 def save_wav(buf, sample_rate, path):
