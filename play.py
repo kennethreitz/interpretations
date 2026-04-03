@@ -56,6 +56,7 @@ ALBUM_ORDER = [
     "voices.py",
     "intrusive.py",
     "waveforms.py",
+    "tape_memory.py",
 ]
 
 
@@ -566,65 +567,29 @@ examples:
     return p
 
 
-def main():
-    parser = build_parser()
-    args = parser.parse_args()
-
-    # ── List ───────────────────────────────────────────────────────
-    if args.list:
-        list_tracks()
-        return
-
-    # ── Track picker when no score given ─────────────────────────
-    if not args.score:
-        path = pick_track()
-        if path is None:
-            return
-    else:
-        path = Path(args.score)
+def _play_track(path, args):
+    """Load, render, and play a single track."""
+    path = Path(path)
     if not path.exists():
         print(f"File not found: {path}")
-        sys.exit(1)
+        return
 
-    # ── Load ───────────────────────────────────────────────────────
     score, mod = load_score(path)
     title = get_title(mod, path)
 
-    # ── Post-build modifications ───────────────────────────────────
     if args.bpm:
         score.bpm = args.bpm
-
     if args.pitch:
         score.reference_pitch = args.pitch
-
     if args.solo:
         apply_solo(score, set(args.solo.split(",")))
-
     if args.mute:
         apply_mute(score, set(args.mute.split(",")))
-
     apply_volume(score, args.volume)
 
-    # ── Info / parts ───────────────────────────────────────────────
-    if args.info:
-        show_info(score, mod, path)
-        return
-
-    if args.parts:
-        show_parts(score)
-        return
-
-    # ── Export to MIDI ─────────────────────────────────────────────
-    if args.midi:
-        score.save_midi(args.midi)
-        print(f"Exported MIDI -> {args.midi}")
-        return
-
-    # ── Show metadata before rendering ──────────────────────────────
     show_info(score, mod, path)
     print()
 
-    # ── Render ─────────────────────────────────────────────────────
     from_sec = parse_time(args.from_time) if args.from_time else None
     to_sec = parse_time(args.to_time) if args.to_time else None
 
@@ -637,7 +602,6 @@ def main():
         loop=args.loop,
     )
 
-    # ── Export to WAV ──────────────────────────────────────────────
     if args.output:
         save_wav(buf, sr, args.output)
         duration_sec = len(buf) / sr
@@ -645,8 +609,6 @@ def main():
         print(f"Exported WAV -> {args.output} ({m}:{s:02d})")
         return
 
-    # ── Play ───────────────────────────────────────────────────────
-    # Build info lines for the player UI
     info = []
     parts = f"{score.time_signature}  {score.bpm} BPM  {len(score.parts)} parts"
     extras = []
@@ -661,6 +623,49 @@ def main():
     info.append(parts)
 
     play_audio(buf, sr, title=title, info_lines=info, offset_sec=offset_sec)
+
+
+def main():
+    parser = build_parser()
+    args = parser.parse_args()
+
+    # ── List ───────────────────────────────────────────────────────
+    if args.list:
+        list_tracks()
+        return
+
+    # ── Track picker when no score given ─────────────────────────
+    if not args.score:
+        while True:
+            path = pick_track()
+            if path is None:
+                return
+            _play_track(path, args)
+        return
+    else:
+        path = Path(args.score)
+
+    if not path.exists():
+        print(f"File not found: {path}")
+        sys.exit(1)
+
+    # ── Info / parts (no playback) ────────────────────────────────
+    if args.info or args.parts or args.midi:
+        score, mod = load_score(path)
+        if args.bpm:
+            score.bpm = args.bpm
+        if args.pitch:
+            score.reference_pitch = args.pitch
+        if args.info:
+            show_info(score, mod, path)
+        elif args.parts:
+            show_parts(score)
+        elif args.midi:
+            score.save_midi(args.midi)
+            print(f"Exported MIDI -> {args.midi}")
+        return
+
+    _play_track(path, args)
 
 
 if __name__ == "__main__":
