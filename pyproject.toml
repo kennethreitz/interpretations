@@ -6,10 +6,16 @@ license = "ISC"
 authors = [
     { name = "Kenneth Reitz", email = "me@kennethreitz.org" },
 ]
-requires-python = ">=3.14"
+requires-python = ">=3.10"
 dependencies = [
     "pytheory>=0.40.9",
 ]
+
+[tool.uv]
+python-preference = "only-managed"
+
+[tool.uv.python]
+version = "3.14"
 
 [build-system]
 requires = ["setuptools"]

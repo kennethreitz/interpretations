@@ -46,39 +46,48 @@ Each track is a `.py` file. Run it to hear it.
 
 ```bash
 uv sync
+uv run play
 ```
 
-**Interactive player** — pick a track, play/pause, seek:
+On first run, you'll be prompted to render all tracks to WAV (parallel, ~3-4 min). After that, playback is instant.
+
+**Interactive player** — animated track picker with album order:
 
 ```bash
-uv run play.py
+uv run play                                                    # pick from list
+uv run play tracks/the_temple.py                                      # play specific track
 ```
 
-**Play a specific track:**
+**Picker controls:**
 
-```bash
-uv run play.py tracks/the_temple.py
-```
+| Key | Action |
+|-----|--------|
+| `↑`/`↓` | Navigate (wraps around) |
+| `Enter` | Play track (from WAV cache if available) |
+| `r` | Render selected track to WAV |
+| `a` | Play all tracks in album order |
+| `R` | Render all tracks (4 parallel workers) |
+| `q` | Quit |
 
 **Playback options:**
 
 ```bash
-uv run play.py tracks/acid_reign.py --from 17 --to 32       # measure range
-uv run play.py tracks/the_temple.py --from-time 3:30         # seek to time
-uv run play.py tracks/ghost_protocol.py --solo arp,kick       # solo parts
-uv run play.py tracks/deep_time.py --mute wind                # mute parts
-uv run play.py tracks/the_temple.py --pitch 440               # override tuning
-uv run play.py tracks/acid_reign.py --bpm 160                 # override tempo
-uv run play.py tracks/silk_road.py --loop 3                   # loop playback
+uv run play tracks/acid_reign.py --from 17 --to 32                   # measure range
+uv run play tracks/the_temple.py --from-time 3:30                     # seek to time
+uv run play tracks/ghost_protocol.py --solo arp,kick                  # solo parts
+uv run play tracks/deep_time.py --mute wind                           # mute parts
+uv run play tracks/the_temple.py --pitch 440                          # override tuning
+uv run play tracks/acid_reign.py --bpm 160                            # override tempo
+uv run play tracks/silk_road.py --loop 3                              # loop playback
 ```
 
 **Export & inspect:**
 
 ```bash
-uv run play.py tracks/raga_midnight.py -o raga.wav            # export WAV
-uv run play.py tracks/culture_clash.py --info                  # show metadata
-uv run play.py tracks/the_interruption.py --parts              # list parts
-uv run play.py --list                                          # list all tracks
+uv run play tracks/raga_midnight.py -o raga.wav                       # export WAV
+uv run play tracks/the_interruption.py --info                         # show metadata
+uv run play tracks/the_interruption.py --parts                        # list parts
+uv run play --list                                                    # list all tracks
 ```
 
 `Ctrl+C` to stop playback.
