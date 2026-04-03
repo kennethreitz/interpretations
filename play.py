@@ -394,6 +394,7 @@ def pick_track():
 
     selected = [0]
     result = [None]
+    action = ["play"]
 
     def _picker(stdscr):
         import time, math
@@ -427,7 +428,7 @@ def pick_track():
                     pass
             stdscr.addstr(3, max(0, (w - 15) // 2), "─" * 15,
                           curses.color_pair(2))
-            stdscr.addstr(4, max(0, (w - 28) // 2), "↑/↓ navigate  ↵ play  q quit",
+            stdscr.addstr(4, max(0, (w - 42) // 2), "↑/↓ navigate  ↵ play  r render  q quit",
                           curses.A_DIM)
 
             # Track list
@@ -438,7 +439,8 @@ def pick_track():
                     break
 
                 name_col = 22
-                meta_str = f"{bpm:>3} BPM  {m}:{s:02d}" if bpm else ""
+                cached = "✓" if _wav_path(f).exists() else " "
+                meta_str = f"{cached} {bpm:>3} BPM  {m}:{s:02d}" if bpm else ""
                 name_display = title[:name_col - 1].ljust(name_col - 1)
 
                 num = f"{i + 1:>2}."
@@ -495,6 +497,11 @@ def pick_track():
                 selected[0] = (selected[0] + 1) % len(entries)
             elif key in (curses.KEY_ENTER, 10, 13):
                 result[0] = entries[selected[0]][0]
+                action[0] = "play"
+                return
+            elif key == ord("r"):
+                result[0] = entries[selected[0]][0]
+                action[0] = "render"
                 return
             elif key == ord("q") or key == 27:
                 return
@@ -502,9 +509,9 @@ def pick_track():
     try:
         curses.wrapper(_picker)
     except KeyboardInterrupt:
-        return None
+        return None, None
 
-    return result[0]
+    return result[0], action[0]
 
 
 def build_parser():
@@ -572,15 +579,17 @@ examples:
     return p
 
 
-def _play_track(path, args):
-    """Load, render, and play a single track."""
-    path = Path(path)
-    if not path.exists():
-        print(f"File not found: {path}")
-        return
+WAVS_DIR = Path(__file__).parent / "wavs"
 
+
+def _wav_path(track_path):
+    """Get the WAV cache path for a track."""
+    return WAVS_DIR / (Path(track_path).stem + ".wav")
+
+
+def _render_and_cache(path, args):
+    """Render a track and save to WAV cache. Returns (buf, sr, offset_sec)."""
     score, mod = load_score(path)
-    title = get_title(mod, path)
 
     if args.bpm:
         score.bpm = args.bpm
@@ -591,9 +600,6 @@ def _play_track(path, args):
     if args.mute:
         apply_mute(score, set(args.mute.split(",")))
     apply_volume(score, args.volume)
-
-    show_info(score, mod, path)
-    print()
 
     from_sec = parse_time(args.from_time) if args.from_time else None
     to_sec = parse_time(args.to_time) if args.to_time else None
@@ -606,6 +612,49 @@ def _play_track(path, args):
         to_seconds=to_sec,
         loop=args.loop,
     )
+
+    # Cache to WAV if no custom args that would change the output
+    if not any([args.bpm, args.pitch, args.solo, args.mute,
+                args.from_measure, args.to_measure,
+                args.from_time, args.to_time,
+                args.volume != 1.0, args.loop != 1]):
+        WAVS_DIR.mkdir(exist_ok=True)
+        wav = _wav_path(path)
+        save_wav(buf, sr, str(wav))
+        sys.stderr.write(f"  Cached -> {wav}\n")
+
+    return buf, sr, offset_sec, score, mod
+
+
+def _play_track(path, args, force_render=False):
+    """Load, render, and play a single track. Uses cached WAV if available."""
+    path = Path(path)
+    if not path.exists():
+        print(f"File not found: {path}")
+        return
+
+    score, mod = load_score(path)
+    title = get_title(mod, path)
+
+    show_info(score, mod, path)
+    print()
+
+    # Check for cached WAV (only if no custom args)
+    wav = _wav_path(path)
+    has_custom = any([args.bpm, args.pitch, args.solo, args.mute,
+                      args.from_measure, args.to_measure,
+                      args.from_time, args.to_time,
+                      args.volume != 1.0, args.loop != 1])
+
+    if wav.exists() and not force_render and not has_custom:
+        import numpy
+        import scipy.io.wavfile
+        sys.stderr.write(f"  Playing cached WAV\n\n")
+        sr, pcm = scipy.io.wavfile.read(str(wav))
+        buf = pcm.astype(numpy.float64) / 32767.0
+        offset_sec = 0.0
+    else:
+        buf, sr, offset_sec, score, mod = _render_and_cache(path, args)
 
     if args.output:
         save_wav(buf, sr, args.output)
@@ -642,10 +691,14 @@ def main():
     # ── Track picker when no score given ─────────────────────────
     if not args.score:
         while True:
-            path = pick_track()
-            if path is None:
+            result = pick_track()
+            if result is None or result[0] is None:
                 return
-            _play_track(path, args)
+            path, act = result
+            if act == "render":
+                _play_track(path, args, force_render=True)
+            else:
+                _play_track(path, args)
         return
     else:
         path = Path(args.score)
