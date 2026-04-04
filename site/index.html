@@ -559,6 +559,25 @@ function playTrack(index) {
     document.getElementById('player-title').textContent = t.title;
     document.getElementById('play-btn').textContent = '⏸';
     document.title = `▶ ${t.title} — Interpretations`;
+
+    // Media Session API — background playback + lock screen controls
+    if ('mediaSession' in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: t.title,
+            artist: 'Infinite State',
+            album: 'Interpretations',
+            artwork: [
+                { src: 'cover.png', sizes: '1024x1024', type: 'image/png' }
+            ]
+        });
+        navigator.mediaSession.setActionHandler('play', () => togglePlay());
+        navigator.mediaSession.setActionHandler('pause', () => togglePlay());
+        navigator.mediaSession.setActionHandler('previoustrack', () => prevTrack());
+        navigator.mediaSession.setActionHandler('nexttrack', () => nextTrack());
+        navigator.mediaSession.setActionHandler('seekto', (details) => {
+            audio.currentTime = details.seekTime;
+        });
+    }
 }
 
 function togglePlay() {
