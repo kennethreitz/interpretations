@@ -323,7 +323,7 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
             # Spectrum analyzer — FFT frequency bands displayed as EQ bars
             import numpy as np
             scope_w = 48
-            bars = "⠀⡀⡄⡆⡇⣇⣧⣷⣿"
+            bars = " ⡀⡄⡆⡇"
             window_size = int(sample_rate * 0.05)
             start_s = max(0, pos - window_size // 2)
             end_s = min(total_frames, start_s + window_size)
@@ -350,7 +350,7 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
                 # Color each bar: low freq green, mid yellow, high red
                 scope_parts = []
                 for j, b in enumerate(bands):
-                    idx = min(8, int(b / peak * 8))
+                    idx = min(4, int(b / peak * 4))
                     frac = j / scope_w
                     if frac < 0.33:
                         c = "\033[32m"  # green — bass
