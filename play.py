@@ -292,6 +292,7 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
     print()    # scope row 2
     print()    # scope row 3
     print()    # blank
+    print()    # controls padding
     print("  [+/f] +5s  [-/s] -5s  [d] +30s  [a] -30s  [space] pause  [n] next  [p] prev  [q] quit")
     print()    # progress line
 
@@ -375,11 +376,11 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
                 scope_lines = ["\033[90m" + " " * scope_w + "\033[0m"] * n_rows
 
             # Draw: move up, write scope rows, skip controls, write progress
-            up = n_rows + 2  # scope rows + blank + controls
+            up = n_rows + 3  # scope rows + blank + padding + controls
             sys.stderr.write(f"\033[{up}A\r")
             for row in scope_lines:
                 sys.stderr.write(f"  {row}  \r\n")
-            sys.stderr.write(f"\n\n\r  {icon} {cur_m}:{cur_s:02d} / {tot_m}:{tot_s:02d}  {bar} ")
+            sys.stderr.write(f"\n\n\n\r  {icon} {cur_m}:{cur_s:02d} / {tot_m}:{tot_s:02d}  {bar} ")
             sys.stderr.flush()
 
             # Non-blocking single char read
