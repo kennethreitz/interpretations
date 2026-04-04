@@ -451,6 +451,10 @@ const TRACKS = [
 
 const audio = new Audio();
 audio.crossOrigin = 'anonymous';
+audio.preload = 'auto';
+// iOS needs this attribute for background playback
+audio.setAttribute('playsinline', '');
+audio.setAttribute('webkit-playsinline', '');
 let currentTrack = -1;
 let isPlaying = false;
 
@@ -632,12 +636,20 @@ audio.addEventListener('ended', () => {
     }
 });
 
-// Progress updates
+// Progress updates + media session position
 audio.addEventListener('timeupdate', () => {
     document.getElementById('time-current').textContent = formatTime(audio.currentTime);
     document.getElementById('time-total').textContent = formatTime(audio.duration);
     const pct = (audio.currentTime / audio.duration) * 100;
     document.getElementById('progress-fill').style.width = pct + '%';
+    // Update lock screen seek bar
+    if ('mediaSession' in navigator && !isNaN(audio.duration)) {
+        navigator.mediaSession.setPositionState({
+            duration: audio.duration,
+            playbackRate: 1,
+            position: audio.currentTime
+        });
+    }
 });
 
 // Load durations
