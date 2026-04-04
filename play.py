@@ -291,6 +291,7 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
     print()
     print("  [+/f] +5s  [-/s] -5s  [d] +30s  [a] -30s  [space] pause  [n] next  [p] prev  [q] quit")
     print()
+    print()  # blank lines for oscilloscope + progress
 
     stream = sd.OutputStream(
         samplerate=sample_rate,
@@ -319,7 +320,27 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
             bar = "█" * filled + "░" * (bar_w - filled)
             icon = "▶" if playing else "⏸"
 
-            sys.stderr.write(f"\r  {icon} {cur_m}:{cur_s:02d} / {tot_m}:{tot_s:02d}  {bar} ")
+            # Oscilloscope — sample a window of audio around current position
+            scope_w = 50
+            scope_blocks = " ▁▂▃▄▅▆▇█"
+            window_size = int(sample_rate * 0.05)  # 50ms window
+            start_s = max(0, pos - window_size // 2)
+            end_s = min(total_frames, start_s + window_size)
+            if end_s > start_s and playing:
+                chunk = buf[start_s:end_s]
+                if chunk.ndim == 2:
+                    chunk = chunk.mean(axis=1)
+                # Downsample to scope width
+                step = max(1, len(chunk) // scope_w)
+                samples = [abs(chunk[i * step]) if i * step < len(chunk) else 0
+                           for i in range(scope_w)]
+                peak = max(samples) if max(samples) > 0 else 1
+                scope = "".join(scope_blocks[min(8, int(s / peak * 8))] for s in samples)
+            else:
+                scope = " " * scope_w
+
+            sys.stderr.write(f"\033[2A\r  \033[33m{scope}\033[0m\n")
+            sys.stderr.write(f"\r  {icon} {cur_m}:{cur_s:02d} / {tot_m}:{tot_s:02d}  {bar} \n")
             sys.stderr.flush()
 
             # Non-blocking single char read
