@@ -320,31 +320,44 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
             bar = "█" * filled + "░" * (bar_w - filled)
             icon = "▶" if playing else "⏸"
 
-            # Oscilloscope — sample a window of audio around current position
-            scope_w = 50
-            scope_blocks = " ▁▂▃▄▅▆▇█"
-            window_size = int(sample_rate * 0.05)  # 50ms window
+            # Oscilloscope — braille waveform centered on zero crossing
+            scope_w = 60
+            # Braille: each char is 2 wide x 4 tall dots. We use pairs of columns.
+            # For a simpler approach: use block + braille for a centered waveform
+            wave_chars = " ·∘○◌●◉⦿⬤"
+            window_size = int(sample_rate * 0.03)  # 30ms window
             start_s = max(0, pos - window_size // 2)
             end_s = min(total_frames, start_s + window_size)
             if end_s > start_s and playing:
                 chunk = buf[start_s:end_s]
                 if chunk.ndim == 2:
                     chunk = chunk.mean(axis=1)
-                # Downsample to scope width
                 step = max(1, len(chunk) // scope_w)
-                samples = [abs(chunk[i * step]) if i * step < len(chunk) else 0
+                # Center the waveform — show positive and negative
+                samples = [chunk[i * step] if i * step < len(chunk) else 0
                            for i in range(scope_w)]
-                peak = max(samples) if max(samples) > 0 else 1
-                scope = "".join(scope_blocks[min(8, int(s / peak * 8))] for s in samples)
+                peak = max(abs(s) for s in samples) if any(samples) else 1
+                # Map to centered display: ▁▂▃▄█▄▃▂▁
+                top = "▁▂▃▄▅▆▇█"
+                scope_chars = []
+                for s in samples:
+                    norm = s / peak if peak > 0 else 0
+                    idx = int(abs(norm) * 7)
+                    idx = min(7, idx)
+                    if idx == 0:
+                        scope_chars.append("─")
+                    else:
+                        scope_chars.append(top[idx])
+                scope = "".join(scope_chars)
             else:
-                scope = " " * scope_w
+                scope = "─" * scope_w
 
             sys.stderr.write(f"\033[2A\r  \033[33m{scope}\033[0m\n")
             sys.stderr.write(f"\r  {icon} {cur_m}:{cur_s:02d} / {tot_m}:{tot_s:02d}  {bar} \n")
             sys.stderr.flush()
 
             # Non-blocking single char read
-            if select.select([sys.stdin], [], [], 0.05)[0]:
+            if select.select([sys.stdin], [], [], 0.025)[0]:
                 ch = sys.stdin.read(1)
                 if ch == "q" or ch == "\x03":  # q or Ctrl+C
                     state["action"] = "stop"
