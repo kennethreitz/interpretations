@@ -358,7 +358,7 @@
     <img src="cover.png" alt="Interpretations" class="cover">
     <div class="album-title">Interpretations</div>
     <div class="artist">Infinite State</div>
-    <div class="album-info">24 tracks · Written in Python · Generated from code</div>
+    <div class="album-info">24 tracks · 83:58 · Written in Python · Generated from code</div>
     <div class="streaming-links" id="streaming-links">
         <!-- Uncomment as links go live
         <a href="#" class="stream-btn">Spotify</a>
@@ -367,6 +367,7 @@
         <a href="#" class="stream-btn">YouTube Music</a>
         -->
         <a href="https://github.com/kennethreitz/interpretations" class="stream-btn">GitHub</a>
+        <a href="interpretations-full-album.zip" class="stream-btn" download>Download All (320 CBR MP3)</a>
     </div>
 </div>
 
@@ -538,6 +539,7 @@ function playTrack(index) {
     document.getElementById('player').style.display = 'flex';
     document.getElementById('player-title').textContent = t.title;
     document.getElementById('play-btn').textContent = '⏸';
+    document.title = `▶ ${t.title} — Interpretations`;
 }
 
 function togglePlay() {
@@ -546,10 +548,12 @@ function togglePlay() {
         audio.pause();
         isPlaying = false;
         document.getElementById('play-btn').textContent = '▶';
+        document.title = `⏸ ${TRACKS[currentTrack].title} — Interpretations`;
     } else {
         audio.play();
         isPlaying = true;
         document.getElementById('play-btn').textContent = '⏸';
+        document.title = `▶ ${TRACKS[currentTrack].title} — Interpretations`;
     }
 }
 
