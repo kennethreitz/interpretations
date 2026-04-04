@@ -288,7 +288,9 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
     if info_lines:
         for line in info_lines:
             print(f"  {line}")
-    print()    # scope line
+    print()    # scope row 1
+    print()    # scope row 2
+    print()    # scope row 3
     print()    # blank
     print("  [+/f] +5s  [-/s] -5s  [d] +30s  [a] -30s  [space] pause  [n] next  [p] prev  [q] quit")
     print()    # progress line
@@ -324,6 +326,7 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
             import numpy as np
             scope_w = 48
             bars = " ⡀⡄⡆⡇"
+            n_rows = 3
             window_size = int(sample_rate * 0.05)
             start_s = max(0, pos - window_size // 2)
             end_s = min(total_frames, start_s + window_size)
@@ -347,24 +350,36 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
                 # Log scale — human hearing is logarithmic
                 bands = [np.log1p(b * 50) for b in bands]
                 peak = max(bands) if max(bands) > 0 else 1
-                # Color each bar: low freq green, mid yellow, high red
-                scope_parts = []
-                for j, b in enumerate(bands):
-                    idx = min(4, int(b / peak * 4))
-                    frac = j / scope_w
-                    if frac < 0.33:
-                        c = "\033[32m"  # green — bass
-                    elif frac < 0.66:
-                        c = "\033[33m"  # yellow — mids
-                    else:
-                        c = "\033[31m"  # red — highs
-                    scope_parts.append(f"{c}{bars[idx]}")
-                scope = "".join(scope_parts) + "\033[0m"
-            else:
-                scope = "\033[90m" + "─" * scope_w + "\033[0m"
+                # Multi-row spectrum: map each band to 0..n_rows*4 height
+                max_h = n_rows * 4
+                heights = [min(max_h, int(b / peak * max_h)) for b in bands]
 
-            # Draw: move up 3 lines, write scope, skip controls line, write progress
-            sys.stderr.write(f"\033[3A\r  {scope}  \r\n\n\n\r  {icon} {cur_m}:{cur_s:02d} / {tot_m}:{tot_s:02d}  {bar} ")
+                # Build rows top to bottom
+                rows = []
+                for row in range(n_rows):
+                    threshold_lo = (n_rows - 1 - row) * 4  # top row = highest threshold
+                    row_parts = []
+                    for j, h in enumerate(heights):
+                        level = max(0, min(4, h - threshold_lo))
+                        frac = j / scope_w
+                        if frac < 0.33:
+                            c = "\033[32m"
+                        elif frac < 0.66:
+                            c = "\033[33m"
+                        else:
+                            c = "\033[31m"
+                        row_parts.append(f"{c}{bars[level]}")
+                    rows.append("".join(row_parts) + "\033[0m")
+                scope_lines = rows
+            else:
+                scope_lines = ["\033[90m" + " " * scope_w + "\033[0m"] * n_rows
+
+            # Draw: move up, write scope rows, skip controls, write progress
+            up = n_rows + 2  # scope rows + blank + controls
+            sys.stderr.write(f"\033[{up}A\r")
+            for row in scope_lines:
+                sys.stderr.write(f"  {row}  \r\n")
+            sys.stderr.write(f"\n\n\r  {icon} {cur_m}:{cur_s:02d} / {tot_m}:{tot_s:02d}  {bar} ")
             sys.stderr.flush()
 
             # Non-blocking single char read
