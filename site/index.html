@@ -308,6 +308,20 @@
             color: #887a3a;
         }
 
+        /* Download link */
+        .track-dl {
+            font-size: 14px;
+            color: #444;
+            text-decoration: none;
+            flex-shrink: 0;
+            padding: 4px;
+            transition: color 0.15s;
+        }
+
+        .track-dl:hover {
+            color: #c8a846;
+        }
+
         /* Share link */
         .track-share {
             font-size: 12px;
@@ -477,6 +491,7 @@ TRACKS.forEach((t, i) => {
             <div class="track-meta">${meta}</div>
             <div class="track-desc">${t.desc}</div>
         </div>
+        <a class="track-dl" href="mp3s/${t.file}.mp3" download title="Download MP3" onclick="event.stopPropagation()">↓</a>
         <span class="track-duration" id="dur-${i}">—</span>
     `;
     el.onclick = () => playTrack(i);
