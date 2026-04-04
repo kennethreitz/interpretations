@@ -349,6 +349,10 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
                         hi = lo + 1
                     bands.append(np.mean(fft[lo:hi]))
                 # Log scale — human hearing is logarithmic
+                # Tilt — reduce bass, boost highs to compensate for FFT energy distribution
+                for j in range(len(bands)):
+                    frac = j / len(bands)
+                    bands[j] *= (0.3 + frac * 0.7)  # bass at 30%, highs at 100%
                 bands = [np.log1p(b * 3) for b in bands]
                 peak = max(bands) if max(bands) > 0 else 1
                 # Multi-row spectrum: map each band to 0..n_rows*4 height
