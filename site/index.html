@@ -517,6 +517,7 @@ TRACKS.forEach((t, i) => {
             <div class="track-meta">${meta}</div>
             <div class="track-desc">${t.desc}</div>
         </div>
+        <a class="track-dl" href="https://github.com/kennethreitz/interpretations/blob/main/tracks/${t.file.replace(/^\d+_/, '')}.py" title="View source" target="_blank" onclick="event.stopPropagation()">&lt;/&gt;</a>
         <a class="track-dl" href="mp3s/${t.file}.mp3" download title="Download MP3" onclick="event.stopPropagation()">↓</a>
         <span class="track-duration" id="dur-${i}">—</span>
     `;
