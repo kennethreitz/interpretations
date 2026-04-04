@@ -263,6 +263,7 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
     big_seek = int(30 * sample_rate)
 
     state = {"pos": 0, "playing": True, "quit": False, "action": None}
+    prev_heights = [0] * 48  # peak hold for spectrum
     lock = threading.Lock()
 
     def callback(outdata, frames, time_info, status):
@@ -357,7 +358,13 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
                 peak = max(bands) if max(bands) > 0 else 1
                 # Multi-row spectrum: map each band to 0..n_rows*4 height
                 max_h = n_rows * 4
-                heights = [min(max_h, int(b / peak * max_h)) for b in bands]
+                raw_heights = [min(max_h, int(b / peak * max_h)) for b in bands]
+                # Peak hold with decay
+                heights = []
+                for j, h in enumerate(raw_heights):
+                    held = max(h, prev_heights[j] - 1)  # decay by 1 per frame
+                    heights.append(held)
+                    prev_heights[j] = held
 
                 # Build rows top to bottom
                 rows = []
