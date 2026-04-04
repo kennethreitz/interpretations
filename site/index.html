@@ -477,7 +477,6 @@ TRACKS.forEach((t, i) => {
             <div class="track-meta">${meta}</div>
             <div class="track-desc">${t.desc}</div>
         </div>
-        <span class="track-share" title="Copy link" onclick="event.stopPropagation(); copyTrackLink(${i})">🔗</span>
         <span class="track-duration" id="dur-${i}">—</span>
     `;
     el.onclick = () => playTrack(i);
