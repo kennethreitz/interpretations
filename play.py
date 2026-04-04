@@ -263,7 +263,7 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
     big_seek = int(30 * sample_rate)
 
     state = {"pos": 0, "playing": True, "quit": False, "action": None}
-    prev_heights = [0] * 48  # peak hold for spectrum
+    prev_heights = [0] * 76  # peak hold for spectrum
     lock = threading.Lock()
 
     def callback(outdata, frames, time_info, status):
@@ -326,7 +326,7 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
 
             # Spectrum analyzer — FFT frequency bands displayed as EQ bars
             import numpy as np
-            scope_w = 48
+            scope_w = 76
             bars = " ⡀⡄⡆⡇"
             n_rows = 3
             window_size = int(sample_rate * 0.05)
