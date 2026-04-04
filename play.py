@@ -344,7 +344,7 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
             sys.stderr.flush()
 
             # Non-blocking single char read
-            if select.select([sys.stdin], [], [], 0.15)[0]:
+            if select.select([sys.stdin], [], [], 0.05)[0]:
                 ch = sys.stdin.read(1)
                 if ch == "q" or ch == "\x03":  # q or Ctrl+C
                     state["action"] = "stop"
