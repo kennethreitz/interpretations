@@ -1,0 +1,16 @@
+{
+    "name": "Interpretations — Infinite State",
+    "short_name": "Interpretations",
+    "description": "24 tracks written in Python. Sitar meets 808.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0a0a0a",
+    "theme_color": "#0a0a0a",
+    "icons": [
+        {
+            "src": "cover.png",
+            "sizes": "1024x1024",
+            "type": "image/png"
+        }
+    ]
+}
