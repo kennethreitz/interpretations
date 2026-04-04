@@ -291,7 +291,9 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
     print()
     print("  [+/f] +5s  [-/s] -5s  [d] +30s  [a] -30s  [space] pause  [n] next  [p] prev  [q] quit")
     print()
-    print()  # blank lines for oscilloscope + progress
+    print()  # blank lines for oscilloscope + whitespace + progress
+    print()
+    print()
 
     stream = sd.OutputStream(
         samplerate=sample_rate,
@@ -320,39 +322,48 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
             bar = "█" * filled + "░" * (bar_w - filled)
             icon = "▶" if playing else "⏸"
 
-            # Oscilloscope — braille waveform centered on zero crossing
-            scope_w = 60
-            # Braille: each char is 2 wide x 4 tall dots. We use pairs of columns.
-            # For a simpler approach: use block + braille for a centered waveform
-            wave_chars = " ·∘○◌●◉⦿⬤"
-            window_size = int(sample_rate * 0.03)  # 30ms window
+            # Spectrum analyzer — FFT frequency bands displayed as EQ bars
+            import numpy as np
+            scope_w = 48
+            bars = " ▁▂▃▄▅▆▇█"
+            window_size = int(sample_rate * 0.05)
             start_s = max(0, pos - window_size // 2)
             end_s = min(total_frames, start_s + window_size)
-            if end_s > start_s and playing:
+
+            if end_s > start_s and playing and (end_s - start_s) > 64:
                 chunk = buf[start_s:end_s]
                 if chunk.ndim == 2:
                     chunk = chunk.mean(axis=1)
-                step = max(1, len(chunk) // scope_w)
-                # Center the waveform — show positive and negative
-                samples = [chunk[i * step] if i * step < len(chunk) else 0
-                           for i in range(scope_w)]
-                peak = max(abs(s) for s in samples) if any(samples) else 1
-                # Map to centered display: ▁▂▃▄█▄▃▂▁
-                top = "▁▂▃▄▅▆▇█"
-                scope_chars = []
-                for s in samples:
-                    norm = s / peak if peak > 0 else 0
-                    idx = int(abs(norm) * 7)
-                    idx = min(7, idx)
-                    if idx == 0:
-                        scope_chars.append("─")
+                # FFT
+                fft = np.abs(np.fft.rfft(chunk))
+                # Group into logarithmic frequency bands
+                n_bins = len(fft)
+                band_edges = np.logspace(np.log10(1), np.log10(n_bins), scope_w + 1).astype(int)
+                band_edges = np.clip(band_edges, 0, n_bins - 1)
+                bands = []
+                for j in range(scope_w):
+                    lo, hi = band_edges[j], band_edges[j + 1]
+                    if hi <= lo:
+                        hi = lo + 1
+                    bands.append(np.mean(fft[lo:hi]))
+                peak = max(bands) if max(bands) > 0 else 1
+                # Color each bar: low freq green, mid yellow, high red
+                scope_parts = []
+                for j, b in enumerate(bands):
+                    idx = min(8, int(b / peak * 8))
+                    frac = j / scope_w
+                    if frac < 0.33:
+                        c = "\033[32m"  # green — bass
+                    elif frac < 0.66:
+                        c = "\033[33m"  # yellow — mids
                     else:
-                        scope_chars.append(top[idx])
-                scope = "".join(scope_chars)
+                        c = "\033[31m"  # red — highs
+                    scope_parts.append(f"{c}{bars[idx]}")
+                scope = "".join(scope_parts) + "\033[0m"
             else:
-                scope = "─" * scope_w
+                scope = "\033[90m" + "─" * scope_w + "\033[0m"
 
-            sys.stderr.write(f"\033[2A\r  \033[33m{scope}\033[0m\n")
+            sys.stderr.write(f"\033[3A\r\n  {scope}\n\n")
             sys.stderr.write(f"\r  {icon} {cur_m}:{cur_s:02d} / {tot_m}:{tot_s:02d}  {bar} \n")
             sys.stderr.flush()
 
