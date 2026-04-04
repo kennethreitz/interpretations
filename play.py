@@ -323,7 +323,7 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
             # Spectrum analyzer — FFT frequency bands displayed as EQ bars
             import numpy as np
             scope_w = 48
-            bars = " ▁▂▃▄▅▆▇█"
+            bars = "⠀⡀⡄⡆⡇⣇⣧⣷⣿"
             window_size = int(sample_rate * 0.05)
             start_s = max(0, pos - window_size // 2)
             end_s = min(total_frames, start_s + window_size)
