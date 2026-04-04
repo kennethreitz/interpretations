@@ -29,6 +29,7 @@ Usage:
 
 import argparse
 import importlib.util
+import os
 import sys
 from pathlib import Path
 
@@ -326,7 +327,11 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
 
             # Spectrum analyzer — FFT frequency bands displayed as EQ bars
             import numpy as np
-            scope_w = 76
+            try:
+                term_w = os.get_terminal_size().columns
+            except OSError:
+                term_w = 80
+            scope_w = min(76, term_w - 4)
             bars = " ⡀⡄⡆⡇"
             n_rows = 3
             window_size = int(sample_rate * 0.05)
