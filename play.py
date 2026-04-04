@@ -349,7 +349,7 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
                         hi = lo + 1
                     bands.append(np.mean(fft[lo:hi]))
                 # Log scale — human hearing is logarithmic
-                bands = [np.log1p(b * 15) for b in bands]
+                bands = [np.log1p(b * 8) for b in bands]
                 peak = max(bands) if max(bands) > 0 else 1
                 # Multi-row spectrum: map each band to 0..n_rows*4 height
                 max_h = n_rows * 4
