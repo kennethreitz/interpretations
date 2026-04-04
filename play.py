@@ -264,7 +264,7 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
     big_seek = int(30 * sample_rate)
 
     state = {"pos": 0, "playing": True, "quit": False, "action": None}
-    prev_heights = [0] * 76  # peak hold for spectrum
+    prev_heights = [0.0] * 76  # peak hold for spectrum (float for slow decay)
     lock = threading.Lock()
 
     def callback(outdata, frames, time_info, status):
@@ -367,7 +367,7 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
                 # Peak hold with decay
                 heights = []
                 for j, h in enumerate(raw_heights):
-                    held = max(h, prev_heights[j] - 1)  # decay by 1 per frame
+                    held = max(h, prev_heights[j] - 0.4)  # slow decay
                     heights.append(held)
                     prev_heights[j] = held
 
@@ -377,7 +377,7 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
                     threshold_lo = (n_rows - 1 - row) * 4  # top row = highest threshold
                     row_parts = []
                     for j, h in enumerate(heights):
-                        level = max(0, min(4, h - threshold_lo))
+                        level = int(max(0, min(4, int(h) - threshold_lo)))
                         frac = j / scope_w
                         if frac < 0.33:
                             c = "\033[32m"
