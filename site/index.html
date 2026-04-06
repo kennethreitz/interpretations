@@ -429,30 +429,30 @@
 
 <script>
 const TRACKS = [
-    { num: 1, file: "01_raga_midnight", title: "Raga Midnight", key: "D phr", bpm: 90, tuning: "shruti · 432Hz", desc: "Sitar raga in four movements with 808 drop. Tabla, tambura, dhol." },
-    { num: 2, file: "02_shruti_lofi", title: "Shruti Lofi", key: "Dm", bpm: 75, tuning: "shruti", desc: "Microtonal lo-fi hip hop. Kalimba, Rhodes, sitar hook, mellotron flute." },
-    { num: 3, file: "03_ghost_protocol", title: "Ghost Protocol", key: "Fm", bpm: 128, tuning: "", desc: "Trip-hop into trance build. Drift arp, kick at bar 49, NES melody at the peak." },
-    { num: 4, file: "04_silk_road", title: "Silk Road", key: "Dm", bpm: 95, tuning: "", desc: "A caravan picking up musicians. Koto → sitar → mandolin → guitar → all together." },
-    { num: 5, file: "05_the_observatory", title: "The Observatory", key: "Gm", bpm: 112, tuning: "", desc: "Chapel through shortwave static. Organ, choir, saw arp, theremin signal." },
-    { num: 6, file: "06_acid_reign", title: "Acid Reign", key: "Am", bpm: 140, tuning: "", desc: "Dual 303 acid bass with resonant filter sweeps. Cajon, Rhodes, 808 sub." },
-    { num: 7, file: "07_beast_mode", title: "Beast Mode", key: "Gm", bpm: 135, tuning: "", desc: "Trap drums, 808 slides, sitar hook + shred solo, mellotron flute drop." },
-    { num: 8, file: "08_apex", title: "Apex", key: "Ebm", bpm: 140, tuning: "", desc: "The fastest, the hardest. Koto hook, wavefold bass, timpani, 32nd shreds." },
-    { num: 9, file: "09_voltage", title: "Voltage", key: "Fm", bpm: 138, tuning: "", desc: "Raw oscillators. Sine, saw, square, hard_sync. Rhythm is pitch." },
-    { num: 10, file: "10_an_exception_occurred", title: "An Exception Occurred", key: "Eb", bpm: 80, tuning: "", desc: "Stability → seeking → psychosis → despair → hymn → recovery. Every note by hand." },
-    { num: 11, file: "11_voices", title: "Voices", key: "F#m", bpm: 65, tuning: "", desc: "Five vocal parts multiplying. Piano enters as reality. One last whisper." },
-    { num: 12, file: "12_intrusive", title: "Intrusive", key: "Bbm", bpm: 92, tuning: "", desc: "One wavefold phrase repeating. Rhodes fights it. Drums fight it. It passes." },
-    { num: 13, file: "13_gravity", title: "Gravity", key: "Cm", bpm: 88, tuning: "", desc: "Sparse piano, 808, boom bap. Sitar bend in the breakdown. Eastern touches." },
-    { num: 14, file: "14_the_interruption", title: "The Interruption", key: "Dm", bpm: 85, tuning: "", desc: "String quartet ambushed by DnB. Flute, harp, drift reese. The strings win." },
-    { num: 15, file: "15_sleight_of_hand", title: "Sleight of Hand", key: "Dm", bpm: 100, tuning: "", desc: "Nine genre shifts. Music box → didge → jazz → 808 → theremin → choir → acid 303." },
-    { num: 16, file: "16_waveforms", title: "Waveforms", key: "Fm", bpm: 118, tuning: "", desc: "Synth showcase. Percussive blips stacking. FM solo, duet in thirds, canon." },
-    { num: 17, file: "17_emergence", title: "Emergence", key: "Em", bpm: 100, tuning: "", desc: "Singing bowls + sitar arps birth synths. Both worlds collide at the peak." },
-    { num: 18, file: "18_chakra", title: "Chakra", key: "(multi)", bpm: "60→135", tuning: "shruti · 432Hz", desc: "Root to crown journey. Seven chakras, metric modulation, drift at the crown." },
-    { num: 19, file: "19_the_temple", title: "The Temple", key: "A phr", bpm: 65, tuning: "shruti · 432Hz", desc: "Devotional layers in a vast stone chamber. The reverb is the instrument." },
-    { num: 20, file: "20_the_dialogue", title: "The Dialogue", key: "E phr", bpm: 75, tuning: "shruti · 432Hz", desc: "Sitar (human) and theremin (machine) find each other. House beat arrives." },
-    { num: 21, file: "21_cathedral", title: "Cathedral", key: "Dm", bpm: 60, tuning: "", desc: "Tubular bells, bagpipe drone, mellotron choir, timpani thunder, pipe organ." },
-    { num: 22, file: "22_tape_memory", title: "Tape Memory", key: "Dbm", bpm: 90, tuning: "", desc: "Mellotron flute dreams. FM, drift, crotales, hard_sync, PWM, wavefold, ring_mod." },
-    { num: 23, file: "23_music_box_factory", title: "Music Box Factory", key: "G", bpm: 108, tuning: "", desc: "Eight tuned percussion instruments. Kalimba, vibraphone, celesta, marimba." },
-    { num: 24, file: "24_deep_time", title: "Deep Time", key: "Bm", bpm: 40, tuning: "just", desc: "7.5 min ambient drone. Tingsha, singing bowls, didgeridoo, theremin, cello." },
+    { num: 1, file: "01_raga_midnight", title: "Raga Midnight", key: "D phr", bpm: 90, tuning: "shruti · 432Hz", dur: "2:40", desc: "Sitar raga in four movements with 808 drop. Tabla, tambura, dhol." },
+    { num: 2, file: "02_shruti_lofi", title: "Shruti Lofi", key: "Dm", bpm: 75, tuning: "shruti", dur: "4:16", desc: "Microtonal lo-fi hip hop. Kalimba, Rhodes, sitar hook, mellotron flute." },
+    { num: 3, file: "03_ghost_protocol", title: "Ghost Protocol", key: "Fm", bpm: 128, tuning: "", dur: "4:00", desc: "Trip-hop into trance build. Drift arp, kick at bar 49, NES melody at the peak." },
+    { num: 4, file: "04_silk_road", title: "Silk Road", key: "Dm", bpm: 95, tuning: "", dur: "3:22", desc: "A caravan picking up musicians. Koto → sitar → mandolin → guitar → all together." },
+    { num: 5, file: "05_the_observatory", title: "The Observatory", key: "Gm", bpm: 112, tuning: "", dur: "3:25", desc: "Chapel through shortwave static. Organ, choir, saw arp, theremin signal." },
+    { num: 6, file: "06_acid_reign", title: "Acid Reign", key: "Am", bpm: 140, tuning: "", dur: "1:51", desc: "Dual 303 acid bass with resonant filter sweeps. Cajon, Rhodes, 808 sub." },
+    { num: 7, file: "07_beast_mode", title: "Beast Mode", key: "Gm", bpm: 135, tuning: "", dur: "2:44", desc: "Trap drums, 808 slides, sitar hook + shred solo, mellotron flute drop." },
+    { num: 8, file: "08_apex", title: "Apex", key: "Ebm", bpm: 140, tuning: "", dur: "2:48", desc: "The fastest, the hardest. Koto hook, wavefold bass, timpani, 32nd shreds." },
+    { num: 9, file: "09_voltage", title: "Voltage", key: "Fm", bpm: 138, tuning: "", dur: "2:46", desc: "Raw oscillators. Sine, saw, square, hard_sync. Rhythm is pitch." },
+    { num: 10, file: "10_an_exception_occurred", title: "An Exception Occurred", key: "Eb", bpm: 80, tuning: "", dur: "3:33", desc: "Stability → seeking → psychosis → despair → hymn → recovery." },
+    { num: 11, file: "11_voices", title: "Voices", key: "F#m", bpm: 65, tuning: "", dur: "3:28", desc: "Five vocal parts multiplying. Piano enters as reality. One last whisper." },
+    { num: 12, file: "12_intrusive", title: "Intrusive", key: "Bbm", bpm: 92, tuning: "", dur: "2:26", desc: "One wavefold phrase repeating. Rhodes fights it. Drums fight it. It passes." },
+    { num: 13, file: "13_gravity", title: "Gravity", key: "Cm", bpm: 88, tuning: "", dur: "2:57", desc: "Sparse piano, 808, boom bap. Sitar bend in the breakdown. Eastern touches." },
+    { num: 14, file: "14_the_interruption", title: "The Interruption", key: "Dm", bpm: 85, tuning: "", dur: "3:57", desc: "String quartet ambushed by DnB. Flute, harp, drift reese. The strings win." },
+    { num: 15, file: "15_sleight_of_hand", title: "Sleight of Hand", key: "Dm", bpm: 100, tuning: "", dur: "2:52", desc: "Nine genre shifts. Music box → didge → jazz → 808 → theremin → choir → acid 303." },
+    { num: 16, file: "16_waveforms", title: "Waveforms", key: "Fm", bpm: 118, tuning: "", dur: "3:16", desc: "Synth showcase. Percussive blips stacking. FM solo, duet in thirds, canon." },
+    { num: 17, file: "17_emergence", title: "Emergence", key: "Em", bpm: 100, tuning: "", dur: "3:31", desc: "Singing bowls + sitar arps birth synths. Both worlds collide at the peak." },
+    { num: 18, file: "18_chakra", title: "Chakra", key: "(multi)", bpm: "60→135", tuning: "shruti · 432Hz", dur: "3:44", desc: "Root to crown journey. Seven chakras, metric modulation, drift at the crown." },
+    { num: 19, file: "19_the_temple", title: "The Temple", key: "A phr", bpm: 65, tuning: "shruti · 432Hz", dur: "4:55", desc: "Devotional layers in a vast stone chamber. The reverb is the instrument." },
+    { num: 20, file: "20_the_dialogue", title: "The Dialogue", key: "E phr", bpm: 75, tuning: "shruti · 432Hz", dur: "4:16", desc: "Sitar (human) and theremin (machine) find each other. House beat arrives." },
+    { num: 21, file: "21_cathedral", title: "Cathedral", key: "Dm", bpm: 60, tuning: "", dur: "4:16", desc: "Tubular bells, bagpipe drone, mellotron choir, timpani thunder, pipe organ." },
+    { num: 22, file: "22_tape_memory", title: "Tape Memory", key: "Dbm", bpm: 90, tuning: "", dur: "3:34", desc: "Mellotron flute dreams. FM, drift, crotales, hard_sync, PWM, wavefold, ring_mod." },
+    { num: 23, file: "23_music_box_factory", title: "Music Box Factory", key: "G", bpm: 108, tuning: "", dur: "4:26", desc: "Eight tuned percussion instruments. Kalimba, vibraphone, celesta, marimba." },
+    { num: 24, file: "24_deep_time", title: "Deep Time", key: "Bm", bpm: 40, tuning: "just", dur: "4:48", desc: "7.5 min ambient drone. Tingsha, singing bowls, didgeridoo, theremin, cello." },
 ];
 
 const audio = new Audio();
@@ -530,7 +530,7 @@ TRACKS.forEach((t, i) => {
         </div>
         <a class="track-dl" href="https://github.com/kennethreitz/interpretations/blob/main/tracks/${t.file.replace(/^\d+_/, '')}.py" title="View source" target="_blank" onclick="event.stopPropagation()">&lt;/&gt;</a>
         <a class="track-dl" href="mp3s/${t.file}.mp3" download title="Download MP3" onclick="event.stopPropagation()">↓</a>
-        <span class="track-duration" id="dur-${i}">—</span>
+        <span class="track-duration" id="dur-${i}">${t.dur || '—'}</span>
     `;
     el.onclick = () => playTrack(i);
     tracklist.appendChild(el);
