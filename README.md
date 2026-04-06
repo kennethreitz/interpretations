@@ -1,6 +1,6 @@
 ![Album Cover](cover.png)
 
-[ [Apple Music](https://music.apple.com/us/album/interpretations/1890986989) ] · [ [Spotify](https://open.spotify.com/album/1jYjggrr6HEKfV4FchcJWD) ] · [ [YouTube Music](https://www.youtube.com/playlist?list=OLAK5uy_mHdRr7gLTWTsJ7HWC7XukIvXUXxdNOagU) ] · [ [Web Player](https://interpretations.kennethreitz.org) ]
+**Listen Now:** [ [Apple Music](https://music.apple.com/us/album/interpretations/1890986989) ] · [ [Spotify](https://open.spotify.com/album/1jYjggrr6HEKfV4FchcJWD) ] · [ [YouTube Music](https://www.youtube.com/playlist?list=OLAK5uy_mHdRr7gLTWTsJ7HWC7XukIvXUXxdNOagU) ] · [ [Web Player](https://interpretations.kennethreitz.org) ]
 
 A 24-track album where Indian classical ragas collide with trap beats, singing bowls ring over 808 sub bass, and a mellotron flute recorded on magnetic tape in 1967 plays alongside wavefolded oscillators that didn't exist until last week. Sitar arps shred at 140 BPM. A string quartet gets ambushed by drum & bass. Five vocal synths simulate auditory hallucinations. A piano tells the story of a psychotic break — from stability through spiritual seeking into chaos, despair, a hymn, and recovery.
 
