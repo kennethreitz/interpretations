@@ -770,7 +770,7 @@ examples:
     insp.add_argument("--parts", action="store_true",
                       help="List all parts with details")
     insp.add_argument("--sheet", action="store_true",
-                      help="Open sheet music (ABC notation) in browser")
+                      help="Open sheet music (LilyPond PDF if available, otherwise abcjs HTML)")
 
     play = p.add_argument_group("playback")
     play.add_argument("--from", dest="from_measure", type=int, metavar="N",
@@ -863,27 +863,63 @@ def _render_and_cache(path, args):
     return buf, sr, offset_sec, score, mod
 
 
+def _has_lilypond():
+    """Check if LilyPond is installed."""
+    import shutil
+    return shutil.which("lilypond") is not None
+
+
 def _open_sheet(path):
-    """Render a track's score as ABC notation and open sheet music in the browser."""
+    """Render sheet music — LilyPond PDF if available, otherwise abcjs HTML."""
     import tempfile
     import webbrowser
+    import subprocess
 
     score, mod = load_score(path)
     title = get_title(mod, Path(path))
+    stem = Path(path).stem
 
-    # Derive ABC key from the module's Key object (e.g. Key("Eb", "minor"))
-    abc_key = "C"
+    # Extract key info from module
+    key_root = "C"
+    mode = "major"
     if hasattr(mod, "key"):
-        k = mod.key
-        root = getattr(k, "tonic_name", "C")
-        mode = getattr(k, "mode", "major")
-        abc_key = str(root)
-        if "minor" in mode.lower():
-            abc_key += "m"
+        key_root = getattr(mod.key, "tonic_name", "C")
+        mode = getattr(mod.key, "mode", "major")
+
+    if _has_lilypond():
+        # LilyPond path — publication-quality PDF
+        ly = score.to_lilypond(title=title, key=key_root, mode=mode)
+        ly_path = Path(tempfile.gettempdir()) / f"{stem}.ly"
+        pdf_path = Path(tempfile.gettempdir()) / f"{stem}.pdf"
+        ly_path.write_text(ly)
+
+        print(f"  Compiling LilyPond...")
+        result = subprocess.run(
+            ["lilypond", "-o", str(pdf_path.with_suffix("")), str(ly_path)],
+            capture_output=True, text=True
+        )
+        if pdf_path.exists():
+            subprocess.run(["open", str(pdf_path)])
+            print(f"  Sheet music -> {pdf_path}")
+        else:
+            # LilyPond failed — fall back to abcjs
+            print(f"  LilyPond failed, falling back to abcjs...")
+            _open_sheet_abc(score, title, key_root, mode, stem)
+    else:
+        _open_sheet_abc(score, title, key_root, mode, stem)
+
+
+def _open_sheet_abc(score, title, key_root, mode, stem):
+    """Fallback: render sheet music as abcjs HTML in the browser."""
+    import tempfile
+    import webbrowser
+
+    abc_key = key_root
+    if "minor" in mode.lower():
+        abc_key += "m"
 
     html = score.to_abc(title=title, key=abc_key, html=True)
-
-    out = Path(tempfile.gettempdir()) / f"{Path(path).stem}_sheet.html"
+    out = Path(tempfile.gettempdir()) / f"{stem}_sheet.html"
     out.write_text(html)
     webbrowser.open(f"file://{out}")
     print(f"  Sheet music -> {out}")
