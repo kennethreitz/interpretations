@@ -8,7 +8,7 @@ authors = [
 ]
 requires-python = ">=3.10"
 dependencies = [
-    "pytheory>=0.41.4",
+    "pytheory>=0.42.1",
 ]
 
 [tool.uv]
