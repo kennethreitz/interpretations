@@ -212,7 +212,10 @@ body {
 /* ── Footer ──────────────────────────────────────── */
 .footer {
     padding: 8px 14px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
     border-top: 1px solid #1a1a1a;
     background: #0d0d0d;
 }
@@ -221,8 +224,11 @@ body {
     font-size: 11px;
     color: #555;
     text-decoration: none;
+    transition: color 0.15s;
 }
 .footer a:hover { color: #c8a846; }
+
+.footer .sep { color: #333; font-size: 10px; }
 
 /* ── Responsive ──────────────────────────────────── */
 @media (max-width: 320px) {
@@ -265,7 +271,13 @@ body {
     <div class="tracks" id="trackList"></div>
 
     <div class="footer">
-        <a href="https://interpretations.kennethreitz.org" target="_blank" rel="noopener">interpretations.kennethreitz.org</a>
+        <a href="https://open.spotify.com/album/1jYjggrr6HEKfV4FchcJWD" target="_blank" rel="noopener" title="Spotify">Spotify</a>
+        <span class="sep">&middot;</span>
+        <a href="https://music.apple.com/us/album/interpretations/1890986989" target="_blank" rel="noopener" title="Apple Music">Apple</a>
+        <span class="sep">&middot;</span>
+        <a href="https://www.youtube.com/playlist?list=OLAK5uy_mHdRr7gLTWTsJ7HWC7XukIvXUXxdNOagU" target="_blank" rel="noopener" title="YouTube Music">YouTube</a>
+        <span class="sep">&middot;</span>
+        <a href="https://github.com/kennethreitz/interpretations" target="_blank" rel="noopener" title="Source code">GitHub</a>
     </div>
 </div>
 
