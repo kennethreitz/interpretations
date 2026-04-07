@@ -1,0 +1,15 @@
+{
+    "version": "1.0",
+    "type": "rich",
+    "title": "Interpretations — Infinite State",
+    "author_name": "Infinite State",
+    "author_url": "https://kennethreitz.org",
+    "provider_name": "Interpretations",
+    "provider_url": "https://interpretations.kennethreitz.org",
+    "thumbnail_url": "https://interpretations.kennethreitz.org/cover.png",
+    "thumbnail_width": 1024,
+    "thumbnail_height": 1024,
+    "html": "<iframe src=\"https://interpretations.kennethreitz.org/embed.html\" width=\"350\" height=\"500\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" style=\"border-radius:8px;border:none;\"></iframe>",
+    "width": 350,
+    "height": 500
+}

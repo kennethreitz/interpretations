@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interpretations — Infinite State</title>
+<link rel="alternate" type="application/json+oembed" href="https://interpretations.kennethreitz.org/oembed.json" title="Interpretations — Infinite State">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #0a0a0a;
+    color: #e0e0e0;
+    overflow: hidden;
+}
+
+.widget {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-height: 600px;
+}
+
+/* ── Header: art + info ──────────────────────────── */
+.header {
+    display: flex;
+    gap: 14px;
+    padding: 14px;
+    background: linear-gradient(180deg, #151515 0%, #0a0a0a 100%);
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.cover {
+    width: 80px;
+    height: 80px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+}
+
+.album-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.02em;
+}
+
+.artist {
+    font-size: 12px;
+    color: #c8a846;
+    margin-top: 2px;
+}
+
+.tagline {
+    font-size: 11px;
+    color: #666;
+    margin-top: 4px;
+    line-height: 1.3;
+}
+
+/* ── Now playing bar ─────────────────────────────── */
+.now-playing {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: #111;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.play-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: #c8a846;
+    color: #0a0a0a;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s;
+}
+.play-btn:hover { background: #dabb55; }
+
+.track-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.track-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-meta {
+    font-size: 11px;
+    color: #666;
+    margin-top: 1px;
+}
+
+.progress-wrap {
+    flex: 1;
+    max-width: 120px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 3px;
+    background: #222;
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #c8a846;
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.3s linear;
+}
+
+.time {
+    font-size: 10px;
+    color: #555;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+/* ── Oscilloscope ────────────────────────────────── */
+.scope {
+    height: 40px;
+    background: #0a0a0a;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.scope canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* ── Track list ──────────────────────────────────── */
+.tracks {
+    flex: 1;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #333 #0a0a0a;
+}
+
+.tracks::-webkit-scrollbar { width: 4px; }
+.tracks::-webkit-scrollbar-track { background: #0a0a0a; }
+.tracks::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+.track {
+    display: flex;
+    align-items: center;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: background 0.1s;
+    gap: 10px;
+    border-bottom: 1px solid #111;
+}
+.track:hover { background: #151515; }
+.track.active { background: #1a1a1a; }
+
+.track-num {
+    font-size: 11px;
+    color: #444;
+    width: 20px;
+    text-align: right;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+}
+.track.active .track-num { color: #c8a846; }
+
+.track-name {
+    flex: 1;
+    font-size: 12px;
+    color: #bbb;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.track.active .track-name { color: #fff; font-weight: 600; }
+
+.track-dur {
+    font-size: 11px;
+    color: #444;
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+}
+
+/* ── Footer ──────────────────────────────────────── */
+.footer {
+    padding: 8px 14px;
+    text-align: center;
+    border-top: 1px solid #1a1a1a;
+    background: #0d0d0d;
+}
+
+.footer a {
+    font-size: 11px;
+    color: #555;
+    text-decoration: none;
+}
+.footer a:hover { color: #c8a846; }
+
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 320px) {
+    .progress-wrap { display: none; }
+    .cover { width: 64px; height: 64px; }
+}
+</style>
+</head>
+<body>
+
+<div class="widget">
+    <div class="header">
+        <a href="https://interpretations.kennethreitz.org" target="_blank" rel="noopener">
+            <img class="cover" id="coverImg" alt="Interpretations album cover">
+        </a>
+        <div class="info">
+            <div class="album-title">Interpretations</div>
+            <div class="artist">Infinite State</div>
+            <div class="tagline">24 tracks written in Python. Sitar meets 808.</div>
+        </div>
+    </div>
+
+    <div class="now-playing">
+        <button class="play-btn" id="playBtn" onclick="togglePlay()">&#9654;</button>
+        <div class="track-info">
+            <div class="track-title" id="nowTitle">Select a track</div>
+            <div class="track-meta" id="nowMeta"></div>
+        </div>
+        <div class="progress-wrap">
+            <span class="time" id="curTime">0:00</span>
+            <div class="progress-bar" id="progressBar" onclick="seek(event)">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <span class="time" id="durTime">0:00</span>
+        </div>
+    </div>
+
+    <div class="scope"><canvas id="scope"></canvas></div>
+
+    <div class="tracks" id="trackList"></div>
+
+    <div class="footer">
+        <a href="https://interpretations.kennethreitz.org" target="_blank" rel="noopener">interpretations.kennethreitz.org</a>
+    </div>
+</div>
+
+<script>
+// Use relative paths when served from same origin, absolute for cross-origin embeds
+const BASE = (location.hostname === 'interpretations.kennethreitz.org' || location.protocol === 'file:')
+    ? '.' : 'https://interpretations.kennethreitz.org';
+const TRACKS = [
+    { num: 1, file: "01_raga_midnight", title: "Raga Midnight", key: "D phr", bpm: 90, dur: "2:40" },
+    { num: 2, file: "02_shruti_lofi", title: "Shruti Lofi", key: "Dm", bpm: 75, dur: "4:16" },
+    { num: 3, file: "03_ghost_protocol", title: "Ghost Protocol", key: "Fm", bpm: 128, dur: "4:00" },
+    { num: 4, file: "04_silk_road", title: "Silk Road", key: "Dm", bpm: 95, dur: "3:22" },
+    { num: 5, file: "05_the_observatory", title: "The Observatory", key: "Gm", bpm: 112, dur: "3:25" },
+    { num: 6, file: "06_acid_reign", title: "Acid Reign", key: "Am", bpm: 140, dur: "1:51" },
+    { num: 7, file: "07_beast_mode", title: "Beast Mode", key: "Gm", bpm: 135, dur: "2:44" },
+    { num: 8, file: "08_apex", title: "Apex", key: "Ebm", bpm: 140, dur: "2:48" },
+    { num: 9, file: "09_voltage", title: "Voltage", key: "Fm", bpm: 138, dur: "2:46" },
+    { num: 10, file: "10_an_exception_occurred", title: "An Exception Occurred", key: "Eb", bpm: 80, dur: "3:33" },
+    { num: 11, file: "11_voices", title: "Voices", key: "F#m", bpm: 65, dur: "3:28" },
+    { num: 12, file: "12_intrusive", title: "Intrusive", key: "Bbm", bpm: 92, dur: "2:26" },
+    { num: 13, file: "13_gravity", title: "Gravity", key: "Cm", bpm: 88, dur: "2:57" },
+    { num: 14, file: "14_the_interruption", title: "The Interruption", key: "Dm", bpm: 85, dur: "3:57" },
+    { num: 15, file: "15_sleight_of_hand", title: "Sleight of Hand", key: "Dm", bpm: 100, dur: "2:52" },
+    { num: 16, file: "16_waveforms", title: "Waveforms", key: "Fm", bpm: 118, dur: "3:16" },
+    { num: 17, file: "17_emergence", title: "Emergence", key: "Em", bpm: 100, dur: "3:31" },
+    { num: 18, file: "18_chakra", title: "Chakra", key: "multi", bpm: "60-135", dur: "3:44" },
+    { num: 19, file: "19_the_temple", title: "The Temple", key: "A phr", bpm: 65, dur: "4:55" },
+    { num: 20, file: "20_the_dialogue", title: "The Dialogue", key: "E phr", bpm: 75, dur: "4:16" },
+    { num: 21, file: "21_cathedral", title: "Cathedral", key: "Dm", bpm: 60, dur: "4:16" },
+    { num: 22, file: "22_tape_memory", title: "Tape Memory", key: "Dbm", bpm: 90, dur: "3:34" },
+    { num: 23, file: "23_music_box_factory", title: "Music Box Factory", key: "G", bpm: 108, dur: "4:26" },
+    { num: 24, file: "24_deep_time", title: "Deep Time", key: "Bm", bpm: 40, dur: "4:48" },
+];
+
+document.getElementById('coverImg').src = (BASE === '.') ? 'cover.png' : BASE + '/cover.png';
+
+const audio = new Audio();
+if (BASE !== '.') audio.crossOrigin = 'anonymous';
+
+// Web Audio API — oscilloscope
+let audioCtx, analyser, source, dataArray;
+const scopeCanvas = document.getElementById('scope');
+const scopeCtx = scopeCanvas.getContext('2d');
+
+function initAudio() {
+    if (audioCtx) return;
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 2048;
+    source = audioCtx.createMediaElementSource(audio);
+    source.connect(analyser);
+    analyser.connect(audioCtx.destination);
+    dataArray = new Uint8Array(analyser.frequencyBinCount);
+    drawScope();
+}
+
+function drawScope() {
+    requestAnimationFrame(drawScope);
+    if (!analyser) return;
+
+    const w = scopeCanvas.width = scopeCanvas.offsetWidth * 2;
+    const h = scopeCanvas.height = 80;
+    analyser.getByteTimeDomainData(dataArray);
+
+    scopeCtx.fillStyle = '#0a0a0a';
+    scopeCtx.fillRect(0, 0, w, h);
+
+    scopeCtx.lineWidth = 1.5;
+    scopeCtx.strokeStyle = '#c8a846';
+    scopeCtx.beginPath();
+
+    const sliceWidth = w / dataArray.length;
+    let x = 0;
+    for (let i = 0; i < dataArray.length; i++) {
+        const v = dataArray[i] / 128.0;
+        const y = v * h / 2;
+        if (i === 0) scopeCtx.moveTo(x, y);
+        else scopeCtx.lineTo(x, y);
+        x += sliceWidth;
+    }
+    scopeCtx.lineTo(w, h / 2);
+    scopeCtx.stroke();
+}
+let current = -1;
+let isPlaying = false;
+
+// Build track list
+const listEl = document.getElementById('trackList');
+TRACKS.forEach((t, i) => {
+    const div = document.createElement('div');
+    div.className = 'track';
+    div.innerHTML = `
+        <span class="track-num">${t.num}</span>
+        <span class="track-name">${t.title}</span>
+        <span class="track-dur">${t.dur}</span>
+    `;
+    div.onclick = () => playTrack(i);
+    listEl.appendChild(div);
+});
+
+function playTrack(i) {
+    current = i;
+    const t = TRACKS[i];
+    initAudio();
+    audio.src = `${BASE}/mp3s/${t.file}.mp3`;
+    audio.play();
+    isPlaying = true;
+    document.getElementById('playBtn').innerHTML = '&#10074;&#10074;';
+    document.getElementById('nowTitle').textContent = t.title;
+    document.getElementById('nowMeta').textContent = `${t.key} · ${t.bpm} BPM`;
+
+    // Highlight active track
+    document.querySelectorAll('.track').forEach((el, j) => {
+        el.classList.toggle('active', j === i);
+    });
+
+    // Scroll active track into view
+    const activeEl = document.querySelectorAll('.track')[i];
+    if (activeEl) activeEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+
+function togglePlay() {
+    if (current === -1) { playTrack(0); return; }
+    if (isPlaying) {
+        audio.pause();
+        isPlaying = false;
+        document.getElementById('playBtn').innerHTML = '&#9654;';
+    } else {
+        audio.play();
+        isPlaying = true;
+        document.getElementById('playBtn').innerHTML = '&#10074;&#10074;';
+    }
+}
+
+function seek(e) {
+    if (!audio.duration) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const pct = (e.clientX - rect.left) / rect.width;
+    audio.currentTime = pct * audio.duration;
+}
+
+function fmt(s) {
+    if (!s || isNaN(s)) return '0:00';
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return `${m}:${sec < 10 ? '0' : ''}${sec}`;
+}
+
+// Update progress
+setInterval(() => {
+    if (!audio.duration) return;
+    const pct = (audio.currentTime / audio.duration) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('curTime').textContent = fmt(audio.currentTime);
+    document.getElementById('durTime').textContent = fmt(audio.duration);
+}, 250);
+
+// Auto-advance
+audio.addEventListener('ended', () => {
+    if (current < TRACKS.length - 1) playTrack(current + 1);
+    else {
+        isPlaying = false;
+        document.getElementById('playBtn').innerHTML = '&#9654;';
+    }
+});
+</script>
+
+</body>
+</html>
