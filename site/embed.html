@@ -209,6 +209,16 @@ body {
     flex-shrink: 0;
 }
 
+.track-dl {
+    font-size: 12px;
+    color: #444;
+    text-decoration: none;
+    flex-shrink: 0;
+    padding: 2px;
+    transition: color 0.15s;
+}
+.track-dl:hover { color: #c8a846; }
+
 /* ── Footer ──────────────────────────────────────── */
 .footer {
     padding: 8px 14px;
@@ -369,10 +379,13 @@ const listEl = document.getElementById('trackList');
 TRACKS.forEach((t, i) => {
     const div = document.createElement('div');
     div.className = 'track';
+    const srcFile = t.file.replace(/^\d+_/, '');
     div.innerHTML = `
         <span class="track-num">${t.num}</span>
         <span class="track-name">${t.title}</span>
         <span class="track-dur">${t.dur}</span>
+        <a class="track-dl" href="https://github.com/kennethreitz/interpretations/blob/main/tracks/${srcFile}.py" title="View source" target="_blank" rel="noopener" onclick="event.stopPropagation()">&lt;/&gt;</a>
+        <a class="track-dl" href="${BASE}/mp3s/${t.file}.mp3" download title="Download MP3" onclick="event.stopPropagation()">↓</a>
     `;
     div.onclick = () => playTrack(i);
     listEl.appendChild(div);
