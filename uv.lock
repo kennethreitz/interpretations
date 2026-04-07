@@ -97,7 +97,7 @@ dependencies = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "pytheory", specifier = ">=0.41.2" }]
+requires-dist = [{ name = "pytheory", specifier = ">=0.41.3" }]
 
 [[package]]
 name = "markdown-it-py"
@@ -287,7 +287,7 @@ wheels = [
 
 [[package]]
 name = "pytheory"
-version = "0.41.2"
+version = "0.41.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "rich" },
@@ -295,9 +295,9 @@ dependencies = [
     { name = "scipy", version = "1.17.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "sounddevice" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d4/55/625d43b77c96bcd7eb0782c34c55dd9c0fba831e47e74af1f14f8d9088ff/pytheory-0.41.2.tar.gz", hash = "sha256:86eb9484921e2be2451215fba293e6daa55a1339593acb96dc061024097577e0", size = 188842, upload-time = "2026-04-07T11:44:13.51Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/19/8f/30508ea3400353429d907d1f6197ded43530ad57ce52e782e68f03f8a3c6/pytheory-0.41.3.tar.gz", hash = "sha256:4627a779b55ba49f89e11bc6726e0433c6b1c14cc555776491b61534e7c35524", size = 188951, upload-time = "2026-04-07T11:48:01.136Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/86/69/4fc3bd3580ad45f05f2f3e6a77ac637b0b12f663c5999685b712d521e502/pytheory-0.41.2-py3-none-any.whl", hash = "sha256:90298eb5df74ad187e512faac0856458b4b906905e4d1eeb24c02a972599fc5f", size = 193031, upload-time = "2026-04-07T11:44:14.705Z" },
+    { url = "https://files.pythonhosted.org/packages/3a/71/7c91af6ffb06982793e7904c0b7dda923797f24a25cc6ac03981ee5f3321/pytheory-0.41.3-py3-none-any.whl", hash = "sha256:790ec6795055cb3ad4655c978780124fcd48fef5b8ba6cc2183033cfab5a2be4", size = 193133, upload-time = "2026-04-07T11:47:59.876Z" },
 ]
 
 [[package]]
