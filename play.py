@@ -613,7 +613,7 @@ def pick_track():
                     pass
             stdscr.addstr(3, max(0, (w - 15) // 2), "─" * 15,
                           curses.color_pair(2))
-            stdscr.addstr(4, max(0, (w - 56) // 2), "↑/↓ navigate  ↵ play  r render  a play all  R render all  q quit",
+            stdscr.addstr(4, max(0, (w - 68) // 2), "↑/↓ navigate  ↵ play  s sheet  r render  a play all  R render all  q quit",
                           curses.A_DIM)
 
             # Track list
@@ -711,6 +711,10 @@ def pick_track():
                 result[0] = entries[selected[0]][0]
                 action[0] = "play"
                 return
+            elif key == ord("s"):
+                result[0] = entries[selected[0]][0]
+                action[0] = "sheet"
+                return
             elif key == ord("r"):
                 result[0] = entries[selected[0]][0]
                 action[0] = "render"
@@ -765,6 +769,8 @@ examples:
                       help="Show score metadata and stats")
     insp.add_argument("--parts", action="store_true",
                       help="List all parts with details")
+    insp.add_argument("--sheet", action="store_true",
+                      help="Open sheet music (ABC notation) in browser")
 
     play = p.add_argument_group("playback")
     play.add_argument("--from", dest="from_measure", type=int, metavar="N",
@@ -855,6 +861,32 @@ def _render_and_cache(path, args):
         sys.stderr.write(f"  Cached -> {wav}\n")
 
     return buf, sr, offset_sec, score, mod
+
+
+def _open_sheet(path):
+    """Render a track's score as ABC notation and open sheet music in the browser."""
+    import tempfile
+    import webbrowser
+
+    score, mod = load_score(path)
+    title = get_title(mod, Path(path))
+
+    # Derive ABC key from the module's Key object (e.g. Key("Eb", "minor"))
+    abc_key = "C"
+    if hasattr(mod, "key"):
+        k = mod.key
+        root = getattr(k, "tonic_name", "C")
+        mode = getattr(k, "mode", "major")
+        abc_key = str(root)
+        if "minor" in mode.lower():
+            abc_key += "m"
+
+    html = score.to_abc(title=title, key=abc_key, html=True)
+
+    out = Path(tempfile.gettempdir()) / f"{Path(path).stem}_sheet.html"
+    out.write_text(html)
+    webbrowser.open(f"file://{out}")
+    print(f"  Sheet music -> {out}")
 
 
 def _play_track(path, args, force_render=False, render_only=False):
@@ -1046,6 +1078,8 @@ def main():
                             print(f"  ✗ {f.name}: {e}")
 
                 print(f"\n  Done! {done[0]} tracks cached.\n")
+            elif act == "sheet":
+                _open_sheet(path)
             elif act == "render":
                 _play_track(path, args, force_render=True)
             else:
@@ -1070,8 +1104,8 @@ def main():
         print(f"File not found: {path}")
         sys.exit(1)
 
-    # ── Info / parts (no playback) ────────────────────────────────
-    if args.info or args.parts or args.midi:
+    # ── Info / parts / sheet (no playback) ──────────────────────────
+    if args.info or args.parts or args.midi or args.sheet:
         score, mod = load_score(path)
         if args.bpm:
             score.bpm = args.bpm
@@ -1081,6 +1115,8 @@ def main():
             show_info(score, mod, path)
         elif args.parts:
             show_parts(score)
+        elif args.sheet:
+            _open_sheet(path)
         elif args.midi:
             score.save_midi(args.midi)
             print(f"Exported MIDI -> {args.midi}")
