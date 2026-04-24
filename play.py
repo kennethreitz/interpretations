@@ -251,9 +251,36 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
     import sounddevice as sd
     import threading
     import time
-    import tty
-    import termios
-    import select
+
+    _IS_WINDOWS = sys.platform == "win32"
+    if _IS_WINDOWS:
+        import msvcrt
+    else:
+        import tty
+        import termios
+        import select
+
+    def _read_key_nonblocking(timeout=0.025):
+        if _IS_WINDOWS:
+            end = time.monotonic() + timeout
+            while time.monotonic() < end:
+                if msvcrt.kbhit():
+                    ch = msvcrt.getch()
+                    if ch in (b"\x00", b"\xe0"):
+                        # Arrow/function key prefix — consume the follow byte
+                        if msvcrt.kbhit():
+                            msvcrt.getch()
+                        return None
+                    try:
+                        return ch.decode("utf-8", errors="ignore")
+                    except Exception:
+                        return None
+                time.sleep(0.005)
+            return None
+        else:
+            if select.select([sys.stdin], [], [], timeout)[0]:
+                return sys.stdin.read(1)
+            return None
 
     total_frames = len(buf)
     total_sec = total_frames / sample_rate
@@ -305,11 +332,16 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
         callback=callback,
     )
 
-    fd = sys.stdin.fileno()
-    old_settings = termios.tcgetattr(fd)
+    if _IS_WINDOWS:
+        fd = None
+        old_settings = None
+    else:
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
 
     try:
-        tty.setraw(fd)
+        if not _IS_WINDOWS:
+            tty.setraw(fd)
         stream.start()
 
         while not state["quit"]:
@@ -400,8 +432,8 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
             sys.stderr.flush()
 
             # Non-blocking single char read
-            if select.select([sys.stdin], [], [], 0.025)[0]:
-                ch = sys.stdin.read(1)
+            ch = _read_key_nonblocking(0.025)
+            if ch:
                 if ch == "q" or ch == "\x03":  # q or Ctrl+C
                     state["action"] = "stop"
                     state["quit"] = True
@@ -431,7 +463,8 @@ def play_audio(buf, sample_rate, title="", info_lines=None, offset_sec=0.0):
     except KeyboardInterrupt:
         sys.stderr.write("\n  Stopped.\n")
     finally:
-        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        if not _IS_WINDOWS and old_settings is not None:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
         stream.stop()
         stream.close()
 

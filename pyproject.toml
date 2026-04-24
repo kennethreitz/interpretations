@@ -9,6 +9,7 @@ authors = [
 requires-python = ">=3.10"
 dependencies = [
     "pytheory>=0.42.1",
+    "windows-curses>=2.4.2; sys_platform == 'win32'",
 ]
 
 [tool.uv]
